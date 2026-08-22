@@ -1,0 +1,22 @@
+services:
+  server:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.dev
+    env_file:
+      - ../.env
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    volumes:
+      - ../:/app
+      - /app/.venv
+
+  database:
+    image: postgres:17
+    volumes:
+      - ../.data/db:/var/lib/postgresql/data/
+    env_file:
+      - ../.env
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"

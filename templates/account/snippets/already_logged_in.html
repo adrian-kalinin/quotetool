@@ -1,0 +1,9 @@
+{% load account %}
+
+<div class="text-center text-secondary mt-3">
+  {% if user.is_authenticated %}
+    <strong>Note:</strong> You are already logged in as {% user_display user %}.
+  {% else %}
+    Not a customer yet? <a href="{% url 'account_signup' %}">Sign up here</a>
+  {% endif %}
+</div>

@@ -1,0 +1,12 @@
+{% load tabler_icons %}
+
+{% if errors %}
+  {% for error in errors %}
+    <div class="alert alert-danger mb-3" role="alert">
+      <div class="alert-icon my-auto">{% tabler_icon 'alert-circle' %}</div>
+      <div>
+        <div class="alert-description">{{ error }}</div>
+      </div>
+    </div>
+  {% endfor %}
+{% endif %}

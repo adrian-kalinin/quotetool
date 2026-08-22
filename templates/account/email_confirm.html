@@ -1,0 +1,36 @@
+{% extends "base_auth.html" %}
+
+{% block head_title %}
+  Confirm Email | {{ block.super }}
+{% endblock head_title %}
+
+{% block content_card %}
+  <div class="card-body">
+    <h2 class="h2 text-center mb-4">Confirm Email Address</h2>
+    {% if confirmation %}
+      {% if can_confirm %}
+        <p class="text-center text-secondary mb-4">
+          Please confirm email address <strong>{{ email }}</strong> by clicking the button below.
+        </p>
+        <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+          {% csrf_token %}
+          {{ form }}
+          {{ redirect_field }}
+          <button type="submit" class="btn btn-primary w-100">Confirm</button>
+        </form>
+      {% else %}
+        <p class="text-center text-secondary">
+          Unable to confirm <strong>{{ email }}</strong> because it is already confirmed by a different account.
+        </p>
+      {% endif %}
+    {% else %}
+      <p class="text-center text-secondary">
+        This email confirmation link expired or is invalid. Please <a href="{% url 'account_email' %}">issue a new email confirmation request</a>.
+      </p>
+    {% endif %}
+  </div>
+{% endblock content_card %}
+
+{% block content_extra %}
+  {% include "account/snippets/already_logged_in.html" %}
+{% endblock content_extra %}

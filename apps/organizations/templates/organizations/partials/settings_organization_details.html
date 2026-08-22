@@ -1,0 +1,28 @@
+<div id="organization-details-container">
+  {% if is_manager %}
+    <p class="text-secondary">Manage your organization details.</p>
+    <form method="post"
+          action="{% url 'organizations:settings-organization-details' %}"
+          hx-post="{% url 'organizations:settings-organization-details' %}"
+          hx-target="#organization-details-container"
+          hx-swap="outerHTML"
+          hx-indicator="#save-organization-spinner"
+          hx-disabled-elt="#save-organization-submit"
+          x-data="{ dirty: false }"
+          @input="dirty = true">
+      {% csrf_token %}
+      {{ organization_form }}
+      <div>
+        <button id="save-organization-submit" type="submit" class="btn btn-primary" :disabled="!dirty">Save Changes</button>
+        <span id="save-organization-spinner" class="spinner-border spinner-border-sm ms-2 htmx-indicator"></span>
+      </div>
+    </form>
+  {% else %}
+    <div class="datagrid">
+      <div class="datagrid-item">
+        <div class="datagrid-title">Organization Name</div>
+        <div class="datagrid-content">{{ request.user.active_organization.name }}</div>
+      </div>
+    </div>
+  {% endif %}
+</div>

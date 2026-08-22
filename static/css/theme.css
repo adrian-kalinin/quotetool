@@ -1,0 +1,42 @@
+html {
+  scrollbar-gutter: stable;
+}
+
+:root {
+  --tblr-primary: #4263eb;
+  --tblr-primary-rgb: 66, 99, 235;
+  --tblr-primary-text-emphasis: rgb(26.4, 39.6, 94);
+  --tblr-primary-bg-subtle: rgb(217.2, 223.8, 251);
+  --tblr-primary-border-subtle: rgb(179.4, 192.6, 247);
+
+  --tblr-border-radius: 0.75rem;
+  --tblr-border-radius-sm: 0.75rem;
+  --tblr-border-radius-lg: 0.75rem;
+  --tblr-border-radius-xl: 0.75rem;
+
+  --tblr-dropdown-item-border-radius: 0.75rem;
+}
+
+.navbar-vertical {
+    scrollbar-gutter: stable both-edges;
+    scrollbar-width: thin;
+}
+
+.navbar-vertical .navbar-nav .nav-link {
+  border-radius: var(--tblr-border-radius);
+  margin: 0.125rem 0;
+}
+
+.navbar-vertical .navbar-nav .nav-link:hover {
+  background-color: rgba(var(--tblr-primary-rgb), 0.05);
+}
+
+.navbar-vertical .nav-item.active .nav-link {
+  background-color: rgba(var(--tblr-primary-rgb), 0.1);
+  color: var(--tblr-primary);
+  font-weight: 500;
+}
+
+.navbar-vertical .nav-item.active::after {
+  content: none;
+}

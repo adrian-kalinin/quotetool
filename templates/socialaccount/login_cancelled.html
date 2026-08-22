@@ -1,0 +1,14 @@
+{% extends "base_auth.html" %}
+
+{% block head_title %}
+  Login Cancelled | {{ block.super }}
+{% endblock head_title %}
+
+{% block content_card %}
+  <div class="card-body">
+    <h2 class="h2 text-center mb-4">Login Cancelled</h2>
+    <p class="text-center text-secondary">
+      You cancelled logging in to our service. If this was a mistake, please proceed to <a href="{% url 'account_login' %}">sign in</a>.
+    </p>
+  </div>
+{% endblock content_card %}

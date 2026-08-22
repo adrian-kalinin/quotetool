@@ -1,0 +1,93 @@
+{% comment %} NOTE: this template is used as a partial on the settings page {% endcomment %}
+
+<div id="email-address-container">
+  <p class="text-secondary">Manage your email address and verify your account.</p>
+  <form method="post"
+        hx-post="{% url 'account_email' %}"
+        hx-target="#email-address-container"
+        hx-swap="outerHTML"
+        hx-indicator="#change-email-spinner"
+        hx-disabled-elt="#change-email-submit"
+        x-data="{ dirty: false }"
+        @input="dirty = true">
+    {% csrf_token %}
+    {% if current_emailaddress %}
+      <div class="mb-3">
+        <label for="current_email" class="form-label">Current email</label>
+        <input id="current_email" disabled type="email" value="{{ current_emailaddress.email }}" class="form-control" />
+      </div>
+    {% endif %}
+    {% if new_emailaddress %}
+      <div class="mb-3">
+        <label for="new_email" class="form-label">
+          {% if not current_emailaddress %}
+            New email
+          {% else %}
+            Changing to
+          {% endif %}
+        </label>
+        <input id="new_email" value="{{ new_emailaddress.email }}" disabled type="email" class="form-control" />
+        <div class="form-text">Your email address is still pending verification.</div>
+      </div>
+      <div>
+        <button id="resend-verification-submit" form="pending-email" type="submit" name="action_send" class="btn btn-primary me-2">
+          Re-send Verification
+        </button>
+        {% if current_emailaddress %}
+          <button id="cancel-verification-submit" form="pending-email" type="submit" name="action_remove" class="btn btn-outline-danger">
+            Cancel Change
+          </button>
+        {% endif %}
+        <span id="new-email-spinner" class="spinner-border spinner-border-sm ms-2 htmx-indicator"></span>
+      </div>
+    {% else %}
+      <div class="mb-3">
+        <label for="{{ add_email_form.email.auto_id }}" class="form-label">
+          {% if not current_emailaddress %}
+            Email
+          {% else %}
+            Change to
+          {% endif %}
+        </label>
+        {% with email=add_email_form.email.value|default_if_none:'' %}
+          {% if add_email_form.email.errors %}
+            <input id="{{ add_email_form.email.auto_id }}"
+                   name="email"
+                   value="{{ email }}"
+                   type="email"
+                   placeholder="New email"
+                   class="form-control is-invalid" />
+            {% for error in add_email_form.email.errors %}<div class="invalid-feedback">{{ error }}</div>{% endfor %}
+          {% else %}
+            <input id="{{ add_email_form.email.auto_id }}"
+                   name="email"
+                   value="{{ email }}"
+                   type="email"
+                   placeholder="New email"
+                   class="form-control"
+                   required />
+          {% endif %}
+        {% endwith %}
+      </div>
+      <div>
+        <button id="change-email-submit" name="action_add" type="submit" class="btn btn-primary" :disabled="!dirty">
+          Change Email
+        </button>
+        <span id="change-email-spinner" class="spinner-border spinner-border-sm ms-2 htmx-indicator"></span>
+      </div>
+    {% endif %}
+  </form>
+  {% if new_emailaddress %}
+    <form id="pending-email"
+          method="post"
+          class="d-none"
+          hx-post="{% url 'account_email' %}"
+          hx-target="#email-address-container"
+          hx-swap="outerHTML"
+          hx-indicator="#new-email-spinner"
+          hx-disabled-elt="#resend-verification-submit,#cancel-verification-submit">
+      {% csrf_token %}
+      <input type="hidden" name="email" value="{{ new_emailaddress.email }}" />
+    </form>
+  {% endif %}
+</div>

@@ -1,0 +1,85 @@
+{% load widget_tweaks %}
+{% load tabler_icons %}
+
+<div id="invitations-container">
+  <form id="invite-member"
+        class="mb-3"
+        method="post"
+        action="{% url 'organizations:settings-member-invite' %}"
+        hx-post="{% url 'organizations:settings-member-invite' %}"
+        hx-target="#invitations-container"
+        hx-swap="outerHTML"
+        hx-indicator="#save-invitations-spinner"
+        hx-disabled-elt="#save-invitations-submit"
+        x-data="{ dirty: false }"
+        @input="dirty = true">
+    {% csrf_token %}
+    <div class="row g-2 align-items-end">
+      <div class="col-sm col-12">
+        <label class="form-label" for="id_email">Invite by email</label>
+        {{ invite_form.email|add_class:'form-control'|add_error_class:'is-invalid' }}
+      </div>
+      <div class="col-auto">
+        <button id="save-invitations-submit" type="submit" class="btn btn-primary" :disabled="!dirty">
+          {% tabler_icon 'plus' extra_class="me-2" %} Invite member
+        </button>
+        <span id="save-invitations-spinner" class="spinner-border spinner-border-sm ms-2 htmx-indicator"></span>
+      </div>
+    </div>
+    {% if invite_form.email.errors %}
+      <div class="text-danger text-sm mt-1">{{ invite_form.email.errors|join:" " }}</div>
+    {% endif %}
+  </form>
+
+  {% if pending_invitations %}
+    <div class="table-responsive">
+      <table class="table table-vcenter card-table table-borderless text-nowrap">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Invited by</th>
+            <th>Expires</th>
+            <th class="w-1">
+              <span class="visually-hidden">Actions</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for invitation in pending_invitations %}
+            <tr>
+              <td data-label="Email">{{ invitation.email }}</td>
+              <td data-label="Invited by">{{ invitation.invited_by.email }}</td>
+              <td data-label="Expires">{{ invitation.expires_at|date:"M j, Y" }}</td>
+              <td class="text-end">
+                <div class="dropdown">
+                  <button class="btn btn-icon btn-ghost-secondary"
+                          type="button"
+                          data-bs-toggle="dropdown"
+                          data-bs-popper-config='{"strategy": "fixed"}'
+                          aria-label="Invitation actions">{% tabler_icon "dots-vertical" %}</button>
+                  <div class="dropdown-menu dropdown-menu-end">
+                    <button type="button"
+                            class="dropdown-item"
+                            hx-post="{% url 'organizations:settings-invitation-resend' invitation.id %}"
+                            hx-target="#invitations-container"
+                            hx-swap="outerHTML">{% tabler_icon "mail-forward" %} Resend invitation</button>
+                    <button type="button"
+                            class="dropdown-item text-danger"
+                            hx-post="{% url 'organizations:settings-invitation-revoke' invitation.id %}"
+                            hx-target="#invitations-container"
+                            hx-swap="outerHTML"
+                            hx-confirm="Revoke the invitation for {{ invitation.email }}?">
+                      {% tabler_icon "ban" %} Revoke invitation
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="text-secondary">No pending invitations.</p>
+  {% endif %}
+</div>

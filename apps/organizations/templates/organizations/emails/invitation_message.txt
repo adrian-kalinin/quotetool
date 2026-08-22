@@ -1,0 +1,7 @@
+{% autoescape off %}
+{{ invited_by.name|default:invited_by.email }} has invited you to join {{ organization.name }}
+
+View and accept the invitation here: {{ invitations_url }}
+
+This invitation expires in 7 days.
+{% endautoescape %}

@@ -1,0 +1,16 @@
+# Python-generated files
+__pycache__/
+.ruff_cache/
+*.py[cod]
+
+# Virtual environments
+.venv/
+
+# Environment variables
+.env
+
+# Database volume
+.data/
+
+# Collected static files
+staticfiles/

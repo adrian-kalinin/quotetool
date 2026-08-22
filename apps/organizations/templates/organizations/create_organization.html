@@ -1,0 +1,35 @@
+{% extends "base_auth.html" %}
+
+{% load tabler_icons %}
+
+{% block head_title %}
+  Create organization | {{ block.super }}
+{% endblock head_title %}
+
+{% block content_card %}
+  <div class="card-body">
+    <h2 class="h2 text-center mb-3">
+      {% if not user.active_organization %}
+        {# djlint:off #}
+        Welcome{% if user.name %}, {{ user.name }}{% endif %}!
+        {# djlint:on #}
+      {% else %}
+        Create an Organization
+      {% endif %}
+    </h2>
+    <p class="text-secondary text-center mb-4">
+      {% if not user.active_organization %}
+        Create your first organization to get started.
+      {% else %}
+        Add another organization to your account.
+      {% endif %}
+    </p>
+    <form method="post" action="{% url 'organizations:organization-create' %}">
+      {% csrf_token %}
+      {{ form }}
+      <div class="form-footer">
+        <button type="submit" class="btn btn-primary w-100">Create organization</button>
+      </div>
+    </form>
+  </div>
+{% endblock content_card %}

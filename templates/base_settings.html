@@ -1,0 +1,70 @@
+{% extends "base_app.html" %}
+
+{% load tabler_icons %}
+
+{% block page_title %}
+  Settings
+{% endblock page_title %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+      <div class="card mb-4">
+        <div class="card-body p-2">
+          <ul id="settings-nav" class="nav nav-pills nav-fill">
+            <li class="nav-item">
+              <a href="{% url 'organizations:settings-organization' %}"
+                 class="nav-link{% if request.resolver_match.view_name == 'organizations:settings-organization' %} active{% endif %}"
+                 hx-boost="true"
+                 hx-indicator="#settings-nav-organization">
+                {% tabler_icon 'building' extra_class="me-2" %} Organization
+                <span id="settings-nav-organization" class="spinner-border spinner-border-sm ms-2 htmx-indicator"></span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'billing:settings-billing' %}"
+                 class="nav-link{% if request.resolver_match.view_name == 'billing:settings-billing' %} active{% endif %}"
+                 hx-boost="true"
+                 hx-indicator="#settings-nav-billing">
+                {% tabler_icon 'credit-card' extra_class="me-2" %} Billing
+                <span id="settings-nav-billing" class="spinner-border spinner-border-sm ms-2 htmx-indicator"></span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'accounts:settings-account' %}"
+                 class="nav-link{% if request.resolver_match.view_name == 'accounts:settings-account' %} active{% endif %}"
+                 hx-boost="true"
+                 hx-indicator="#settings-nav-account">
+                {% tabler_icon 'user' extra_class="me-2" %} Account
+                <span id="settings-nav-account" class="spinner-border spinner-border-sm ms-2 htmx-indicator"></span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'accounts:settings-security' %}"
+                 class="nav-link{% if request.resolver_match.view_name == 'accounts:settings-security' %} active{% endif %}"
+                 hx-boost="true"
+                 hx-indicator="#settings-nav-security">
+                {% tabler_icon 'shield' extra_class="me-2" %} Security
+                <span id="settings-nav-security" class="spinner-border spinner-border-sm ms-2 htmx-indicator"></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      {% if not active_organization.has_active_subscription %}
+        <div class="alert alert-warning" role="alert">
+          <div>
+            <h4 class="alert-heading">Your organization doesn't have an active subscription</h4>
+            <div class="alert-description">
+              Choose a plan on the <a href="{% url 'billing:settings-billing' %}">billing page</a> to get started, or contact your organization administrator for help.
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      {% block settings_content %}
+      {% endblock settings_content %}
+    </div>
+  </div>
+{% endblock content %}

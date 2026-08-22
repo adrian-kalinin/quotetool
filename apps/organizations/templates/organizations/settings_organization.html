@@ -1,0 +1,45 @@
+{% extends "base_settings.html" %}
+
+{% block settings_content %}
+  <div class="card mb-4">
+    <div class="card-header">
+      <h3 class="card-title">Organization Details</h3>
+    </div>
+    <div class="card-body">{% include "organizations/partials/settings_organization_details.html" %}</div>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-header">
+      <h3 class="card-title">Members</h3>
+    </div>
+    <div class="card-body">{% include "organizations/partials/settings_members.html" %}</div>
+  </div>
+
+  {% if is_manager %}
+    <div class="card mb-4">
+      <div class="card-header">
+        <h3 class="card-title">Pending invitations</h3>
+      </div>
+      <div class="card-body">{% include "organizations/partials/settings_invitations.html" %}</div>
+    </div>
+  {% endif %}
+
+  {% if user_membership.role != "owner" %}
+    <div class="card mb-4">
+      <div class="card-header">
+        <h3 class="card-title text-danger">Danger Zone</h3>
+      </div>
+      <div class="card-body">
+        <p class="text-secondary">
+          <strong>You will lose access to this organization until you are invited again.</strong> This action does not delete the organization or your account.
+        </p>
+        <form method="post"
+              action="{% url 'organizations:organization-leave' %}"
+              onsubmit="return confirm('Leave {{ active_organization.name }}?');">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Leave organization</button>
+        </form>
+      </div>
+    </div>
+  {% endif %}
+{% endblock settings_content %}

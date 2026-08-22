@@ -1,0 +1,28 @@
+{% load tabler_icons %}
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="toast show mt-3 mb-0"
+         role="alert"
+         aria-live="assertive"
+         aria-atomic="true"
+         x-data="{ show: true }"
+         x-init="setTimeout(() => show = false, 5000)"
+         x-show="show"
+         x-transition>
+      <div class="toast-header">
+        {% if message.tags == 'success' %}
+          {% tabler_icon 'check' extra_class='text-success' %}
+        {% elif message.tags == 'warning' %}
+          {% tabler_icon 'alert-triangle' extra_class='text-warning' %}
+        {% elif message.tags == 'error' %}
+          {% tabler_icon 'alert-circle' extra_class='text-danger' %}
+        {% else %}
+          {% tabler_icon 'alert-circle' extra_class='text-info' %}
+        {% endif %}
+        <button type="button" class="ms-auto btn-close" @click="show = false"></button>
+      </div>
+      <div class="toast-body">{{ message }}</div>
+    </div>
+  {% endfor %}
+{% endif %}

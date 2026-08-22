@@ -1,0 +1,72 @@
+{% extends "base_auth.html" %}
+
+{% load tabler_icons %}
+
+{% block head_title %}
+  Invitations | {{ block.super }}
+{% endblock head_title %}
+
+{% block content_card %}
+  <div class="card-body">
+    {% if user.active_organization_id %}
+      <h2 class="h2 text-center mb-3">
+        {# djlint:off #}
+        Welcome{% if user.name %}, {{ user.name }}{% endif %}!
+        {# djlint:on #}
+      </h2>
+      <p class="text-secondary text-center">
+        You have an organization invitation waiting. Accept it to join, or decline it to create your own.
+      </p>
+      {% for invitation in pending_invitations %}
+        <div class="border rounded-3 p-3 mt-3">
+          <div class="d-flex align-items-center mb-3">
+            <span class="avatar avatar-sm bg-primary-lt me-3">{% tabler_icon "building" %}</span>
+            <div>
+              <div class="fw-semibold">{{ invitation.organization.name }}</div>
+              <div class="text-secondary small">Invited by {{ invitation.invited_by.name|default:invitation.invited_by.email }}</div>
+            </div>
+          </div>
+          <form method="post" action="{% url 'organizations:invitation-accept' invitation.id %}" class="mb-2">
+            {% csrf_token %}
+            <button class="btn btn-primary w-100">Join organization</button>
+          </form>
+          <form method="post" action="{% url 'organizations:invitation-decline' invitation.id %}" class="text-center">
+            {% csrf_token %}
+            <button class="btn btn-link btn-sm text-secondary">Decline invitation</button>
+          </form>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h2 class="h2 text-center mb-3">Organization Invitations</h2>
+      {% if pending_invitations %}
+        <p class="text-secondary text-center">
+          You have {{ pending_invitations|length }} pending invitation{{ pending_invitations|length|pluralize }}.
+        </p>
+        {% for invitation in pending_invitations %}
+          <div class="border rounded-3 p-3 mt-3">
+            <div class="d-flex align-items-center mb-3">
+              <span class="avatar avatar-sm bg-primary-lt me-3">{% tabler_icon "building" %}</span>
+              <div>
+                <div class="fw-semibold">{{ invitation.organization.name }}</div>
+                <div class="text-secondary small">Invited by {{ invitation.invited_by.name|default:invitation.invited_by.email }}</div>
+              </div>
+            </div>
+            <form method="post" action="{% url 'organizations:invitation-accept' invitation.id %}" class="mb-2">
+              {% csrf_token %}
+              <button class="btn btn-primary w-100">Join organization</button>
+            </form>
+            <form method="post" action="{% url 'organizations:invitation-decline' invitation.id %}" class="text-center">
+              {% csrf_token %}
+              <button class="btn btn-link btn-sm text-secondary">Decline invitation</button>
+            </form>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="text-secondary text-center">You have no pending organization invitations.</p>
+        <div class="text-center mt-3">
+          <a href="{% url 'dashboard:dashboard' %}" class="btn btn-outline-secondary w-100">Back to app</a>
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+{% endblock content_card %}

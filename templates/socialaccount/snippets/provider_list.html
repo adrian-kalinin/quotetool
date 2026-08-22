@@ -1,0 +1,9 @@
+{% load socialaccount tabler_icons %}
+
+<form method="post" action="{% provider_login_url "google" process=process %}">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-outline w-100">
+    {% tabler_icon "brand-google" style="filled" %}
+    Continue with Google
+  </button>
+</form>

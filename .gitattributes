@@ -1,0 +1,3 @@
+# Treat vendored Tabler icons as non-diffable and exclude from language stats
+static/libs/tabler/** -diff
+static/libs/tabler/** linguist-vendored

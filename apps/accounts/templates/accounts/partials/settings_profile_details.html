@@ -1,0 +1,19 @@
+<div id="profile-details-container">
+  <p class="text-secondary">Manage your profile information.</p>
+  <form method="post"
+        action="{% url 'accounts:settings-profile' %}"
+        hx-post="{% url 'accounts:settings-profile' %}"
+        hx-target="#profile-details-container"
+        hx-swap="outerHTML"
+        hx-indicator="#save-profile-spinner"
+        hx-disabled-elt="#save-profile-submit"
+        x-data="{ dirty: false }"
+        @input="dirty = true">
+    {% csrf_token %}
+    {{ profile_form }}
+    <div>
+      <button id="save-profile-submit" type="submit" class="btn btn-primary" :disabled="!dirty">Save Changes</button>
+      <span id="save-profile-spinner" class="spinner-border spinner-border-sm ms-2 htmx-indicator"></span>
+    </div>
+  </form>
+</div>

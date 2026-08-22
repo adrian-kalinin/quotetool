@@ -1,0 +1,1 @@
+{% autoescape off %}You've been invited to join {{ organization.name }}{% endautoescape %}

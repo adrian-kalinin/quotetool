@@ -1,0 +1,106 @@
+[project]
+name = "django-saas-starter"
+version = "0.1.0"
+description = "Django starter for shipping SaaS products fast"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "babel>=2.18.0",
+    "django>=5.2.8",
+    "django-allauth[socialaccount]>=65.13.1",
+    "django-htmx>=1.27.0",
+    "django-unfold>=0.102.0",
+    "django-widget-tweaks>=1.5.0",
+    "environs>=14.5.0",
+    "gunicorn>=23.0.0",
+    "polar-sdk==1.0.0a16",
+    "psycopg[binary]>=3.2.13",
+    "whitenoise>=6.11.0",
+]
+
+[dependency-groups]
+dev = [
+    "basedpyright>=1.39.10",
+    "django-browser-reload>=1.21.0",
+    "django-stubs>=5.2.9",
+    "django-stubs-ext>=5.2.9",
+    "djlint>=1.36.4",
+    "ruff>=0.14.7",
+]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+  # Disable some modules
+  "COM",
+  "FIX",
+  "TD",
+  "EM",
+  "CPY",
+  # Ignore missing docstrings
+  "D100",
+  "D101",
+  "D102",
+  "D103",
+  "D104",
+  "D105",
+  "D106",
+  "D107",
+  # Docstring format preferences
+  "D203",
+  "D213",
+  # Ignore missing types for *args, **kwargs
+  "ANN002",
+  "ANN003",
+  # Allow long exception messages
+  "TRY003",
+  # Allow mutable class default values
+  "RUF012",
+]
+
+[tool.ruff.lint.isort]
+force-single-line = true
+
+[tool.ruff.lint.per-file-ignores]
+"**/migrations/**.py" = [
+  "E501",
+  "RUF012",
+]
+"**/tests/**.py" = [
+  "PT009",
+  "PT027",
+]
+
+[tool.ruff.format]
+exclude = ["**/migrations/**.py"]
+
+[tool.djlint]
+quiet=true
+profile="django"
+indent=2
+max_blank_lines=1
+max_line_length=120
+max_attribute_length=120
+format_css=true
+format_js=true
+ignore="H021"
+exclude=".venv/,static/"
+
+[tool.djlint.css]
+indent_size=2
+
+[tool.djlint.js]
+indent_size=2
+
+[tool.basedpyright]
+include = ["."]
+exclude = [
+    "**/__pycache__",
+    ".venv",
+    "static",
+    "staticfiles"
+]
+typeCheckingMode = "basic"
