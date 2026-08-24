@@ -2,7 +2,6 @@ from typing import TYPE_CHECKING
 from typing import cast
 
 from django.http import HttpRequest
-from django.utils import timezone
 
 from apps.organizations.models import OrganizationInvitation
 from apps.organizations.models import OrganizationMembership
@@ -31,9 +30,7 @@ def organizations(request: HttpRequest) -> dict[str, object]:
     # fall back to the FK for the (middleware-prevented) inconsistent state.
     active_organization = organizations_by_id.get(user.active_organization_id, user.active_organization)
 
-    pending_invitations_count = OrganizationInvitation.objects.filter(
-        email__iexact=user.email, status=OrganizationInvitation.Status.PENDING, expires_at__gt=timezone.now()
-    ).count()
+    pending_invitations_count = OrganizationInvitation.objects.pending().filter(email__iexact=user.email).count()  # type: ignore[ reportAttributeAccessIssue]
 
     return {
         "active_organization": active_organization,

@@ -5,7 +5,6 @@ from django.db import transaction
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.utils import timezone
 from django.views import View
 from django.views.generic.edit import CreateView
 
@@ -25,11 +24,7 @@ class OnboardingView(LoginRequiredMixin, View):
         if request.user.active_organization_id:
             return redirect("dashboard:dashboard")
 
-        has_pending = OrganizationInvitation.objects.filter(
-            email__iexact=request.user.email,
-            status=OrganizationInvitation.Status.PENDING,
-            expires_at__gt=timezone.now(),
-        ).exists()
+        has_pending = OrganizationInvitation.objects.pending().filter(email__iexact=request.user.email).exists()  # type: ignore[reportAttributeAccessIssue]
 
         if has_pending:
             return redirect("organizations:invitations")

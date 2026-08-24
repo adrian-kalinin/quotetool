@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from django.utils import timezone
 from django.views import View
 from django.views.generic import TemplateView
 
@@ -19,11 +18,9 @@ class InvitationListView(LoginRequiredMixin, TemplateView):
 
     def get_pending_invitations(self) -> list[OrganizationInvitation]:
         return list(
-            OrganizationInvitation.objects.select_related("organization", "invited_by").filter(
-                email__iexact=self.request.user.email,
-                status=OrganizationInvitation.Status.PENDING,
-                expires_at__gt=timezone.now(),
-            )
+            OrganizationInvitation.objects.pending()  # type: ignore[reportAttributeAccessIssue]
+            .select_related("organization", "invited_by")
+            .filter(email__iexact=self.request.user.email)
         )
 
     def get(self, request: AuthenticatedHttpRequest, *args, **kwargs) -> HttpResponse:
@@ -50,13 +47,9 @@ class BaseInvitationActionView(LoginRequiredMixin, View):
 
     def get_target_invitation(self, invitation_id: int) -> OrganizationInvitation | None:
         return (
-            OrganizationInvitation.objects.select_related("organization")
-            .filter(
-                id=invitation_id,
-                email__iexact=self.request.user.email,
-                status=OrganizationInvitation.Status.PENDING,
-                expires_at__gt=timezone.now(),
-            )
+            OrganizationInvitation.objects.pending()  # type: ignore[reportAttributeAccessIssue]
+            .select_related("organization")
+            .filter(id=invitation_id, email__iexact=self.request.user.email)
             .first()
         )
 

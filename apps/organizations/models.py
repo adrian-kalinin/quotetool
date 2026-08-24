@@ -2,6 +2,7 @@ import uuid
 
 from django.conf import settings
 from django.db import models
+from django.utils import timezone
 
 
 class Organization(models.Model):
@@ -62,6 +63,14 @@ class OrganizationMembership(models.Model):
         return self.role in (OrganizationMembership.Role.OWNER, OrganizationMembership.Role.ADMIN)
 
 
+class OrganizationInvitationQuerySet(models.QuerySet["OrganizationInvitation"]):
+    """QuerySet for OrganizationInvitation."""
+
+    def pending(self) -> "OrganizationInvitationQuerySet":
+        """Return invitations still open to be accepted (pending and not expired)."""
+        return self.filter(status=OrganizationInvitation.Status.PENDING, expires_at__gt=timezone.now())
+
+
 class OrganizationInvitation(models.Model):
     class Status(models.TextChoices):
         PENDING = "pending", "Pending"
@@ -89,6 +98,8 @@ class OrganizationInvitation(models.Model):
 
     organization_id: int
     invited_by_id: int
+
+    objects = OrganizationInvitationQuerySet.as_manager()
 
     class Meta:
         verbose_name = "Invitation"

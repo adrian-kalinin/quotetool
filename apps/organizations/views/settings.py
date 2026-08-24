@@ -44,8 +44,8 @@ class OrganizationSettingsContextMixin:
         context = {"is_manager": membership.is_manager, "pending_invitations": []}
 
         if membership.is_manager:
-            context["pending_invitations"] = OrganizationInvitation.objects.filter(
-                organization=self.request.user.active_organization, status=OrganizationInvitation.Status.PENDING
+            context["pending_invitations"] = OrganizationInvitation.objects.pending().filter(  # type: ignore[reportAttributeAccessIssue]
+                organization=self.request.user.active_organization
             )
 
         return context
@@ -176,11 +176,11 @@ class BaseOrganizationInvitationActionView(OrganizationAccessMixin, Organization
     requires_subscription = False
 
     def get_target_invitation(self, invitation_id: int) -> OrganizationInvitation | None:
-        return OrganizationInvitation.objects.filter(
-            id=invitation_id,
-            organization=self.request.user.active_organization,
-            status=OrganizationInvitation.Status.PENDING,
-        ).first()
+        return (
+            OrganizationInvitation.objects.pending()  # type: ignore[reportAttributeAccessIssue]
+            .filter(id=invitation_id, organization=self.request.user.active_organization)
+            .first()
+        )
 
     def get_context_data(self, **kwargs) -> dict[str, object]:
         context = super().get_context_data(**kwargs)
