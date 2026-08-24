@@ -66,7 +66,6 @@ class OrganizationInvitation(models.Model):
     class Status(models.TextChoices):
         PENDING = "pending", "Pending"
         ACCEPTED = "accepted", "Accepted"
-        EXPIRED = "expired", "Expired"
         REVOKED = "revoked", "Revoked"
         DECLINED = "declined", "Declined"
 
