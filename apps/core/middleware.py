@@ -2,8 +2,10 @@ from collections.abc import Callable
 
 from django.contrib import messages
 from django.http import HttpResponse
+from django.middleware.locale import LocaleMiddleware
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.utils import translation
 from django_htmx.http import trigger_client_event
 
 from apps.core.http import HttpRequest
@@ -48,3 +50,20 @@ def htmx_only_middleware(get_response: Callable) -> Callable:
         return get_response(request)
 
     return middleware
+
+
+class UserLocaleMiddleware(LocaleMiddleware):
+    """LocaleMiddleware that prefers the authenticated user's language (user → cookie → header → default)."""
+
+    def process_request(self, request: HttpRequest) -> None:
+        user = getattr(request, "user", None)
+
+        if user is not None and user.is_authenticated:
+            language = getattr(user, "language", "")
+
+            if language:
+                translation.activate(language)
+                request.LANGUAGE_CODE = translation.get_language()
+                return
+
+        super().process_request(request)
