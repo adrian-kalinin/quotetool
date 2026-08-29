@@ -1,9 +1,9 @@
 {% extends "base_app.html" %}
 
-{% load tabler_icons %}
+{% load tabler_icons i18n %}
 
 {% block page_title %}
-  Settings
+  {% trans "Settings" %}
 {% endblock page_title %}
 
 {% block content %}
@@ -17,7 +17,7 @@
                  class="nav-link{% if request.resolver_match.view_name == 'organizations:settings-organization' %} active{% endif %}"
                  hx-boost="true"
                  hx-indicator="#settings-nav-organization">
-                {% tabler_icon 'building' extra_class="me-2" %} Organization
+                {% tabler_icon 'building' extra_class="me-2" %} {% trans "Organization" %}
                 <span id="settings-nav-organization" class="spinner-border spinner-border-sm ms-2 htmx-indicator"></span>
               </a>
             </li>
@@ -26,7 +26,7 @@
                  class="nav-link{% if request.resolver_match.view_name == 'billing:settings-billing' %} active{% endif %}"
                  hx-boost="true"
                  hx-indicator="#settings-nav-billing">
-                {% tabler_icon 'credit-card' extra_class="me-2" %} Billing
+                {% tabler_icon 'credit-card' extra_class="me-2" %} {% trans "Billing" %}
                 <span id="settings-nav-billing" class="spinner-border spinner-border-sm ms-2 htmx-indicator"></span>
               </a>
             </li>
@@ -35,7 +35,7 @@
                  class="nav-link{% if request.resolver_match.view_name == 'accounts:settings-account' %} active{% endif %}"
                  hx-boost="true"
                  hx-indicator="#settings-nav-account">
-                {% tabler_icon 'user' extra_class="me-2" %} Account
+                {% tabler_icon 'user' extra_class="me-2" %} {% trans "Account" %}
                 <span id="settings-nav-account" class="spinner-border spinner-border-sm ms-2 htmx-indicator"></span>
               </a>
             </li>
@@ -44,7 +44,7 @@
                  class="nav-link{% if request.resolver_match.view_name == 'accounts:settings-security' %} active{% endif %}"
                  hx-boost="true"
                  hx-indicator="#settings-nav-security">
-                {% tabler_icon 'shield' extra_class="me-2" %} Security
+                {% tabler_icon 'shield' extra_class="me-2" %} {% trans "Security" %}
                 <span id="settings-nav-security" class="spinner-border spinner-border-sm ms-2 htmx-indicator"></span>
               </a>
             </li>
@@ -53,11 +53,12 @@
       </div>
 
       {% if not active_organization.has_active_subscription %}
+        {% url 'billing:settings-billing' as billing_url %}
         <div class="alert alert-warning" role="alert">
           <div>
-            <h4 class="alert-heading">Your organization doesn't have an active subscription</h4>
+            <h4 class="alert-heading">{% trans "Your organization doesn't have an active subscription" %}</h4>
             <div class="alert-description">
-              Choose a plan on the <a href="{% url 'billing:settings-billing' %}">billing page</a> to get started, or contact your organization administrator for help.
+              {% blocktranslate %}Choose a plan on the <a href="{{ billing_url }}">billing page</a> to get started, or contact your organization administrator for help.{% endblocktranslate %}
             </div>
           </div>
         </div>

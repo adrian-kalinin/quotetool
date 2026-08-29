@@ -1,21 +1,23 @@
 {% extends "base_auth.html" %}
 
+{% load i18n %}
+
 {% block head_title %}
-  Confirm Access | {{ block.super }}
+  {% trans "Confirm Access" %} | {{ block.super }}
 {% endblock head_title %}
 
 {% block content_card %}
   <div class="card-body">
-    <h2 class="h2 text-center mb-4">Confirm Access</h2>
+    <h2 class="h2 text-center mb-4">{% trans "Confirm Access" %}</h2>
     <p class="text-center text-secondary mb-4">
-      To keep your account safe, please confirm your password before proceeding.
+      {% trans "To keep your account safe, please confirm your password before proceeding." %}
     </p>
     <form method="post" action="{% url 'account_reauthenticate' %}">
       {% csrf_token %}
       {{ form }}
       {{ redirect_field }}
       <div class="form-footer">
-        <button type="submit" class="btn btn-primary w-100">Continue</button>
+        <button type="submit" class="btn btn-primary w-100">{% trans "Continue" %}</button>
       </div>
     </form>
   </div>

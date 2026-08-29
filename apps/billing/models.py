@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from apps.billing.plans import BILLING_PLANS
 from apps.billing.plans import Plan
@@ -9,12 +10,12 @@ class Subscription(models.Model):
     """The organization's current Polar subscription, snapshotted from webhook payloads."""
 
     class Status(models.TextChoices):
-        TRIALING = "trialing", "Trialing"
-        ACTIVE = "active", "Active"
-        PAST_DUE = "past_due", "Past due"
-        CANCELED = "canceled", "Canceled"
-        UNPAID = "unpaid", "Unpaid"
-        PAUSED = "paused", "Paused"
+        TRIALING = "trialing", _("Trialing")
+        ACTIVE = "active", _("Active")
+        PAST_DUE = "past_due", _("Past due")
+        CANCELED = "canceled", _("Canceled")
+        UNPAID = "unpaid", _("Unpaid")
+        PAUSED = "paused", _("Paused")
 
     organization = models.OneToOneField(
         "organizations.Organization", on_delete=models.CASCADE, related_name="subscription"
@@ -57,9 +58,9 @@ class WebhookEvent(models.Model):
     """Idempotency + audit record for Polar webhook deliveries."""
 
     class Status(models.TextChoices):
-        RECEIVED = "received", "Received"
-        PROCESSED = "processed", "Processed"
-        ERROR = "error", "Error"
+        RECEIVED = "received", _("Received")
+        PROCESSED = "processed", _("Processed")
+        ERROR = "error", _("Error")
 
     polar_event_id = models.CharField(max_length=100, unique=True)
     event_type = models.CharField(max_length=50)

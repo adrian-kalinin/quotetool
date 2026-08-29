@@ -1,3 +1,6 @@
+{% load i18n %}
+
 <div class="text-center text-secondary mt-3">
-  <a href="{% url 'dashboard:dashboard' %}">Go back to the app</a>
+  {% url 'dashboard:dashboard' as dashboard_url %}
+  <a href="{{ dashboard_url }}">{% trans "Go back to the app" %}</a>
 </div>

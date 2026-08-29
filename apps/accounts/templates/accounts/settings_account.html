@@ -1,23 +1,25 @@
 {% extends "base_settings.html" %}
 
+{% load i18n %}
+
 {% block settings_content %}
   <div class="card mb-4">
     <div class="card-header">
-      <h3 class="card-title">Profile Details</h3>
+      <h3 class="card-title">{% trans "Profile Details" %}</h3>
     </div>
     <div class="card-body">{% include "accounts/partials/settings_profile_details.html" %}</div>
   </div>
 
   <div class="card mb-4">
     <div class="card-header">
-      <h3 class="card-title">Email Address</h3>
+      <h3 class="card-title">{% trans "Email Address" %}</h3>
     </div>
     <div class="card-body">{% include "account/email_change.html" %}</div>
   </div>
 
   <div class="card mb-4">
     <div class="card-header">
-      <h3 class="card-title">Connected Accounts</h3>
+      <h3 class="card-title">{% trans "Connected Accounts" %}</h3>
     </div>
     <div class="card-body">{% include "socialaccount/connections.html" %}</div>
   </div>

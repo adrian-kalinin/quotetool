@@ -1,25 +1,28 @@
 {% extends "base_auth.html" %}
 
 {% load tabler_icons %}
+{% load i18n %}
 
 {% block head_title %}
-  Sign In | {{ block.super }}
+  {% trans "Sign In" %} | {{ block.super }}
 {% endblock head_title %}
 
 {% block content_card %}
   <div class="card-body">
     {% if process == "connect" %}
-      <h2 class="h2 text-center mb-4">Connect {{ provider.name }}</h2>
-      <p class="text-center text-secondary">You are about to connect a new third-party account from {{ provider.name }}.</p>
-    {% else %}
-      <h2 class="h2 text-center mb-4">Sign In Via {{ provider.name }}</h2>
+      <h2 class="h2 text-center mb-4">{% blocktranslate %}Connect {{ provider.name }}{% endblocktranslate %}</h2>
       <p class="text-center text-secondary">
-        You are about to sign in using a third-party account from {{ provider.name }}.
+        {% blocktranslate %}You are about to connect a new third-party account from {{ provider.name }}.{% endblocktranslate %}
+      </p>
+    {% else %}
+      <h2 class="h2 text-center mb-4">{% blocktranslate %}Sign In Via {{ provider.name }}{% endblocktranslate %}</h2>
+      <p class="text-center text-secondary">
+        {% blocktranslate %}You are about to sign in using a third-party account from {{ provider.name }}.{% endblocktranslate %}
       </p>
     {% endif %}
     <form method="post">
       {% csrf_token %}
-      <button type="submit" class="btn btn-primary w-100">Continue</button>
+      <button type="submit" class="btn btn-primary w-100">{% trans "Continue" %}</button>
     </form>
   </div>
 {% endblock content_card %}

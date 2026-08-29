@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.utils.translation import gettext as _
 from django.views import View
 
 from apps.billing.client import get_polar_client
@@ -31,17 +32,17 @@ class CheckoutView(OrganizationAccessMixin, View):
         try:
             plan_key = PlanKey(request.POST.get("plan_key", ""))
         except ValueError:
-            messages.error(request, "Invalid plan.")
+            messages.error(request, _("Invalid plan."))
             return redirect("billing:settings-billing")
 
         subscription = getattr(organization, "subscription", None)
         if subscription is not None and subscription.is_active:
-            messages.info(request, "You already have an active subscription; manage it from the portal.")
+            messages.info(request, _("You already have an active subscription; manage it from the portal."))
             return redirect("billing:settings-billing")
 
         product_id = product_id_for(plan_key)
         if product_id is None:
-            messages.error(request, "This plan is not available for purchase.")
+            messages.error(request, _("This plan is not available for purchase."))
             return redirect("billing:settings-billing")
 
         try:
@@ -53,7 +54,7 @@ class CheckoutView(OrganizationAccessMixin, View):
             )
         except Exception:
             logger.exception("Failed to create Polar checkout for organization %s", organization.uuid)
-            messages.error(request, "Could not start checkout. Please try again later.")
+            messages.error(request, _("Could not start checkout. Please try again later."))
             return redirect("billing:settings-billing")
 
         response = HttpResponseRedirect(checkout.url)
@@ -69,5 +70,5 @@ class CheckoutSuccessView(OrganizationAccessMixin, View):
 
     def get(self, request: AuthenticatedHttpRequest) -> HttpResponse:
         sync_subscription_state(request.user.active_organization)
-        messages.success(request, "Subscription activated successfully.")
+        messages.success(request, _("Subscription activated successfully."))
         return redirect("billing:settings-billing")

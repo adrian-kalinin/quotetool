@@ -1,14 +1,17 @@
 {% extends "base_auth.html" %}
 
+{% load i18n %}
+
 {% block head_title %}
-  Login Failed | {{ block.super }}
+  {% trans "Login Failed" %} | {{ block.super }}
 {% endblock head_title %}
 
 {% block content_card %}
   <div class="card-body">
-    <h2 class="h2 text-center mb-4">Login Failed</h2>
+    <h2 class="h2 text-center mb-4">{% trans "Login Failed" %}</h2>
+    {% url 'account_login' as login_url %}
     <p class="text-center text-secondary">
-      An error occurred while logging in via your third-party account, please try to <a href="{% url 'account_login' %}">sign in</a> again.
+      {% blocktranslate %}An error occurred while logging in via your third-party account, please try to <a href="{{ login_url }}">sign in</a> again.{% endblocktranslate %}
     </p>
   </div>
 {% endblock content_card %}

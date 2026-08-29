@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.utils.translation import gettext as _
 from django.views import View
 
 from apps.billing.client import get_polar_client
@@ -32,7 +33,7 @@ class PortalRedirectView(OrganizationAccessMixin, View):
             )
         except Exception:
             logger.exception("Failed to create Polar customer session for organization %s", organization.uuid)
-            messages.error(request, "Could not open the customer portal. Please try again later.")
+            messages.error(request, _("Could not open the customer portal. Please try again later."))
             return redirect("billing:settings-billing")
 
         response = HttpResponseRedirect(session.customer_portal_url)

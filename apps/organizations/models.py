@@ -3,6 +3,7 @@ import uuid
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 
 class Organization(models.Model):
@@ -25,9 +26,9 @@ class Organization(models.Model):
 
 class OrganizationMembership(models.Model):
     class Role(models.TextChoices):
-        OWNER = "owner", "Owner"
-        ADMIN = "admin", "Admin"
-        MEMBER = "member", "Member"
+        OWNER = "owner", _("Owner")
+        ADMIN = "admin", _("Admin")
+        MEMBER = "member", _("Member")
 
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -73,10 +74,10 @@ class OrganizationInvitationQuerySet(models.QuerySet["OrganizationInvitation"]):
 
 class OrganizationInvitation(models.Model):
     class Status(models.TextChoices):
-        PENDING = "pending", "Pending"
-        ACCEPTED = "accepted", "Accepted"
-        REVOKED = "revoked", "Revoked"
-        DECLINED = "declined", "Declined"
+        PENDING = "pending", _("Pending")
+        ACCEPTED = "accepted", _("Accepted")
+        REVOKED = "revoked", _("Revoked")
+        DECLINED = "declined", _("Declined")
 
     organization = models.ForeignKey(
         Organization,
@@ -102,7 +103,7 @@ class OrganizationInvitation(models.Model):
     objects = OrganizationInvitationQuerySet.as_manager()
 
     class Meta:
-        verbose_name = "Invitation"
+        verbose_name = _("Invitation")
         constraints = [
             models.UniqueConstraint(
                 fields=["organization", "email"],

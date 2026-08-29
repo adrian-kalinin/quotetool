@@ -1,14 +1,15 @@
 {% load tabler_icons %}
+{% load i18n %}
 
 <div id="members-container">
   <div class="table-responsive">
     <table class="table table-vcenter card-table table-borderless">
       <thead>
         <tr>
-          <th>User</th>
-          <th>Role</th>
+          <th>{% trans "User" %}</th>
+          <th>{% trans "Role" %}</th>
           <th class="w-1">
-            <span class="visually-hidden">Actions</span>
+            <span class="visually-hidden">{% trans "Actions" %}</span>
           </th>
         </tr>
       </thead>
@@ -26,11 +27,11 @@
             </td>
             <td>
               {% if membership.role == "owner" %}
-                <span class="badge bg-purple-lt text-purple-lt-fg">Owner</span>
+                <span class="badge bg-purple-lt text-purple-lt-fg">{% trans "Owner" %}</span>
               {% elif membership.role == "admin" %}
-                <span class="badge bg-blue-lt text-blue-lt-fg">Admin</span>
+                <span class="badge bg-blue-lt text-blue-lt-fg">{% trans "Admin" %}</span>
               {% else %}
-                <span class="badge bg-gray-lt text-gray-lt-fg">Member</span>
+                <span class="badge bg-gray-lt text-gray-lt-fg">{% trans "Member" %}</span>
               {% endif %}
             </td>
             <td class="text-end">
@@ -41,7 +42,7 @@
                           type="button"
                           data-bs-toggle="dropdown"
                           data-bs-popper-config='{"strategy": "fixed"}'
-                          aria-label="Member actions">{% tabler_icon "dots-vertical" %}</button>
+                          aria-label="{% trans "Member actions" %}">{% tabler_icon "dots-vertical" %}</button>
                   <div class="dropdown-menu dropdown-menu-end">
                     {% if "make_admin" in actions %}
                       <button type="button"
@@ -49,33 +50,35 @@
                               hx-post="{% url 'organizations:settings-member-role' membership.id %}"
                               hx-vals='{"role": "admin"}'
                               hx-target="#members-container"
-                              hx-swap="outerHTML">{% tabler_icon "user" %} Make admin</button>
+                              hx-swap="outerHTML">{% tabler_icon "user" %} {% trans "Make admin" %}</button>
                     {% elif "make_member" in actions %}
                       <button type="button"
                               class="dropdown-item"
                               hx-post="{% url 'organizations:settings-member-role' membership.id %}"
                               hx-vals='{"role": "member"}'
                               hx-target="#members-container"
-                              hx-swap="outerHTML">{% tabler_icon "user" %} Make member</button>
+                              hx-swap="outerHTML">{% tabler_icon "user" %} {% trans "Make member" %}</button>
                     {% endif %}
                     {% if "transfer_ownership" in actions %}
+                      {% blocktranslate with member_email=membership.user.email asvar transfer_confirm %}Transfer ownership to {{ member_email }}? You will become an admin.{% endblocktranslate %}
                       <button type="button"
                               class="dropdown-item"
                               hx-post="{% url 'organizations:settings-member-transfer-ownership' membership.id %}"
                               hx-target="#members-container"
                               hx-swap="outerHTML"
-                              hx-confirm="Transfer ownership to {{ membership.user.email }}? You will become an admin.">
-                        {% tabler_icon "crown" %} Transfer ownership
+                              hx-confirm="{{ transfer_confirm }}">
+                        {% tabler_icon "crown" %} {% trans "Transfer ownership" %}
                       </button>
                     {% endif %}
                     {% if "remove" in actions %}
+                      {% blocktranslate with member_email=membership.user.email asvar remove_confirm %}Remove {{ member_email }} from the organization?{% endblocktranslate %}
                       <button type="button"
                               class="dropdown-item text-danger"
                               hx-post="{% url 'organizations:settings-member-remove' membership.id %}"
                               hx-target="#members-container"
                               hx-swap="outerHTML"
-                              hx-confirm="Remove {{ membership.user.email }} from the organization?">
-                        {% tabler_icon "user-minus" %} Remove from organization
+                              hx-confirm="{{ remove_confirm }}">
+                        {% tabler_icon "user-minus" %} {% trans "Remove from organization" %}
                       </button>
                     {% endif %}
                   </div>

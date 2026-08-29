@@ -1,16 +1,18 @@
 {% extends "base_auth.html" %}
 
+{% load i18n %}
+
 {% block head_title %}
-  Verification Sent | {{ block.super }}
+  {% trans "Verification Sent" %} | {{ block.super }}
 {% endblock head_title %}
 
 {% block content_card %}
   <div class="card-body">
-    <h2 class="h2 text-center mb-4">Verify Your Email Address</h2>
-    <p class="text-center text-secondary">We've sent a verification email to your inbox.</p>
-    <p class="text-center text-secondary">If you don't see it, check your spam or junk folder.</p>
+    <h2 class="h2 text-center mb-4">{% trans "Verify Your Email Address" %}</h2>
+    <p class="text-center text-secondary">{% trans "We've sent a verification email to your inbox." %}</p>
+    <p class="text-center text-secondary">{% trans "If you don't see it, check your spam or junk folder." %}</p>
     <p class="text-center text-secondary">
-      Still haven't received it after a few minutes? Contact us, and we'll help you get verified.
+      {% trans "Still haven't received it after a few minutes? Contact us, and we'll help you get verified." %}
     </p>
   </div>
 {% endblock content_card %}

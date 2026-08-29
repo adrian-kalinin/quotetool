@@ -3,12 +3,15 @@
 {% load l10n %}
 {% load billing %}
 {% load tabler_icons %}
+{% load i18n %}
 
 {% block settings_content %}
   {% if subscription %}
     <div class="card mb-4">
       <div class="card-header">
-        <h3 class="card-title">{{ subscription.plan.name }} Plan</h3>
+        <h3 class="card-title">
+          {% blocktranslate with plan_name=subscription.plan.name %}{{ plan_name }} Plan{% endblocktranslate %}
+        </h3>
         <span class="ms-auto badge bg-{% if subscription.is_active %}success{% else %}danger{% endif %} text-{% if subscription.is_active %}success{% else %}danger{% endif %}-fg">
           {{ subscription.get_status_display }}
         </span>
@@ -17,9 +20,9 @@
         <p class="text-secondary">
           {% if subscription.is_active and subscription.current_period_end %}
             {% if subscription.cancel_at_period_end %}
-              Your subscription is valid until <b>{{ subscription.current_period_end.date|localize }}</b>.
+              {% blocktranslate with end_date=subscription.current_period_end.date|localize %}Your subscription is valid until <b>{{ end_date }}</b>.{% endblocktranslate %}
             {% else %}
-              Your subscription will renew on <b>{{ subscription.current_period_end.date|localize }}</b>.
+              {% blocktranslate with end_date=subscription.current_period_end.date|localize %}Your subscription will renew on <b>{{ end_date }}</b>.{% endblocktranslate %}
             {% endif %}
           {% endif %}
         </p>
@@ -33,15 +36,15 @@
             {% endfor %}
           </ul>
         </div>
-        <div class="text-secondary mb-3">{{ subscription.amount|money:subscription.currency }} / month</div>
+        <div class="text-secondary mb-3">{{ subscription.amount|money:subscription.currency }} {% trans "/ month" %}</div>
         {% if is_manager %}
           <form method="post" action="{% url 'billing:portal' %}">
             {% csrf_token %}
-            <button type="submit" class="btn btn-primary">Manage in portal</button>
+            <button type="submit" class="btn btn-primary">{% trans "Manage in portal" %}</button>
           </form>
         {% else %}
           <div class="alert text-secondary">
-            Only owners and admins can change the subscription. Ask your administrator to manage billing.
+            {% trans "Only owners and admins can change the subscription. Ask your administrator to manage billing." %}
           </div>
         {% endif %}
       </div>
@@ -51,7 +54,9 @@
     {% for plan in plans %}
       <div class="card mb-4">
         <div class="card-header">
-          <h3 class="card-title">{{ plan.plan.name }} Plan</h3>
+          <h3 class="card-title">
+            {% blocktranslate with plan_name=plan.plan.name %}{{ plan_name }} Plan{% endblocktranslate %}
+          </h3>
         </div>
         <div class="card-body">
           <p class="text-secondary">{{ plan.plan.tagline }}</p>
@@ -67,8 +72,10 @@
             {% csrf_token %}
             <input type="hidden" name="plan_key" value="{{ plan.plan.key }}">
             <button type="submit" class="btn btn-primary" {% if not is_manager %}disabled{% endif %}>
-              Subscribe
-              {% if plan.price %}· {{ plan.price.amount_cents|money:plan.price.currency }} / month{% endif %}
+              {% trans "Subscribe" %}
+              {% if plan.price %}
+                · {{ plan.price.amount_cents|money:plan.price.currency }} {% trans "/ month" %}
+              {% endif %}
             </button>
           </form>
         </div>

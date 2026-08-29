@@ -1,27 +1,30 @@
 {% extends "base_auth.html" %}
 
+{% load i18n %}
+
 {% block head_title %}
-  Sign In | {{ block.super }}
+  {% trans "Sign In" %} | {{ block.super }}
 {% endblock head_title %}
 
 {% block content_card %}
   <div class="card-body">
-    <h2 class="h2 text-center mb-4">Welcome Back</h2>
+    <h2 class="h2 text-center mb-4">{% trans "Welcome Back" %}</h2>
     <form method="post" action="{% url 'account_login' %}">
       {% csrf_token %}
       {{ form }}
       {{ redirect_field }}
       <div class="form-footer">
-        <button type="submit" class="btn btn-primary w-100">Sign In</button>
+        <button type="submit" class="btn btn-primary w-100">{% trans "Sign In" %}</button>
       </div>
     </form>
-    <div class="hr-text">or</div>
+    <div class="hr-text">{% trans "or" %}</div>
     {% include "socialaccount/snippets/provider_list.html" %}
   </div>
 {% endblock content_card %}
 
 {% block content_extra %}
+  {% url 'account_signup' as signup_url %}
   <div class="text-center text-secondary mt-3">
-    Don't have an account? <a href="{% url 'account_signup' %}">Sign up here</a>
+    {% blocktranslate %}Don't have an account? <a href="{{ signup_url }}">Sign up here</a>{% endblocktranslate %}
   </div>
 {% endblock content_extra %}

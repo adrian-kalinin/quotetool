@@ -1,9 +1,12 @@
 {% load account %}
+{% load i18n %}
 
 <div class="text-center text-secondary mt-3">
   {% if user.is_authenticated %}
-    <strong>Note:</strong> You are already logged in as {% user_display user %}.
+    {% user_display user as user_display_name %}
+    {% blocktranslate %}Note: You are already logged in as <strong>{{ user_display_name }}</strong>.{% endblocktranslate %}
   {% else %}
-    Not a customer yet? <a href="{% url 'account_signup' %}">Sign up here</a>
+    {% url 'account_signup' as signup_url %}
+    {% blocktranslate %}Not a customer yet? <a href="{{ signup_url }}">Sign up here</a>{% endblocktranslate %}
   {% endif %}
 </div>

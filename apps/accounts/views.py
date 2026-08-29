@@ -5,6 +5,7 @@ from allauth.socialaccount.views import ConnectionsView
 from django.contrib import messages
 from django.http import HttpResponse
 from django.urls import reverse_lazy
+from django.utils.translation import gettext as _
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import UpdateView
 
@@ -48,7 +49,7 @@ class ProfileUpdateView(OrganizationAccessMixin, UpdateView):
 
     def form_valid(self, form: ProfileForm) -> HttpResponse:
         response = super().form_valid(form)
-        messages.success(self.request, "Profile updated successfully.")
+        messages.success(self.request, _("Profile updated successfully."))
 
         if self.request.htmx:
             return self.render_to_response(self.get_context_data())

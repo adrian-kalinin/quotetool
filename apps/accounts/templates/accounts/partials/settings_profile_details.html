@@ -1,5 +1,7 @@
+{% load i18n %}
+
 <div id="profile-details-container">
-  <p class="text-secondary">Manage your profile information.</p>
+  <p class="text-secondary">{% trans "Manage your profile information." %}</p>
   <form method="post"
         action="{% url 'accounts:settings-profile' %}"
         hx-post="{% url 'accounts:settings-profile' %}"
@@ -12,8 +14,23 @@
     {% csrf_token %}
     {{ profile_form }}
     <div>
-      <button id="save-profile-submit" type="submit" class="btn btn-primary" :disabled="!dirty">Save Changes</button>
+      <button id="save-profile-submit" type="submit" class="btn btn-primary" :disabled="!dirty">
+        {% trans "Save Changes" %}
+      </button>
       <span id="save-profile-spinner" class="spinner-border spinner-border-sm ms-2 htmx-indicator"></span>
     </div>
   </form>
+  <div class="mt-4">
+    <label class="form-label" for="language-select">{% trans "Language" %}</label>
+    <form method="post" action="{% url 'core:set-language' %}">
+      {% csrf_token %}
+      {% get_current_language as CURRENT_LANGUAGE %}
+      {% get_available_languages as AVAILABLE_LANGUAGES %}
+      <select id="language-select" name="language" class="form-select" onchange="this.form.submit()">
+        {% for code, name in AVAILABLE_LANGUAGES %}
+          <option value="{{ code }}"{% if code == CURRENT_LANGUAGE %} selected{% endif %}>{{ name }}</option>
+        {% endfor %}
+      </select>
+    </form>
+  </div>
 </div>

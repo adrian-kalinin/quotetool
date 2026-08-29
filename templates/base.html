@@ -1,11 +1,13 @@
-{% load static django_htmx %}
+{% load static django_htmx i18n %}
+
+{% get_current_language as CURRENT_LANGUAGE %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ CURRENT_LANGUAGE }}">
   <head>
     <title>
       {% block head_title %}
-        Product
+        {% trans "Product" %}
       {% endblock head_title %}
     </title>
     <meta charset="UTF-8" />

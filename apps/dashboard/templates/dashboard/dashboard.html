@@ -1,18 +1,19 @@
 {% extends "base_app.html" %}
 
 {% load tabler_icons %}
+{% load i18n %}
 
 {% block head_title %}
-  Home | {{ block.super }}
+  {% trans "Home" %} | {{ block.super }}
 {% endblock head_title %}
 
 {% block page_title %}
-  Home
+  {% trans "Home" %}
 {% endblock page_title %}
 
 {% block page_actions %}
-  <button class="btn btn-primary">Download Report</button>
-  <button class="btn btn-outline">View Details</button>
+  <button class="btn btn-primary">{% trans "Download Report" %}</button>
+  <button class="btn btn-outline">{% trans "View Details" %}</button>
 {% endblock page_actions %}
 
 {% block content %}
@@ -23,7 +24,7 @@
         <div class="card">
           <div class="card-body">
             <div class="d-flex align-items-center">
-              <div class="subheader">Total Users</div>
+              <div class="subheader">{% trans "Total Users" %}</div>
               <div class="ms-auto lh-1">
                 <div class="btn-list flex-nowrap">
                   <span class="badge bg-green-lt text-green-lt-fg">+12%</span>
@@ -38,7 +39,7 @@
         <div class="card">
           <div class="card-body">
             <div class="d-flex align-items-center">
-              <div class="subheader">Revenue</div>
+              <div class="subheader">{% trans "Revenue" %}</div>
               <div class="ms-auto lh-1">
                 <div class="btn-list flex-nowrap">
                   <span class="badge bg-red-lt text-red-lt-fg">+8%</span>
@@ -53,7 +54,7 @@
         <div class="card">
           <div class="card-body">
             <div class="d-flex align-items-center">
-              <div class="subheader">Active Sessions</div>
+              <div class="subheader">{% trans "Active Sessions" %}</div>
               <div class="ms-auto lh-1">
                 <div class="btn-list flex-nowrap">
                   <span class="badge bg-yellow-lt text-yellow-lt-fg">-2%</span>
@@ -68,7 +69,7 @@
         <div class="card">
           <div class="card-body">
             <div class="d-flex align-items-center">
-              <div class="subheader">Conversion Rate</div>
+              <div class="subheader">{% trans "Conversion Rate" %}</div>
               <div class="ms-auto lh-1">
                 <div class="btn-list flex-nowrap">
                   <span class="badge bg-green-lt text-green-lt-fg">+5%</span>
@@ -86,13 +87,13 @@
       <div class="col-md-6">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">{% tabler_icon 'chart-pie' extra_class="me-2" %}Revenue Breakdown</h3>
+            <h3 class="card-title">{% tabler_icon 'chart-pie' extra_class="me-2" %}{% trans "Revenue Breakdown" %}</h3>
           </div>
           <div class="card-body">
             <div class="space-y-3">
               <div>
                 <div class="d-flex align-items-center mb-2">
-                  <span class="text-body fw-medium">Subscriptions</span>
+                  <span class="text-body fw-medium">{% trans "Subscriptions" %}</span>
                   <span class="ms-auto text-muted">$15,240</span>
                 </div>
                 <div class="progress">
@@ -101,7 +102,7 @@
               </div>
               <div>
                 <div class="d-flex align-items-center mb-2">
-                  <span class="text-body fw-medium">One-Time Sales</span>
+                  <span class="text-body fw-medium">{% trans "One-Time Sales" %}</span>
                   <span class="ms-auto text-muted">$6,180</span>
                 </div>
                 <div class="progress">
@@ -110,7 +111,7 @@
               </div>
               <div>
                 <div class="d-flex align-items-center mb-2">
-                  <span class="text-body fw-medium">Refunds</span>
+                  <span class="text-body fw-medium">{% trans "Refunds" %}</span>
                   <span class="ms-auto text-muted">$3,160</span>
                 </div>
                 <div class="progress">
@@ -124,13 +125,13 @@
       <div class="col-md-6">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">{% tabler_icon 'activity' extra_class="me-2" %}Performance Metrics</h3>
+            <h3 class="card-title">{% tabler_icon 'activity' extra_class="me-2" %}{% trans "Performance Metrics" %}</h3>
           </div>
           <div class="card-body">
             <div class="space-y-3">
               <div>
                 <div class="d-flex align-items-center mb-2">
-                  <span class="text-body fw-medium">Page Views</span>
+                  <span class="text-body fw-medium">{% trans "Page Views" %}</span>
                   <span class="ms-auto text-muted">82%</span>
                 </div>
                 <div class="progress">
@@ -139,7 +140,7 @@
               </div>
               <div>
                 <div class="d-flex align-items-center mb-2">
-                  <span class="text-body fw-medium">Conversions</span>
+                  <span class="text-body fw-medium">{% trans "Conversions" %}</span>
                   <span class="ms-auto text-muted">56%</span>
                 </div>
                 <div class="progress">
@@ -148,7 +149,7 @@
               </div>
               <div>
                 <div class="d-flex align-items-center mb-2">
-                  <span class="text-body fw-medium">Click-Through Rate</span>
+                  <span class="text-body fw-medium">{% trans "Click-Through Rate" %}</span>
                   <span class="ms-auto text-muted">71%</span>
                 </div>
                 <div class="progress">
@@ -166,16 +167,16 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">{% tabler_icon 'history' extra_class="me-2" %}Recent Activity</h3>
+            <h3 class="card-title">{% tabler_icon 'history' extra_class="me-2" %}{% trans "Recent Activity" %}</h3>
           </div>
           <div class="table-responsive">
             <table class="table table-vcenter card-table">
               <thead>
                 <tr>
-                  <th>User</th>
-                  <th>Action</th>
-                  <th>Date</th>
-                  <th>Status</th>
+                  <th>{% trans "User" %}</th>
+                  <th>{% trans "Action" %}</th>
+                  <th>{% trans "Date" %}</th>
+                  <th>{% trans "Status" %}</th>
                 </tr>
               </thead>
               <tbody>
@@ -189,10 +190,10 @@
                       </div>
                     </div>
                   </td>
-                  <td>{% tabler_icon 'user-plus' extra_class="me-2" %}Account Created</td>
+                  <td>{% tabler_icon 'user-plus' extra_class="me-2" %}{% trans "Account Created" %}</td>
                   <td>Dec 28, 2025</td>
                   <td>
-                    <span class="badge bg-green-lt text-green-lt-fg">Completed</span>
+                    <span class="badge bg-green-lt text-green-lt-fg">{% trans "Completed" %}</span>
                   </td>
                 </tr>
                 <tr>
@@ -205,10 +206,10 @@
                       </div>
                     </div>
                   </td>
-                  <td>{% tabler_icon 'credit-card' extra_class="me-2" %}Payment Made</td>
+                  <td>{% tabler_icon 'credit-card' extra_class="me-2" %}{% trans "Payment Made" %}</td>
                   <td>Dec 27, 2025</td>
                   <td>
-                    <span class="badge bg-green-lt text-green-lt-fg">Completed</span>
+                    <span class="badge bg-green-lt text-green-lt-fg">{% trans "Completed" %}</span>
                   </td>
                 </tr>
                 <tr>
@@ -221,10 +222,10 @@
                       </div>
                     </div>
                   </td>
-                  <td>{% tabler_icon 'logout' extra_class="me-2" %}Account Closed</td>
+                  <td>{% tabler_icon 'logout' extra_class="me-2" %}{% trans "Account Closed" %}</td>
                   <td>Dec 26, 2025</td>
                   <td>
-                    <span class="badge bg-red-lt text-red-lt-fg">Cancelled</span>
+                    <span class="badge bg-red-lt text-red-lt-fg">{% trans "Cancelled" %}</span>
                   </td>
                 </tr>
               </tbody>

@@ -1,6 +1,8 @@
+{% load i18n %}
+
 <div id="organization-details-container">
   {% if is_manager %}
-    <p class="text-secondary">Manage your organization details.</p>
+    <p class="text-secondary">{% trans "Manage your organization details." %}</p>
     <form method="post"
           action="{% url 'organizations:settings-organization-details' %}"
           hx-post="{% url 'organizations:settings-organization-details' %}"
@@ -13,14 +15,16 @@
       {% csrf_token %}
       {{ organization_form }}
       <div>
-        <button id="save-organization-submit" type="submit" class="btn btn-primary" :disabled="!dirty">Save Changes</button>
+        <button id="save-organization-submit" type="submit" class="btn btn-primary" :disabled="!dirty">
+          {% trans "Save Changes" %}
+        </button>
         <span id="save-organization-spinner" class="spinner-border spinner-border-sm ms-2 htmx-indicator"></span>
       </div>
     </form>
   {% else %}
     <div class="datagrid">
       <div class="datagrid-item">
-        <div class="datagrid-title">Organization Name</div>
+        <div class="datagrid-title">{% trans "Organization Name" %}</div>
         <div class="datagrid-content">{{ request.user.active_organization.name }}</div>
       </div>
     </div>

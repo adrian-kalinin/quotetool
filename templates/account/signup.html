@@ -1,30 +1,33 @@
 {% extends "base_auth.html" %}
 
+{% load i18n %}
+
 {% block head_title %}
-  Sign Up | {{ block.super }}
+  {% trans "Sign Up" %} | {{ block.super }}
 {% endblock head_title %}
 
 {% block content_card %}
   <div class="card-body">
-    <h2 class="h2 text-center mb-4">Create Your Account</h2>
+    <h2 class="h2 text-center mb-4">{% trans "Create Your Account" %}</h2>
     <form method="post" action="{% url 'account_signup' %}">
       {% csrf_token %}
       {{ form }}
       {{ redirect_field }}
       <div class="form-footer">
-        <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+        <button type="submit" class="btn btn-primary w-100">{% trans "Sign Up" %}</button>
       </div>
     </form>
-    <div class="hr-text">or</div>
+    <div class="hr-text">{% trans "or" %}</div>
     {% include "socialaccount/snippets/provider_list.html" %}
     <p class="text-center text-secondary mt-4">
-      By continuing, you agree to our <a href="#" class="link link-primary">Terms and Conditions</a>
+      {% trans "By continuing, you agree to our" %} <a href="#" class="link link-primary">{% trans "Terms and Conditions" %}</a>
     </p>
   </div>
 {% endblock content_card %}
 
 {% block content_extra %}
+  {% url 'account_login' as login_url %}
   <div class="text-center text-secondary mt-3">
-    Already have an account? <a href="{% url 'account_login' %}" class="link link-primary">Sign in here</a>
+    {% blocktranslate %}Already have an account? <a href="{{ login_url }}" class="link link-primary">Sign in here</a>{% endblocktranslate %}
   </div>
 {% endblock content_extra %}

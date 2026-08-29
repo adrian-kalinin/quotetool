@@ -1,5 +1,6 @@
 {% load widget_tweaks %}
 {% load tabler_icons %}
+{% load i18n %}
 
 <div id="invitations-container">
   <form id="invite-member"
@@ -16,12 +17,12 @@
     {% csrf_token %}
     <div class="row g-2 align-items-end">
       <div class="col-sm col-12">
-        <label class="form-label" for="id_email">Invite by email</label>
+        <label class="form-label" for="id_email">{% trans "Invite by email" %}</label>
         {{ invite_form.email|add_class:'form-control'|add_error_class:'is-invalid' }}
       </div>
       <div class="col-auto">
         <button id="save-invitations-submit" type="submit" class="btn btn-primary" :disabled="!dirty">
-          {% tabler_icon 'plus' extra_class="me-2" %} Invite member
+          {% tabler_icon 'plus' extra_class="me-2" %} {% trans "Invite member" %}
         </button>
         <span id="save-invitations-spinner" class="spinner-border spinner-border-sm ms-2 htmx-indicator"></span>
       </div>
@@ -36,40 +37,43 @@
       <table class="table table-vcenter card-table table-borderless text-nowrap">
         <thead>
           <tr>
-            <th>Email</th>
-            <th>Invited by</th>
-            <th>Expires</th>
+            <th>{% trans "Email" %}</th>
+            <th>{% trans "Invited by" %}</th>
+            <th>{% trans "Expires" %}</th>
             <th class="w-1">
-              <span class="visually-hidden">Actions</span>
+              <span class="visually-hidden">{% trans "Actions" %}</span>
             </th>
           </tr>
         </thead>
         <tbody>
           {% for invitation in pending_invitations %}
             <tr>
-              <td data-label="Email">{{ invitation.email }}</td>
-              <td data-label="Invited by">{{ invitation.invited_by.email }}</td>
-              <td data-label="Expires">{{ invitation.expires_at|date:"M j, Y" }}</td>
+              <td data-label="{% trans "Email" %}">{{ invitation.email }}</td>
+              <td data-label="{% trans "Invited by" %}">{{ invitation.invited_by.email }}</td>
+              <td data-label="{% trans "Expires" %}">{{ invitation.expires_at|date:"M j, Y" }}</td>
               <td class="text-end">
                 <div class="dropdown">
                   <button class="btn btn-icon btn-ghost-secondary"
                           type="button"
                           data-bs-toggle="dropdown"
                           data-bs-popper-config='{"strategy": "fixed"}'
-                          aria-label="Invitation actions">{% tabler_icon "dots-vertical" %}</button>
+                          aria-label="{% trans "Invitation actions" %}">{% tabler_icon "dots-vertical" %}</button>
                   <div class="dropdown-menu dropdown-menu-end">
                     <button type="button"
                             class="dropdown-item"
                             hx-post="{% url 'organizations:settings-invitation-resend' invitation.id %}"
                             hx-target="#invitations-container"
-                            hx-swap="outerHTML">{% tabler_icon "mail-forward" %} Resend invitation</button>
+                            hx-swap="outerHTML">
+                      {% tabler_icon "mail-forward" %} {% trans "Resend invitation" %}
+                    </button>
+                    {% blocktranslate with invitation_email=invitation.email asvar revoke_confirm %}Revoke the invitation for {{ invitation_email }}?{% endblocktranslate %}
                     <button type="button"
                             class="dropdown-item text-danger"
                             hx-post="{% url 'organizations:settings-invitation-revoke' invitation.id %}"
                             hx-target="#invitations-container"
                             hx-swap="outerHTML"
-                            hx-confirm="Revoke the invitation for {{ invitation.email }}?">
-                      {% tabler_icon "ban" %} Revoke invitation
+                            hx-confirm="{{ revoke_confirm }}">
+                      {% tabler_icon "ban" %} {% trans "Revoke invitation" %}
                     </button>
                   </div>
                 </div>
@@ -80,6 +84,6 @@
       </table>
     </div>
   {% else %}
-    <p class="text-secondary">No pending invitations.</p>
+    <p class="text-secondary">{% trans "No pending invitations." %}</p>
   {% endif %}
 </div>

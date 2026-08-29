@@ -5,6 +5,7 @@ from django.db import transaction
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils.translation import gettext as _
 from django.views import View
 from django.views.generic.edit import CreateView
 
@@ -48,7 +49,7 @@ class OrganizationCreateView(LoginRequiredMixin, CreateView):
         )
         self.request.user.active_organization = self.object
         self.request.user.save(update_fields=["active_organization", "updated_at"])
-        messages.success(self.request, "Organization created.")
+        messages.success(self.request, _("Organization created."))
 
         return response
 
@@ -58,7 +59,7 @@ class OrganizationSwitchView(LoginRequiredMixin, View):
 
     http_method_names = ["post"]
 
-    def post(self, request: AuthenticatedHttpRequest, org_uuid: uuid.UUID, *_, **__) -> HttpResponse:
+    def post(self, request: AuthenticatedHttpRequest, org_uuid: uuid.UUID, *_args, **_kwargs) -> HttpResponse:
         membership = (
             OrganizationMembership.objects.select_related("organization")
             .filter(user=request.user, organization__uuid=org_uuid)
@@ -66,12 +67,12 @@ class OrganizationSwitchView(LoginRequiredMixin, View):
         )
 
         if membership is None:
-            messages.error(request, "You are not a member of that organization.")
+            messages.error(request, _("You are not a member of that organization."))
             return redirect("dashboard:dashboard")
 
         request.user.active_organization = membership.organization
         request.user.save(update_fields=["active_organization", "updated_at"])
-        messages.success(request, f"Switched to {membership.organization.name}.")
+        messages.success(request, _("Switched to %(organization)s.") % {"organization": membership.organization.name})
 
         return redirect("dashboard:dashboard")
 
@@ -82,7 +83,7 @@ class OrganizationLeaveView(OrganizationAccessMixin, View):
     http_method_names = ["post"]
     requires_subscription = False
 
-    def post(self, request: AuthenticatedHttpRequest, *_, **__) -> HttpResponse:
+    def post(self, request: AuthenticatedHttpRequest, *_args, **_kwargs) -> HttpResponse:
         membership = (
             OrganizationMembership.objects.select_related("organization")
             .filter(user=request.user, organization=request.user.active_organization_id)
@@ -90,7 +91,7 @@ class OrganizationLeaveView(OrganizationAccessMixin, View):
         )
 
         if membership is None:
-            messages.error(request, "You are not a member of that organization.")
+            messages.error(request, _("You are not a member of that organization."))
             return redirect("dashboard:dashboard")
 
         try:
@@ -100,6 +101,6 @@ class OrganizationLeaveView(OrganizationAccessMixin, View):
         else:
             request.user.active_organization = None
             request.user.save(update_fields=["active_organization", "updated_at"])
-            messages.success(request, f"You left {membership.organization.name}.")
+            messages.success(request, _("You left %(organization)s.") % {"organization": membership.organization.name})
 
         return redirect("dashboard:dashboard")

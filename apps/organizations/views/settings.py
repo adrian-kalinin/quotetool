@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.urls import reverse_lazy
+from django.utils.translation import gettext as _
 from django.views.generic import FormView
 from django.views.generic import TemplateView
 from django.views.generic import UpdateView
@@ -118,7 +119,7 @@ class OrganizationUpdateView(OrganizationAccessMixin, UpdateView):
 
     def form_valid(self, form: OrganizationForm) -> HttpResponse:
         response = super().form_valid(form)
-        messages.success(self.request, "Organization updated successfully.")
+        messages.success(self.request, _("Organization updated successfully."))
 
         if self.request.htmx:
             return self.render_to_response(self.get_context_data())
@@ -149,11 +150,11 @@ class MemberInviteView(OrganizationAccessMixin, OrganizationSettingsContextMixin
         ).exists()
 
         if already_member:
-            messages.info(self.request, "That user is already a member of this organization.")
+            messages.info(self.request, _("That user is already a member of this organization."))
         else:
             invitations_url = self.request.build_absolute_uri(reverse("organizations:invitations"))
             send_organization_invitation(form.cleaned_data["email"], self.request.user, invitations_url)
-            messages.success(self.request, f"Invitation sent to {form.cleaned_data['email']}.")
+            messages.success(self.request, _("Invitation sent to %(email)s.") % {"email": form.cleaned_data["email"]})
 
         if self.request.htmx:
             return self.render_to_response(self.get_context_data(form=InviteMemberForm()))
@@ -197,11 +198,11 @@ class BaseOrganizationInvitationActionView(OrganizationAccessMixin, Organization
 class InvitationRevokeView(BaseOrganizationInvitationActionView):
     """Revoke a pending invitation so it can no longer be accepted."""
 
-    def post(self, request: AuthenticatedHttpRequest, invitation_id: int, *_, **__) -> HttpResponse:
+    def post(self, request: AuthenticatedHttpRequest, invitation_id: int, *_args, **_kwargs) -> HttpResponse:
         invitation = self.get_target_invitation(invitation_id)
 
         if invitation is None:
-            messages.error(request, "That invitation is no longer pending.")
+            messages.error(request, _("That invitation is no longer pending."))
             return self.render_invitations()
 
         try:
@@ -210,7 +211,7 @@ class InvitationRevokeView(BaseOrganizationInvitationActionView):
             messages.error(request, str(exc))
             return self.render_invitations()
 
-        messages.success(request, f"Revoked the invitation for {invitation.email}.")
+        messages.success(request, _("Revoked the invitation for %(email)s.") % {"email": invitation.email})
 
         return self.render_invitations()
 
@@ -218,11 +219,11 @@ class InvitationRevokeView(BaseOrganizationInvitationActionView):
 class InvitationResendView(BaseOrganizationInvitationActionView):
     """Re-send a pending invitation, extending its expiry."""
 
-    def post(self, request: AuthenticatedHttpRequest, invitation_id: int, *_, **__) -> HttpResponse:
+    def post(self, request: AuthenticatedHttpRequest, invitation_id: int, *_args, **_kwargs) -> HttpResponse:
         invitation = self.get_target_invitation(invitation_id)
 
         if invitation is None:
-            messages.error(request, "That invitation is no longer pending.")
+            messages.error(request, _("That invitation is no longer pending."))
             return self.render_invitations()
 
         invitations_url = request.build_absolute_uri(reverse("organizations:invitations"))
@@ -233,7 +234,7 @@ class InvitationResendView(BaseOrganizationInvitationActionView):
             messages.error(request, str(exc))
             return self.render_invitations()
 
-        messages.success(request, f"Resent the invitation to {invitation.email}.")
+        messages.success(request, _("Resent the invitation to %(email)s.") % {"email": invitation.email})
 
         return self.render_invitations()
 
@@ -267,11 +268,11 @@ class MemberRoleUpdateView(BaseMembershipActionView):
 
     allowed_roles = (OrganizationMembership.Role.OWNER, OrganizationMembership.Role.ADMIN)
 
-    def post(self, request: AuthenticatedHttpRequest, membership_id: int, *_, **__) -> HttpResponse:
+    def post(self, request: AuthenticatedHttpRequest, membership_id: int, *_args, **_kwargs) -> HttpResponse:
         membership = self.get_target_membership(membership_id)
 
         if membership is None:
-            messages.error(request, "That member is no longer part of this organization.")
+            messages.error(request, _("That member is no longer part of this organization."))
             return self.render_members()
 
         try:
@@ -279,7 +280,7 @@ class MemberRoleUpdateView(BaseMembershipActionView):
         except ValueError as exc:
             messages.error(request, str(exc))
         else:
-            messages.success(request, f"Updated role for {membership.user.email}.")
+            messages.success(request, _("Updated role for %(email)s.") % {"email": membership.user.email})
 
         return self.render_members()
 
@@ -287,11 +288,11 @@ class MemberRoleUpdateView(BaseMembershipActionView):
 class MemberRemoveView(BaseMembershipActionView):
     """Remove a member from the organization (owner/admin, hierarchy-aware)."""
 
-    def post(self, request: AuthenticatedHttpRequest, membership_id: int, *_, **__) -> HttpResponse:
+    def post(self, request: AuthenticatedHttpRequest, membership_id: int, *_args, **_kwargs) -> HttpResponse:
         membership = self.get_target_membership(membership_id)
 
         if membership is None:
-            messages.error(request, "That member is no longer part of this organization.")
+            messages.error(request, _("That member is no longer part of this organization."))
             return self.render_members()
 
         email = membership.user.email
@@ -301,7 +302,7 @@ class MemberRemoveView(BaseMembershipActionView):
         except ValueError as exc:
             messages.error(request, str(exc))
         else:
-            messages.success(request, f"Removed {email} from the organization.")
+            messages.success(request, _("Removed %(email)s from the organization.") % {"email": email})
 
         return self.render_members()
 
@@ -311,11 +312,11 @@ class MemberTransferOwnershipView(BaseMembershipActionView):
 
     allowed_roles = (OrganizationMembership.Role.OWNER,)
 
-    def post(self, request: AuthenticatedHttpRequest, membership_id: int, *_, **__) -> HttpResponse:
+    def post(self, request: AuthenticatedHttpRequest, membership_id: int, *_args, **_kwargs) -> HttpResponse:
         membership = self.get_target_membership(membership_id)
 
         if membership is None:
-            messages.error(request, "That member is no longer part of this organization.")
+            messages.error(request, _("That member is no longer part of this organization."))
             return self.render_members()
 
         try:
@@ -323,6 +324,9 @@ class MemberTransferOwnershipView(BaseMembershipActionView):
         except ValueError as exc:
             messages.error(request, str(exc))
         else:
-            messages.success(request, f"Ownership transferred to {membership.user.email}. You are now an admin.")
+            messages.success(
+                request,
+                _("Ownership transferred to %(email)s. You are now an admin.") % {"email": membership.user.email},
+            )
 
         return self.render_members()

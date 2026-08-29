@@ -1,19 +1,21 @@
 {% extends "base_auth.html" %}
 
+{% load i18n %}
+
 {% block head_title %}
-  Account Inactive | {{ block.super }}
+  {% trans "Account Inactive" %} | {{ block.super }}
 {% endblock head_title %}
 
 {% block content_card %}
   <div class="card-body">
-    <h2 class="h2 text-center mb-4">Account Inactive</h2>
-    <p class="text-center text-secondary">Sorry, this account appears to be inactive.</p>
+    <h2 class="h2 text-center mb-4">{% trans "Account Inactive" %}</h2>
+    <p class="text-center text-secondary">{% trans "Sorry, this account appears to be inactive." %}</p>
     <form method="post" action="{% url 'account_logout' %}">
       {% csrf_token %}
       {{ form }}
       {{ redirect_field }}
       <div class="form-footer">
-        <button type="submit" class="btn btn-primary w-100">Sign Out</button>
+        <button type="submit" class="btn btn-primary w-100">{% trans "Sign Out" %}</button>
       </div>
     </form>
   </div>

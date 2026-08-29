@@ -1,9 +1,11 @@
 {% extends "base_settings.html" %}
 
+{% load i18n %}
+
 {% block settings_content %}
   <div class="card mb-4">
     <div class="card-header">
-      <h3 class="card-title">Password</h3>
+      <h3 class="card-title">{% trans "Password" %}</h3>
     </div>
     <div class="card-body">{% include password_template %}</div>
   </div>

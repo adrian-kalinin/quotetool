@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect
+from django.utils.translation import gettext as _
 from django.views import View
 from django.views.generic import TemplateView
 
@@ -57,11 +58,11 @@ class BaseInvitationActionView(LoginRequiredMixin, View):
 class InvitationAcceptView(BaseInvitationActionView):
     """Accept an invitation and join its organization."""
 
-    def post(self, request: AuthenticatedHttpRequest, invitation_id: int, *_, **__) -> HttpResponse:
+    def post(self, request: AuthenticatedHttpRequest, invitation_id: int, *_args, **_kwargs) -> HttpResponse:
         invitation = self.get_target_invitation(invitation_id)
 
         if invitation is None:
-            messages.error(request, "That invitation is no longer available.")
+            messages.error(request, _("That invitation is no longer available."))
             return redirect("organizations:invitations")
 
         try:
@@ -70,7 +71,7 @@ class InvitationAcceptView(BaseInvitationActionView):
             messages.error(request, str(exc))
             return redirect("organizations:invitations")
 
-        messages.success(request, f"You joined {invitation.organization.name}.")
+        messages.success(request, _("You joined %(organization)s.") % {"organization": invitation.organization.name})
 
         return redirect("dashboard:dashboard")
 
@@ -78,11 +79,11 @@ class InvitationAcceptView(BaseInvitationActionView):
 class InvitationDeclineView(BaseInvitationActionView):
     """Decline an invitation."""
 
-    def post(self, request: AuthenticatedHttpRequest, invitation_id: int, *_, **__) -> HttpResponse:
+    def post(self, request: AuthenticatedHttpRequest, invitation_id: int, *_args, **_kwargs) -> HttpResponse:
         invitation = self.get_target_invitation(invitation_id)
 
         if invitation is None:
-            messages.error(request, "That invitation is no longer available.")
+            messages.error(request, _("That invitation is no longer available."))
             return redirect("organizations:invitations")
 
         try:
@@ -91,6 +92,6 @@ class InvitationDeclineView(BaseInvitationActionView):
             messages.error(request, str(exc))
             return redirect("organizations:invitations")
 
-        messages.info(request, "Invitation declined.")
+        messages.info(request, _("Invitation declined."))
 
         return redirect("organizations:invitations")

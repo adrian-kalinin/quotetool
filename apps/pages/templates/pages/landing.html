@@ -2,16 +2,17 @@
 
 {% load billing %}
 {% load tabler_icons %}
+{% load i18n %}
 
 {% block head_title %}
-  Product - The all-in-one platform to grow your business
+  {% blocktranslate %}Product - The all-in-one platform to grow your business{% endblocktranslate %}
 {% endblock head_title %}
 
 {% block page %}
   {% comment %} Navbar {% endcomment %}
   <header class="navbar navbar-expand-md navbar-light bg-white fixed-top border-bottom">
     <div class="container-xl">
-      <a class="navbar-brand text-primary fw-bold" href="{% url "pages:landing" %}">Product</a>
+      <a class="navbar-brand text-primary fw-bold" href="{% url "pages:landing" %}">{% trans "Product" %}</a>
       <button class="navbar-toggler"
               type="button"
               data-bs-toggle="collapse"
@@ -22,14 +23,27 @@
       </button>
       <div class="collapse navbar-collapse" id="navbar-menu">
         <div class="navbar-nav ms-md-3">
-          <a class="nav-link" href="#features">Features</a>
-          <a class="nav-link" href="#highlights">Highlights</a>
-          <a class="nav-link" href="#pricing">Pricing</a>
+          <a class="nav-link" href="#features">{% trans "Features" %}</a>
+          <a class="nav-link" href="#highlights">{% trans "Highlights" %}</a>
+          <a class="nav-link" href="#pricing">{% trans "Pricing" %}</a>
         </div>
         <div class="navbar-nav ms-auto gap-2 py-md-1">
-          <a href="{% url "account_login" %}" class="nav-link">Login</a>
+          <form method="post" action="{% url 'core:set-language' %}" class="d-inline-flex align-items-center">
+            {% csrf_token %}
+            {% get_current_language as CURRENT_LANGUAGE %}
+            {% get_available_languages as AVAILABLE_LANGUAGES %}
+            <select name="language"
+                    class="form-select form-select-sm"
+                    onchange="this.form.submit()"
+                    aria-label="{% trans "Change language" %}">
+              {% for code, name in AVAILABLE_LANGUAGES %}
+                <option value="{{ code }}"{% if code == CURRENT_LANGUAGE %} selected{% endif %}>{{ name }}</option>
+              {% endfor %}
+            </select>
+          </form>
+          <a href="{% url "account_login" %}" class="nav-link">{% trans "Login" %}</a>
           <a href="{% url "account_signup" %}" class="btn btn-primary">
-            Get started {% tabler_icon "arrow-narrow-right" extra_class="d-none d-md-inline ms-1" %}
+            {% trans "Get started" %} {% tabler_icon "arrow-narrow-right" extra_class="d-none d-md-inline ms-1" %}
           </a>
         </div>
       </div>
@@ -42,24 +56,25 @@
       <div class="row align-items-center g-5">
         <div class="col-lg-6 text-center text-lg-start">
           <div class="mb-3">
-            <span class="badge bg-primary-lt text-primary">Now in public beta</span>
+            <span class="badge bg-primary-lt text-primary">{% trans "Now in public beta" %}</span>
           </div>
           <h1 class="display-5 fw-bold mb-3">
-            <span class="text-primary">Streamline</span> your business, <span class="text-primary">amplify</span> your results
+            <span class="text-primary">{% trans "Streamline" %}</span> {% trans "your business," %}
+            <span class="text-primary">{% trans "amplify" %}</span> {% trans "your results" %}
           </h1>
           <p class="lead text-secondary mb-4">
-            Streamline your operations, save time on repetitive work, and focus on what matters most. Join thousands of businesses getting more done every day.
+            {% trans "Streamline your operations, save time on repetitive work, and focus on what matters most. Join thousands of businesses getting more done every day." %}
           </p>
           <div class="d-flex flex-column flex-sm-row gap-2 justify-content-center justify-content-lg-start mb-3">
-            <a href="{% url "account_signup" %}" class="btn btn-primary btn-lg">Start your free trial</a>
-            <a href="#features" class="btn btn-outline-primary btn-lg">See how it works</a>
+            <a href="{% url "account_signup" %}" class="btn btn-primary btn-lg">{% trans "Start your free trial" %}</a>
+            <a href="#features" class="btn btn-outline-primary btn-lg">{% trans "See how it works" %}</a>
           </div>
-          <p class="text-muted small mb-0">No credit card required. 14-day free trial.</p>
+          <p class="text-muted small mb-0">{% trans "No credit card required. 14-day free trial." %}</p>
         </div>
         <div class="col-lg-6 text-center">
           <img src="https://placehold.co/600x400"
                class="img-fluid rounded-3 shadow-sm"
-               alt="Dashboard preview"
+               alt="{% trans "Dashboard preview" %}"
                width="600"
                height="400" />
         </div>
@@ -72,9 +87,9 @@
     <div class="container-xl">
       <div class="row justify-content-center mb-5">
         <div class="col-md-8 text-center">
-          <h2 class="fw-bold mb-3">Everything you need to scale</h2>
+          <h2 class="fw-bold mb-3">{% trans "Everything you need to scale" %}</h2>
           <p class="lead text-secondary mb-0">
-            Powerful features designed to help you work smarter, not harder. From automation to analytics, we have you covered.
+            {% trans "Powerful features designed to help you work smarter, not harder. From automation to analytics, we have you covered." %}
           </p>
         </div>
       </div>
@@ -83,9 +98,9 @@
           <div class="card card-hover h-100 border-0 shadow-sm">
             <div class="card-body">
               <div class="text-primary mb-3">{% tabler_icon "bolt" %}</div>
-              <h3 class="h4 card-title">Lightning fast</h3>
+              <h3 class="h4 card-title">{% trans "Lightning fast" %}</h3>
               <p class="text-secondary mb-0">
-                Built for speed. Our infrastructure ensures your pages load in milliseconds, keeping your users engaged.
+                {% trans "Built for speed. Our infrastructure ensures your pages load in milliseconds, keeping your users engaged." %}
               </p>
             </div>
           </div>
@@ -94,9 +109,9 @@
           <div class="card card-hover h-100 border-0 shadow-sm">
             <div class="card-body">
               <div class="text-primary mb-3">{% tabler_icon "shield-check" %}</div>
-              <h3 class="h4 card-title">Enterprise security</h3>
+              <h3 class="h4 card-title">{% trans "Enterprise security" %}</h3>
               <p class="text-secondary mb-0">
-                Bank-grade encryption, GDPR compliance, and granular permissions to keep your data safe at all times.
+                {% trans "Bank-grade encryption, GDPR compliance, and granular permissions to keep your data safe at all times." %}
               </p>
             </div>
           </div>
@@ -105,8 +120,10 @@
           <div class="card card-hover h-100 border-0 shadow-sm">
             <div class="card-body">
               <div class="text-primary mb-3">{% tabler_icon "chart-bar" %}</div>
-              <h3 class="h4 card-title">Real-time analytics</h3>
-              <p class="text-secondary mb-0">Make smarter decisions with clear insights and reports that update automatically.</p>
+              <h3 class="h4 card-title">{% trans "Real-time analytics" %}</h3>
+              <p class="text-secondary mb-0">
+                {% trans "Make smarter decisions with clear insights and reports that update automatically." %}
+              </p>
             </div>
           </div>
         </div>
@@ -114,8 +131,10 @@
           <div class="card card-hover h-100 border-0 shadow-sm">
             <div class="card-body">
               <div class="text-primary mb-3">{% tabler_icon "users" %}</div>
-              <h3 class="h4 card-title">Team collaboration</h3>
-              <p class="text-secondary mb-0">Work together seamlessly with shared organizations, comments, and activity tracking.</p>
+              <h3 class="h4 card-title">{% trans "Team collaboration" %}</h3>
+              <p class="text-secondary mb-0">
+                {% trans "Work together seamlessly with shared organizations, comments, and activity tracking." %}
+              </p>
             </div>
           </div>
         </div>
@@ -123,8 +142,10 @@
           <div class="card card-hover h-100 border-0 shadow-sm">
             <div class="card-body">
               <div class="text-primary mb-3">{% tabler_icon "code" %}</div>
-              <h3 class="h4 card-title">Connect your tools</h3>
-              <p class="text-secondary mb-0">Link the apps you already use and keep everything in sync without extra effort.</p>
+              <h3 class="h4 card-title">{% trans "Connect your tools" %}</h3>
+              <p class="text-secondary mb-0">
+                {% trans "Link the apps you already use and keep everything in sync without extra effort." %}
+              </p>
             </div>
           </div>
         </div>
@@ -132,9 +153,9 @@
           <div class="card card-hover h-100 border-0 shadow-sm">
             <div class="card-body">
               <div class="text-primary mb-3">{% tabler_icon "lifebuoy" %}</div>
-              <h3 class="h4 card-title">World-class support</h3>
+              <h3 class="h4 card-title">{% trans "World-class support" %}</h3>
               <p class="text-secondary mb-0">
-                Our team is here to help. Get answers fast via chat, email, or our extensive knowledge base.
+                {% trans "Our team is here to help. Get answers fast via chat, email, or our extensive knowledge base." %}
               </p>
             </div>
           </div>
@@ -148,35 +169,37 @@
     <div class="container-xl">
       <div class="row justify-content-center mb-5">
         <div class="col-md-8 text-center">
-          <h2 class="fw-bold mb-3">See it in action</h2>
-          <p class="lead text-secondary mb-0">Powerful capabilities designed to help your team work smarter and achieve more.</p>
+          <h2 class="fw-bold mb-3">{% trans "See it in action" %}</h2>
+          <p class="lead text-secondary mb-0">
+            {% trans "Powerful capabilities designed to help your team work smarter and achieve more." %}
+          </p>
         </div>
       </div>
       <div class="row align-items-center g-5 my-5 my-md-6">
         <div class="col-lg-6">
           <img src="https://placehold.co/600x400"
                class="img-fluid rounded-3 shadow-sm"
-               alt="Dashboard feature"
+               alt="{% trans "Dashboard feature" %}"
                width="600"
                height="400" />
         </div>
         <div class="col-lg-6">
-          <h2 class="fw-bold mb-3">Everything in one place</h2>
+          <h2 class="fw-bold mb-3">{% trans "Everything in one place" %}</h2>
           <p class="lead text-secondary mb-4">
-            Stop switching between apps. Bring everything together so your whole team stays on the same page.
+            {% trans "Stop switching between apps. Bring everything together so your whole team stays on the same page." %}
           </p>
           <ul class="list-unstyled mb-0">
             <li class="d-flex align-items-start mb-3">
               <span class="text-primary me-2 mt-1">{% tabler_icon "check" %}</span>
-              <span class="text-secondary">One clear view of everything that matters</span>
+              <span class="text-secondary">{% trans "One clear view of everything that matters" %}</span>
             </li>
             <li class="d-flex align-items-start mb-3">
               <span class="text-primary me-2 mt-1">{% tabler_icon "check" %}</span>
-              <span class="text-secondary">Find anything in seconds</span>
+              <span class="text-secondary">{% trans "Find anything in seconds" %}</span>
             </li>
             <li class="d-flex align-items-start">
               <span class="text-primary me-2 mt-1">{% tabler_icon "check" %}</span>
-              <span class="text-secondary">Stay informed without the noise</span>
+              <span class="text-secondary">{% trans "Stay informed without the noise" %}</span>
             </li>
           </ul>
         </div>
@@ -185,27 +208,27 @@
         <div class="col-lg-6 order-lg-2">
           <img src="https://placehold.co/600x400"
                class="img-fluid rounded-3 shadow-sm"
-               alt="Automation feature"
+               alt="{% trans "Automation feature" %}"
                width="600"
                height="400" />
         </div>
         <div class="col-lg-6 order-lg-1">
-          <h2 class="fw-bold mb-3">Automate the busywork</h2>
+          <h2 class="fw-bold mb-3">{% trans "Automate the busywork" %}</h2>
           <p class="lead text-secondary mb-4">
-            Focus on what matters. Let our platform handle repetitive tasks so your team can move faster.
+            {% trans "Focus on what matters. Let our platform handle repetitive tasks so your team can move faster." %}
           </p>
           <ul class="list-unstyled mb-0">
             <li class="d-flex align-items-start mb-3">
               <span class="text-primary me-2 mt-1">{% tabler_icon "check" %}</span>
-              <span class="text-secondary">Set up automations in a few clicks</span>
+              <span class="text-secondary">{% trans "Set up automations in a few clicks" %}</span>
             </li>
             <li class="d-flex align-items-start mb-3">
               <span class="text-primary me-2 mt-1">{% tabler_icon "check" %}</span>
-              <span class="text-secondary">Connect steps so nothing falls through the cracks</span>
+              <span class="text-secondary">{% trans "Connect steps so nothing falls through the cracks" %}</span>
             </li>
             <li class="d-flex align-items-start">
               <span class="text-primary me-2 mt-1">{% tabler_icon "check" %}</span>
-              <span class="text-secondary">Works with the tools you already use</span>
+              <span class="text-secondary">{% trans "Works with the tools you already use" %}</span>
             </li>
           </ul>
         </div>
@@ -214,27 +237,27 @@
         <div class="col-lg-6">
           <img src="https://placehold.co/600x400"
                class="img-fluid rounded-3 shadow-sm"
-               alt="Collaboration feature"
+               alt="{% trans "Collaboration feature" %}"
                width="600"
                height="400" />
         </div>
         <div class="col-lg-6">
-          <h2 class="fw-bold mb-3">Built for teams that move fast</h2>
+          <h2 class="fw-bold mb-3">{% trans "Built for teams that move fast" %}</h2>
           <p class="lead text-secondary mb-4">
-            Collaborate effortlessly with shared organizations, activity tracking, and instant feedback.
+            {% trans "Collaborate effortlessly with shared organizations, activity tracking, and instant feedback." %}
           </p>
           <ul class="list-unstyled mb-0">
             <li class="d-flex align-items-start mb-3">
               <span class="text-primary me-2 mt-1">{% tabler_icon "check" %}</span>
-              <span class="text-secondary">See who is working on what, in real time</span>
+              <span class="text-secondary">{% trans "See who is working on what, in real time" %}</span>
             </li>
             <li class="d-flex align-items-start mb-3">
               <span class="text-primary me-2 mt-1">{% tabler_icon "check" %}</span>
-              <span class="text-secondary">Comment and mention teammates anywhere</span>
+              <span class="text-secondary">{% trans "Comment and mention teammates anywhere" %}</span>
             </li>
             <li class="d-flex align-items-start">
               <span class="text-primary me-2 mt-1">{% tabler_icon "check" %}</span>
-              <span class="text-secondary">Control who can see and do what</span>
+              <span class="text-secondary">{% trans "Control who can see and do what" %}</span>
             </li>
           </ul>
         </div>
@@ -247,8 +270,10 @@
     <div class="container-xl">
       <div class="row justify-content-center mb-5">
         <div class="col-md-8 text-center">
-          <h2 class="fw-bold mb-3">Loved by teams everywhere</h2>
-          <p class="lead text-secondary mb-0">Do not just take our word for it. Here is what our customers have to say.</p>
+          <h2 class="fw-bold mb-3">{% trans "Loved by teams everywhere" %}</h2>
+          <p class="lead text-secondary mb-0">
+            {% trans "Do not just take our word for it. Here is what our customers have to say." %}
+          </p>
         </div>
       </div>
       <div class="row g-4">
@@ -256,7 +281,7 @@
           <div class="card h-100 border-0 shadow-sm">
             <div class="card-body">
               <p class="text-secondary mb-4">
-                "Product has completely transformed how we run our business. We have cut turnaround time in half and the team loves using it."
+                {% trans "Product has completely transformed how we run our business. We have cut turnaround time in half and the team loves using it." %}
               </p>
               <div class="d-flex align-items-center">
                 <span class="avatar avatar-sm bg-primary-lt text-primary me-2">JD</span>
@@ -272,7 +297,7 @@
           <div class="card h-100 border-0 shadow-sm">
             <div class="card-body">
               <p class="text-secondary mb-4">
-                "The best investment we made this year. The automation alone saved us countless hours of busywork every month."
+                {% trans "The best investment we made this year. The automation alone saved us countless hours of busywork every month." %}
               </p>
               <div class="d-flex align-items-center">
                 <span class="avatar avatar-sm bg-primary-lt text-primary me-2">JS</span>
@@ -288,7 +313,7 @@
           <div class="card h-100 border-0 shadow-sm">
             <div class="card-body">
               <p class="text-secondary mb-4">
-                "Finally, a tool that is both powerful and easy to use. Our onboarding time dropped to almost zero. Highly recommended."
+                {% trans "Finally, a tool that is both powerful and easy to use. Our onboarding time dropped to almost zero. Highly recommended." %}
               </p>
               <div class="d-flex align-items-center">
                 <span class="avatar avatar-sm bg-primary-lt text-primary me-2">AL</span>
@@ -309,9 +334,9 @@
     <div class="container-xl">
       <div class="row justify-content-center mb-5">
         <div class="col-md-8 text-center">
-          <h2 class="fw-bold mb-3">Simple, transparent pricing</h2>
+          <h2 class="fw-bold mb-3">{% trans "Simple, transparent pricing" %}</h2>
           <p class="lead text-secondary mb-0">
-            Choose the plan that fits your team. Upgrade or downgrade anytime with no hidden fees.
+            {% trans "Choose the plan that fits your team. Upgrade or downgrade anytime with no hidden fees." %}
           </p>
         </div>
       </div>
@@ -321,7 +346,7 @@
             <div class="card h-100 shadow-sm{% if item.plan.highlight %} border-primary{% endif %}">
               {% if item.plan.badge %}
                 <div class="card-header bg-primary text-white text-center py-2">
-                  <span class="small fw-medium">Most Popular</span>
+                  <span class="small fw-medium">{% trans "Most Popular" %}</span>
                 </div>
               {% endif %}
               <div class="card-body">
@@ -329,7 +354,7 @@
                 {% if item.price %}
                   <div class="mb-3">
                     <span class="display-5 fw-bold">{{ item.price.amount_cents|money:item.price.currency }}</span>
-                    <span class="text-muted">/ month</span>
+                    <span class="text-muted">{% trans "/ month" %}</span>
                   </div>
                 {% endif %}
                 <p class="text-secondary">{{ item.plan.tagline }}</p>
@@ -341,7 +366,7 @@
                     </li>
                   {% endfor %}
                 </ul>
-                <a href="{% url "account_signup" %}" class="btn btn-outline-primary w-100">Get started</a>
+                <a href="{% url "account_signup" %}" class="btn btn-outline-primary w-100">{% trans "Get started" %}</a>
               </div>
             </div>
           </div>
@@ -355,17 +380,17 @@
     <div class="container-xl">
       <div class="row justify-content-center">
         <div class="col-lg-8">
-          <h2 class="fw-bold text-center mb-5">Frequently asked questions</h2>
+          <h2 class="fw-bold text-center mb-5">{% trans "Frequently asked questions" %}</h2>
           <div class="accordion" id="faqAccordion">
             <div class="accordion-item">
               <h2 class="accordion-header">
                 <button class="accordion-button fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="true">
-                  Is there a free trial?
+                  {% trans "Is there a free trial?" %}
                 </button>
               </h2>
               <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
                 <div class="accordion-body text-secondary">
-                  Yes. Every plan starts with a 14-day free trial. No credit card is required to sign up, and you can cancel anytime.
+                  {% trans "Yes. Every plan starts with a 14-day free trial. No credit card is required to sign up, and you can cancel anytime." %}
                 </div>
               </div>
             </div>
@@ -375,11 +400,11 @@
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target="#faq2"
-                        aria-expanded="false">Can I change my plan later?</button>
+                        aria-expanded="false">{% trans "Can I change my plan later?" %}</button>
               </h2>
               <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                 <div class="accordion-body text-secondary">
-                  Absolutely. You can upgrade or downgrade your plan at any time. Changes take effect immediately, and we prorate any payments.
+                  {% trans "Absolutely. You can upgrade or downgrade your plan at any time. Changes take effect immediately, and we prorate any payments." %}
                 </div>
               </div>
             </div>
@@ -389,11 +414,11 @@
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target="#faq3"
-                        aria-expanded="false">What payment methods do you accept?</button>
+                        aria-expanded="false">{% trans "What payment methods do you accept?" %}</button>
               </h2>
               <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                 <div class="accordion-body text-secondary">
-                  We accept all major credit cards, including Visa, Mastercard, and American Express. For Enterprise plans, we also support invoicing.
+                  {% trans "We accept all major credit cards, including Visa, Mastercard, and American Express. For Enterprise plans, we also support invoicing." %}
                 </div>
               </div>
             </div>
@@ -403,11 +428,11 @@
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target="#faq4"
-                        aria-expanded="false">How do I cancel my subscription?</button>
+                        aria-expanded="false">{% trans "How do I cancel my subscription?" %}</button>
               </h2>
               <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                 <div class="accordion-body text-secondary">
-                  You can cancel your subscription directly from your account settings at any time. Your data will remain accessible until the end of your billing period.
+                  {% trans "You can cancel your subscription directly from your account settings at any time. Your data will remain accessible until the end of your billing period." %}
                 </div>
               </div>
             </div>
@@ -420,14 +445,14 @@
   {% comment %} Final CTA {% endcomment %}
   <section class="bg-primary text-white py-5 py-md-6">
     <div class="container-xl text-center">
-      <h2 class="fw-bold mb-3">Ready to get started?</h2>
+      <h2 class="fw-bold mb-3">{% trans "Ready to get started?" %}</h2>
       <p class="lead text-white mb-4 col-md-8 mx-auto">
-        Join thousands of teams already using Product to ship faster and smarter.
+        {% trans "Join thousands of teams already using Product to ship faster and smarter." %}
       </p>
       <a href="{% url "account_signup" %}" class="btn btn-light btn-lg">
-        Start your free trial {% tabler_icon "arrow-right" extra_class="ms-1" %}
+        {% trans "Start your free trial" %} {% tabler_icon "arrow-right" extra_class="ms-1" %}
       </a>
-      <p class="small mt-3 mb-0">No credit card required.</p>
+      <p class="small mt-3 mb-0">{% trans "No credit card required." %}</p>
     </div>
   </section>
 
@@ -436,16 +461,18 @@
     <div class="container-xl">
       <div class="row align-items-center g-3">
         <div class="col-md-6">
-          <span class="text-primary fw-bold me-2">Product</span>
-          <span class="text-secondary small">The all-in-one platform to grow your business.</span>
+          <span class="text-primary fw-bold me-2">{% trans "Product" %}</span>
+          <span class="text-secondary small">{% trans "The all-in-one platform to grow your business." %}</span>
         </div>
         <div class="col-md-6 text-md-end">
-          <a href="#" class="text-secondary text-decoration-none small me-3">Privacy</a>
-          <a href="#" class="text-secondary text-decoration-none small me-3">Terms</a>
-          <a href="#" class="text-secondary text-decoration-none small">Support</a>
+          <a href="#" class="text-secondary text-decoration-none small me-3">{% trans "Privacy" %}</a>
+          <a href="#" class="text-secondary text-decoration-none small me-3">{% trans "Terms" %}</a>
+          <a href="#" class="text-secondary text-decoration-none small">{% trans "Support" %}</a>
         </div>
       </div>
-      <div class="text-center text-muted small mt-3 pt-3 border-top">@ {% now "Y" %} Product. All rights reserved.</div>
+      <div class="text-center text-muted small mt-3 pt-3 border-top">
+        @ {% now "Y" %} {% trans "Product" %}. {% trans "All rights reserved." %}
+      </div>
     </div>
   </footer>
 {% endblock page %}

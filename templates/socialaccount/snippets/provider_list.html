@@ -1,9 +1,11 @@
-{% load socialaccount tabler_icons %}
+{% load socialaccount %}
+{% load tabler_icons %}
+{% load i18n %}
 
 <form method="post" action="{% provider_login_url "google" process=process %}">
   {% csrf_token %}
   <button type="submit" class="btn btn-outline w-100">
     {% tabler_icon "brand-google" style="filled" %}
-    Continue with Google
+    {% trans "Continue with Google" %}
   </button>
 </form>
