@@ -38,6 +38,14 @@ shell:
 manage *args:
     @{{ COMPOSE }} exec server python manage.py {{ args }}
 
+# Extract translatable strings into locale .po files (e.g. `just makemessages -l de`)
+makemessages *args:
+    @{{ COMPOSE }} exec server python manage.py makemessages {{ args }}
+
+# Compile locale .po files into .mo files
+compilemessages *args:
+    @{{ COMPOSE }} exec server python manage.py compilemessages {{ args }}
+
 # Run the test suite
 test *args:
     @echo "{{ MAGENTA }}Running tests...{{ NORMAL }}"
