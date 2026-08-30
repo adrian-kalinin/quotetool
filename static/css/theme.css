@@ -13,7 +13,11 @@ html {
   --tblr-border-radius-sm: 0.75rem;
   --tblr-border-radius-lg: 0.75rem;
   --tblr-border-radius-xl: 0.75rem;
+}
 
+.dropdown-menu {
+  --tblr-dropdown-padding-x: 0.25rem;
+  --tblr-dropdown-padding-y: 0.25rem;
   --tblr-dropdown-item-border-radius: 0.75rem;
 }
 
