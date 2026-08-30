@@ -1,0 +1,1332 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-30 18:48+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: apps/accounts/forms.py:9 apps/authn/forms.py:53
+msgid "Name"
+msgstr ""
+
+#: apps/accounts/forms.py:10 apps/authn/forms.py:54
+msgid "Enter your name"
+msgstr ""
+
+#: apps/accounts/templates/accounts/partials/settings_profile_details.html:4
+msgid "Manage your profile information."
+msgstr ""
+
+#: apps/accounts/templates/accounts/partials/settings_profile_details.html:18
+#: apps/organizations/templates/organizations/partials/settings_organization_details.html:19
+msgid "Save Changes"
+msgstr ""
+
+#: apps/accounts/templates/accounts/settings_account.html:8
+msgid "Profile Details"
+msgstr ""
+
+#: apps/accounts/templates/accounts/settings_account.html:15
+#: apps/organizations/forms.py:22
+msgid "Email Address"
+msgstr ""
+
+#: apps/accounts/templates/accounts/settings_account.html:22
+msgid "Connected Accounts"
+msgstr ""
+
+#: apps/accounts/templates/accounts/settings_security.html:8
+msgid "Password"
+msgstr ""
+
+#: apps/accounts/views.py:52
+msgid "Profile updated successfully."
+msgstr ""
+
+#: apps/authn/forms.py:42 apps/authn/forms.py:60 apps/authn/forms.py:113
+msgid "Enter your email"
+msgstr ""
+
+#: apps/authn/forms.py:43 apps/authn/forms.py:61
+msgid "Enter your password"
+msgstr ""
+
+#: apps/authn/forms.py:44
+msgid "Remember me"
+msgstr ""
+
+#: apps/authn/forms.py:80
+msgid "Current password"
+msgstr ""
+
+#: apps/authn/forms.py:80
+msgid "Enter current password"
+msgstr ""
+
+#: apps/authn/forms.py:82 apps/authn/forms.py:98 apps/authn/forms.py:123
+msgid "New password"
+msgstr ""
+
+#: apps/authn/forms.py:82 apps/authn/forms.py:98 apps/authn/forms.py:125
+msgid "Enter new password"
+msgstr ""
+
+#: apps/authn/forms.py:86 apps/authn/forms.py:102 apps/authn/forms.py:130
+msgid "New password (again)"
+msgstr ""
+
+#: apps/authn/forms.py:88 apps/authn/forms.py:104 apps/authn/forms.py:132
+msgid "Confirm new password"
+msgstr ""
+
+#: apps/billing/models.py:13
+msgid "Trialing"
+msgstr ""
+
+#: apps/billing/models.py:14
+msgid "Active"
+msgstr ""
+
+#: apps/billing/models.py:15
+msgid "Past due"
+msgstr ""
+
+#: apps/billing/models.py:16
+msgid "Canceled"
+msgstr ""
+
+#: apps/billing/models.py:17
+msgid "Unpaid"
+msgstr ""
+
+#: apps/billing/models.py:18
+msgid "Paused"
+msgstr ""
+
+#: apps/billing/models.py:61
+msgid "Received"
+msgstr ""
+
+#: apps/billing/models.py:62
+msgid "Processed"
+msgstr ""
+
+#: apps/billing/models.py:63
+msgid "Error"
+msgstr ""
+
+#: apps/billing/templates/billing/settings.html:13
+#: apps/billing/templates/billing/settings.html:58
+#, python-format
+msgid "%(plan_name)s Plan"
+msgstr ""
+
+#: apps/billing/templates/billing/settings.html:23
+#, python-format
+msgid "Your subscription is valid until <b>%(end_date)s</b>."
+msgstr ""
+
+#: apps/billing/templates/billing/settings.html:25
+#, python-format
+msgid "Your subscription will renew on <b>%(end_date)s</b>."
+msgstr ""
+
+#: apps/billing/templates/billing/settings.html:39
+#: apps/billing/templates/billing/settings.html:77
+#: apps/pages/templates/pages/landing.html:368
+msgid "/ month"
+msgstr ""
+
+#: apps/billing/templates/billing/settings.html:43
+msgid "Manage in portal"
+msgstr ""
+
+#: apps/billing/templates/billing/settings.html:47
+msgid ""
+"Only owners and admins can change the subscription. Ask your administrator "
+"to manage billing."
+msgstr ""
+
+#: apps/billing/templates/billing/settings.html:75
+msgid "Subscribe"
+msgstr ""
+
+#: apps/billing/views/checkout.py:35
+msgid "Invalid plan."
+msgstr ""
+
+#: apps/billing/views/checkout.py:40
+msgid "You already have an active subscription; manage it from the portal."
+msgstr ""
+
+#: apps/billing/views/checkout.py:45
+msgid "This plan is not available for purchase."
+msgstr ""
+
+#: apps/billing/views/checkout.py:57
+msgid "Could not start checkout. Please try again later."
+msgstr ""
+
+#: apps/billing/views/checkout.py:73
+msgid "Subscription activated successfully."
+msgstr ""
+
+#: apps/billing/views/portal.py:36
+msgid "Could not open the customer portal. Please try again later."
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:7
+#: apps/dashboard/templates/dashboard/dashboard.html:11
+#: templates/base_app.html:27
+msgid "Home"
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:15
+msgid "Download Report"
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:16
+msgid "View Details"
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:27
+msgid "Total Users"
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:42
+msgid "Revenue"
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:57
+msgid "Active Sessions"
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:72
+msgid "Conversion Rate"
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:90
+msgid "Revenue Breakdown"
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:96
+msgid "Subscriptions"
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:105
+msgid "One-Time Sales"
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:114
+msgid "Refunds"
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:128
+msgid "Performance Metrics"
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:134
+msgid "Page Views"
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:143
+msgid "Conversions"
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:152
+msgid "Click-Through Rate"
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:170
+msgid "Recent Activity"
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:176
+#: apps/organizations/templates/organizations/partials/settings_members.html:9
+msgid "User"
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:177
+msgid "Action"
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:178
+msgid "Date"
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:179
+msgid "Status"
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:193
+msgid "Account Created"
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:196
+#: apps/dashboard/templates/dashboard/dashboard.html:212
+msgid "Completed"
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:209
+msgid "Payment Made"
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:225
+msgid "Account Closed"
+msgstr ""
+
+#: apps/dashboard/templates/dashboard/dashboard.html:228
+msgid "Cancelled"
+msgstr ""
+
+#: apps/organizations/forms.py:10
+msgid "Organization name"
+msgstr ""
+
+#: apps/organizations/models.py:29
+#: apps/organizations/templates/organizations/partials/settings_members.html:30
+msgid "Owner"
+msgstr ""
+
+#: apps/organizations/models.py:30
+#: apps/organizations/templates/organizations/partials/settings_members.html:32
+msgid "Admin"
+msgstr ""
+
+#: apps/organizations/models.py:31
+#: apps/organizations/templates/organizations/partials/settings_members.html:34
+msgid "Member"
+msgstr ""
+
+#: apps/organizations/models.py:77
+msgid "Pending"
+msgstr ""
+
+#: apps/organizations/models.py:78
+msgid "Accepted"
+msgstr ""
+
+#: apps/organizations/models.py:79
+msgid "Revoked"
+msgstr ""
+
+#: apps/organizations/models.py:80
+msgid "Declined"
+msgstr ""
+
+#: apps/organizations/models.py:106
+msgid "Invitation"
+msgstr ""
+
+#: apps/organizations/templates/organizations/create_organization.html:7
+#: apps/organizations/templates/organizations/create_organization.html:32
+msgid "Create organization"
+msgstr ""
+
+#: apps/organizations/templates/organizations/create_organization.html:15
+#: apps/organizations/templates/organizations/invitations.html:15
+msgid "Welcome"
+msgstr ""
+
+#: apps/organizations/templates/organizations/create_organization.html:18
+msgid "Create an Organization"
+msgstr ""
+
+#: apps/organizations/templates/organizations/create_organization.html:23
+msgid "Create your first organization to get started."
+msgstr ""
+
+#: apps/organizations/templates/organizations/create_organization.html:25
+msgid "Add another organization to your account."
+msgstr ""
+
+#: apps/organizations/templates/organizations/invitations.html:7
+msgid "Invitations"
+msgstr ""
+
+#: apps/organizations/templates/organizations/invitations.html:19
+msgid ""
+"You have an organization invitation waiting. Accept it to join, or decline "
+"it to create your own."
+msgstr ""
+
+#: apps/organizations/templates/organizations/invitations.html:28
+#: apps/organizations/templates/organizations/invitations.html:55
+#, python-format
+msgid "Invited by %(invited_by)s"
+msgstr ""
+
+#: apps/organizations/templates/organizations/invitations.html:34
+#: apps/organizations/templates/organizations/invitations.html:61
+msgid "Join organization"
+msgstr ""
+
+#: apps/organizations/templates/organizations/invitations.html:38
+#: apps/organizations/templates/organizations/invitations.html:65
+msgid "Decline invitation"
+msgstr ""
+
+#: apps/organizations/templates/organizations/invitations.html:43
+msgid "Organization Invitations"
+msgstr ""
+
+#: apps/organizations/templates/organizations/invitations.html:46
+#, python-format
+msgid "You have %(counter)s pending invitation."
+msgid_plural "You have %(counter)s pending invitations."
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/organizations/templates/organizations/invitations.html:70
+msgid "You have no pending organization invitations."
+msgstr ""
+
+#: apps/organizations/templates/organizations/invitations.html:72
+msgid "Back to app"
+msgstr ""
+
+#: apps/organizations/templates/organizations/partials/settings_invitations.html:20
+msgid "Invite by email"
+msgstr ""
+
+#: apps/organizations/templates/organizations/partials/settings_invitations.html:25
+msgid "Invite member"
+msgstr ""
+
+#: apps/organizations/templates/organizations/partials/settings_invitations.html:40
+#: apps/organizations/templates/organizations/partials/settings_invitations.html:51
+#: templates/account/email_change.html:50
+msgid "Email"
+msgstr ""
+
+#: apps/organizations/templates/organizations/partials/settings_invitations.html:41
+#: apps/organizations/templates/organizations/partials/settings_invitations.html:52
+msgid "Invited by"
+msgstr ""
+
+#: apps/organizations/templates/organizations/partials/settings_invitations.html:42
+#: apps/organizations/templates/organizations/partials/settings_invitations.html:53
+msgid "Expires"
+msgstr ""
+
+#: apps/organizations/templates/organizations/partials/settings_invitations.html:44
+#: apps/organizations/templates/organizations/partials/settings_members.html:12
+msgid "Actions"
+msgstr ""
+
+#: apps/organizations/templates/organizations/partials/settings_invitations.html:60
+msgid "Invitation actions"
+msgstr ""
+
+#: apps/organizations/templates/organizations/partials/settings_invitations.html:67
+msgid "Resend invitation"
+msgstr ""
+
+#: apps/organizations/templates/organizations/partials/settings_invitations.html:69
+#, python-format
+msgid "Revoke the invitation for %(invitation_email)s?"
+msgstr ""
+
+#: apps/organizations/templates/organizations/partials/settings_invitations.html:76
+msgid "Revoke invitation"
+msgstr ""
+
+#: apps/organizations/templates/organizations/partials/settings_invitations.html:87
+msgid "No pending invitations."
+msgstr ""
+
+#: apps/organizations/templates/organizations/partials/settings_members.html:10
+msgid "Role"
+msgstr ""
+
+#: apps/organizations/templates/organizations/partials/settings_members.html:45
+msgid "Member actions"
+msgstr ""
+
+#: apps/organizations/templates/organizations/partials/settings_members.html:53
+msgid "Make admin"
+msgstr ""
+
+#: apps/organizations/templates/organizations/partials/settings_members.html:60
+msgid "Make member"
+msgstr ""
+
+#: apps/organizations/templates/organizations/partials/settings_members.html:63
+#, python-format
+msgid "Transfer ownership to %(member_email)s? You will become an admin."
+msgstr ""
+
+#: apps/organizations/templates/organizations/partials/settings_members.html:70
+msgid "Transfer ownership"
+msgstr ""
+
+#: apps/organizations/templates/organizations/partials/settings_members.html:74
+#, python-format
+msgid "Remove %(member_email)s from the organization?"
+msgstr ""
+
+#: apps/organizations/templates/organizations/partials/settings_members.html:81
+msgid "Remove from organization"
+msgstr ""
+
+#: apps/organizations/templates/organizations/partials/settings_organization_details.html:5
+msgid "Manage your organization details."
+msgstr ""
+
+#: apps/organizations/templates/organizations/partials/settings_organization_details.html:27
+msgid "Organization Name"
+msgstr ""
+
+#: apps/organizations/templates/organizations/settings_organization.html:8
+msgid "Organization Details"
+msgstr ""
+
+#: apps/organizations/templates/organizations/settings_organization.html:15
+msgid "Members"
+msgstr ""
+
+#: apps/organizations/templates/organizations/settings_organization.html:23
+msgid "Pending invitations"
+msgstr ""
+
+#: apps/organizations/templates/organizations/settings_organization.html:32
+msgid "Danger Zone"
+msgstr ""
+
+#: apps/organizations/templates/organizations/settings_organization.html:36
+msgid ""
+"You will lose access to this organization until you are invited again. This "
+"action does not delete the organization or your account."
+msgstr ""
+
+#: apps/organizations/templates/organizations/settings_organization.html:40
+#, python-format
+msgid "Leave %(organization_name)s?"
+msgstr ""
+
+#: apps/organizations/templates/organizations/settings_organization.html:42
+msgid "Leave organization"
+msgstr ""
+
+#: apps/organizations/views/invitations.py:65
+#: apps/organizations/views/invitations.py:86
+msgid "That invitation is no longer available."
+msgstr ""
+
+#: apps/organizations/views/invitations.py:74
+#, python-format
+msgid "You joined %(organization)s."
+msgstr ""
+
+#: apps/organizations/views/invitations.py:95
+msgid "Invitation declined."
+msgstr ""
+
+#: apps/organizations/views/organization.py:52
+msgid "Organization created."
+msgstr ""
+
+#: apps/organizations/views/organization.py:70
+#: apps/organizations/views/organization.py:94
+msgid "You are not a member of that organization."
+msgstr ""
+
+#: apps/organizations/views/organization.py:75
+#, python-format
+msgid "Switched to %(organization)s."
+msgstr ""
+
+#: apps/organizations/views/organization.py:104
+#, python-format
+msgid "You left %(organization)s."
+msgstr ""
+
+#: apps/organizations/views/settings.py:122
+msgid "Organization updated successfully."
+msgstr ""
+
+#: apps/organizations/views/settings.py:153
+msgid "That user is already a member of this organization."
+msgstr ""
+
+#: apps/organizations/views/settings.py:157
+#, python-format
+msgid "Invitation sent to %(email)s."
+msgstr ""
+
+#: apps/organizations/views/settings.py:205
+#: apps/organizations/views/settings.py:226
+msgid "That invitation is no longer pending."
+msgstr ""
+
+#: apps/organizations/views/settings.py:214
+#, python-format
+msgid "Revoked the invitation for %(email)s."
+msgstr ""
+
+#: apps/organizations/views/settings.py:237
+#, python-format
+msgid "Resent the invitation to %(email)s."
+msgstr ""
+
+#: apps/organizations/views/settings.py:275
+#: apps/organizations/views/settings.py:295
+#: apps/organizations/views/settings.py:319
+msgid "That member is no longer part of this organization."
+msgstr ""
+
+#: apps/organizations/views/settings.py:283
+#, python-format
+msgid "Updated role for %(email)s."
+msgstr ""
+
+#: apps/organizations/views/settings.py:305
+#, python-format
+msgid "Removed %(email)s from the organization."
+msgstr ""
+
+#: apps/organizations/views/settings.py:329
+#, python-format
+msgid "Ownership transferred to %(email)s. You are now an admin."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:8
+msgid "Product - The all-in-one platform to grow your business"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:16
+#: apps/pages/templates/pages/landing.html:478
+#: apps/pages/templates/pages/landing.html:488 templates/base.html:10
+#: templates/base_app.html:17 templates/base_auth.html:10
+msgid "Product"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:27
+msgid "Features"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:28
+msgid "Highlights"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:29
+msgid "Pricing"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:37
+msgid "Change language"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:50
+msgid "Login"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:52
+#: apps/pages/templates/pages/landing.html:380
+msgid "Get started"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:66
+msgid "Now in public beta"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:69
+msgid "Streamline"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:69
+msgid "your business,"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:70
+msgid "amplify"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:70
+msgid "your results"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:73
+msgid ""
+"Streamline your operations, save time on repetitive work, and focus on what "
+"matters most. Join thousands of businesses getting more done every day."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:76
+#: apps/pages/templates/pages/landing.html:466
+msgid "Start your free trial"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:77
+msgid "See how it works"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:79
+msgid "No credit card required. 14-day free trial."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:84
+msgid "Dashboard preview"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:98
+msgid "Everything you need to scale"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:100
+msgid ""
+"Powerful features designed to help you work smarter, not harder. From "
+"automation to analytics, we have you covered."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:109
+msgid "Lightning fast"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:111
+msgid ""
+"Built for speed. Our infrastructure ensures your pages load in milliseconds, "
+"keeping your users engaged."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:120
+msgid "Enterprise security"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:122
+msgid ""
+"Bank-grade encryption, GDPR compliance, and granular permissions to keep "
+"your data safe at all times."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:131
+msgid "Real-time analytics"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:133
+msgid ""
+"Make smarter decisions with clear insights and reports that update "
+"automatically."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:142
+msgid "Team collaboration"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:144
+msgid ""
+"Work together seamlessly with shared organizations, comments, and activity "
+"tracking."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:153
+msgid "Connect your tools"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:155
+msgid ""
+"Link the apps you already use and keep everything in sync without extra "
+"effort."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:164
+msgid "World-class support"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:166
+msgid ""
+"Our team is here to help. Get answers fast via chat, email, or our extensive "
+"knowledge base."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:181
+msgid "See it in action"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:183
+msgid ""
+"Powerful capabilities designed to help your team work smarter and achieve "
+"more."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:191
+msgid "Dashboard feature"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:196
+msgid "Everything in one place"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:198
+msgid ""
+"Stop switching between apps. Bring everything together so your whole team "
+"stays on the same page."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:203
+msgid "One clear view of everything that matters"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:207
+msgid "Find anything in seconds"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:211
+msgid "Stay informed without the noise"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:220
+msgid "Automation feature"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:225
+msgid "Automate the busywork"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:227
+msgid ""
+"Focus on what matters. Let our platform handle repetitive tasks so your team "
+"can move faster."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:232
+msgid "Set up automations in a few clicks"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:236
+msgid "Connect steps so nothing falls through the cracks"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:240
+msgid "Works with the tools you already use"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:249
+msgid "Collaboration feature"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:254
+msgid "Built for teams that move fast"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:256
+msgid ""
+"Collaborate effortlessly with shared organizations, activity tracking, and "
+"instant feedback."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:261
+msgid "See who is working on what, in real time"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:265
+msgid "Comment and mention teammates anywhere"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:269
+msgid "Control who can see and do what"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:283
+msgid "Loved by teams everywhere"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:285
+msgid ""
+"Do not just take our word for it. Here is what our customers have to say."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:294
+msgid ""
+"Product has completely transformed how we run our business. We have cut "
+"turnaround time in half and the team loves using it."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:310
+msgid ""
+"The best investment we made this year. The automation alone saved us "
+"countless hours of busywork every month."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:326
+msgid ""
+"Finally, a tool that is both powerful and easy to use. Our onboarding time "
+"dropped to almost zero. Highly recommended."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:348
+msgid "Simple, transparent pricing"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:350
+msgid ""
+"Choose the plan that fits your team. Upgrade or downgrade anytime with no "
+"hidden fees."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:360
+msgid "Most Popular"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:395
+msgid "Frequently asked questions"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:400
+msgid "Is there a free trial?"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:405
+msgid ""
+"Yes. Every plan starts with a 14-day free trial. No credit card is required "
+"to sign up, and you can cancel anytime."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:415
+msgid "Can I change my plan later?"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:419
+msgid ""
+"Absolutely. You can upgrade or downgrade your plan at any time. Changes take "
+"effect immediately, and we prorate any payments."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:429
+msgid "What payment methods do you accept?"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:433
+msgid ""
+"We accept all major credit cards, including Visa, Mastercard, and American "
+"Express. For Enterprise plans, we also support invoicing."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:443
+msgid "How do I cancel my subscription?"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:447
+msgid ""
+"You can cancel your subscription directly from your account settings at any "
+"time. Your data will remain accessible until the end of your billing period."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:461
+msgid "Ready to get started?"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:463
+msgid ""
+"Join thousands of teams already using Product to ship faster and smarter."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:468
+msgid "No credit card required."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:479
+msgid "The all-in-one platform to grow your business."
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:482
+msgid "Privacy"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:483
+msgid "Terms"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:484
+msgid "Support"
+msgstr ""
+
+#: apps/pages/templates/pages/landing.html:488
+msgid "All rights reserved."
+msgstr ""
+
+#: templates/account/account_inactive.html:6
+#: templates/account/account_inactive.html:11
+msgid "Account Inactive"
+msgstr ""
+
+#: templates/account/account_inactive.html:12
+msgid "Sorry, this account appears to be inactive."
+msgstr ""
+
+#: templates/account/account_inactive.html:18 templates/account/logout.html:6
+#: templates/account/logout.html:11
+msgid "Sign Out"
+msgstr ""
+
+#: templates/account/email_change.html:7
+msgid "Manage your email address and verify your account."
+msgstr ""
+
+#: templates/account/email_change.html:19
+msgid "Current email"
+msgstr ""
+
+#: templates/account/email_change.html:27
+#: templates/account/email_change.html:61
+#: templates/account/email_change.html:69
+msgid "New email"
+msgstr ""
+
+#: templates/account/email_change.html:29
+msgid "Changing to"
+msgstr ""
+
+#: templates/account/email_change.html:33
+msgid "Your email address is still pending verification."
+msgstr ""
+
+#: templates/account/email_change.html:37
+msgid "Re-send Verification"
+msgstr ""
+
+#: templates/account/email_change.html:41
+msgid "Cancel Change"
+msgstr ""
+
+#: templates/account/email_change.html:52
+msgid "Change to"
+msgstr ""
+
+#: templates/account/email_change.html:77
+msgid "Change Email"
+msgstr ""
+
+#: templates/account/email_confirm.html:6
+msgid "Confirm Email"
+msgstr ""
+
+#: templates/account/email_confirm.html:11
+msgid "Confirm Email Address"
+msgstr ""
+
+#: templates/account/email_confirm.html:15
+#, python-format
+msgid ""
+"Please confirm email address <strong>%(email)s</strong> by clicking the "
+"button below."
+msgstr ""
+
+#: templates/account/email_confirm.html:21
+msgid "Confirm"
+msgstr ""
+
+#: templates/account/email_confirm.html:25
+#, python-format
+msgid ""
+"Unable to confirm <strong>%(email)s</strong> because it is already confirmed "
+"by a different account."
+msgstr ""
+
+#: templates/account/email_confirm.html:31
+#, python-format
+msgid ""
+"This email confirmation link expired or is invalid. Please <a "
+"href=\"%(email_url)s\">issue a new email confirmation request</a>."
+msgstr ""
+
+#: templates/account/login.html:6 templates/account/login.html:17
+#: templates/socialaccount/login.html:7
+msgid "Sign In"
+msgstr ""
+
+#: templates/account/login.html:11
+msgid "Welcome Back"
+msgstr ""
+
+#: templates/account/login.html:20 templates/account/signup.html:20
+msgid "or"
+msgstr ""
+
+#: templates/account/login.html:28
+#, python-format
+msgid "Don't have an account? <a href=\"%(signup_url)s\">Sign up here</a>"
+msgstr ""
+
+#: templates/account/logout.html:12
+msgid "Are you sure you want to sign out?"
+msgstr ""
+
+#: templates/account/logout.html:18 templates/account/password_reset.html:18
+#: templates/account/reauthenticate.html:20
+#: templates/socialaccount/login.html:25
+msgid "Continue"
+msgstr ""
+
+#: templates/account/password_change.html:7
+msgid "Update your password to keep your account secure."
+msgstr ""
+
+#: templates/account/password_change.html:22
+#: templates/account/password_reset_from_key.html:6
+#: templates/account/password_reset_from_key.html:18
+#: templates/account/password_reset_from_key_done.html:6
+#: templates/account/password_reset_from_key_done.html:11
+msgid "Change Password"
+msgstr ""
+
+#: templates/account/password_change.html:26
+msgid "Forgot Password?"
+msgstr ""
+
+#: templates/account/password_reset.html:6
+#: templates/account/password_reset.html:11
+#: templates/account/password_reset_done.html:6
+msgid "Password Reset"
+msgstr ""
+
+#: templates/account/password_reset.html:12
+msgid "We'll send you a link to reset your password."
+msgstr ""
+
+#: templates/account/password_reset.html:27
+#, python-format
+msgid ""
+"Remember your password? <a href=\"%(login_url)s\" class=\"link link-"
+"primary\">Sign in here</a>"
+msgstr ""
+
+#: templates/account/password_reset_done.html:11
+msgid "Email Sent"
+msgstr ""
+
+#: templates/account/password_reset_done.html:12
+msgid "We've sent a password reset link to your email."
+msgstr ""
+
+#: templates/account/password_reset_from_key.html:12
+msgid "Bad Token"
+msgstr ""
+
+#: templates/account/password_reset_from_key.html:15
+#, python-format
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used. Please request a <a href=\"%(reset_url)s\" class=\"link link-"
+"primary\">new password reset</a>."
+msgstr ""
+
+#: templates/account/password_reset_from_key.html:24
+msgid "Submit"
+msgstr ""
+
+#: templates/account/password_reset_from_key.html:25
+msgid "Cancel"
+msgstr ""
+
+#: templates/account/password_reset_from_key_done.html:14
+#, python-format
+msgid ""
+"Your password has been successfully changed. You can <a "
+"href=\"%(login_url)s\">log in to your account</a> now."
+msgstr ""
+
+#: templates/account/password_set.html:10
+msgid "Set a password for your account to enable password-based login."
+msgstr ""
+
+#: templates/account/password_set.html:25
+msgid "Set Password"
+msgstr ""
+
+#: templates/account/reauthenticate.html:6
+#: templates/account/reauthenticate.html:11
+msgid "Confirm Access"
+msgstr ""
+
+#: templates/account/reauthenticate.html:13
+msgid ""
+"To keep your account safe, please confirm your password before proceeding."
+msgstr ""
+
+#: templates/account/signup.html:6 templates/account/signup.html:17
+msgid "Sign Up"
+msgstr ""
+
+#: templates/account/signup.html:11
+msgid "Create Your Account"
+msgstr ""
+
+#: templates/account/signup.html:23
+msgid "By continuing, you agree to our"
+msgstr ""
+
+#: templates/account/signup.html:23
+msgid "Terms and Conditions"
+msgstr ""
+
+#: templates/account/signup.html:31
+#, python-format
+msgid ""
+"Already have an account? <a href=\"%(login_url)s\" class=\"link link-"
+"primary\">Sign in here</a>"
+msgstr ""
+
+#: templates/account/snippets/already_logged_in.html:7
+#, python-format
+msgid ""
+"Note: You are already logged in as <strong>%(user_display_name)s</strong>."
+msgstr ""
+
+#: templates/account/snippets/already_logged_in.html:10
+#, python-format
+msgid "Not a customer yet? <a href=\"%(signup_url)s\">Sign up here</a>"
+msgstr ""
+
+#: templates/account/snippets/go_back.html:5
+msgid "Go back to the app"
+msgstr ""
+
+#: templates/account/verification_sent.html:6
+msgid "Verification Sent"
+msgstr ""
+
+#: templates/account/verification_sent.html:11
+msgid "Verify Your Email Address"
+msgstr ""
+
+#: templates/account/verification_sent.html:12
+msgid "We've sent a verification email to your inbox."
+msgstr ""
+
+#: templates/account/verification_sent.html:13
+msgid "If you don't see it, check your spam or junk folder."
+msgstr ""
+
+#: templates/account/verification_sent.html:15
+msgid ""
+"Still haven't received it after a few minutes? Contact us, and we'll help "
+"you get verified."
+msgstr ""
+
+#: templates/base_app.html:34 templates/base_settings.html:6
+msgid "Settings"
+msgstr ""
+
+#: templates/base_app.html:43
+#, python-format
+msgid "Invitations (%(pending_invitations_count)s)"
+msgstr ""
+
+#: templates/base_app.html:56 templates/base_settings.html:20
+msgid "Organization"
+msgstr ""
+
+#: templates/base_app.html:69
+msgid "Language"
+msgstr ""
+
+#: templates/base_app.html:81
+msgid "New organization"
+msgstr ""
+
+#: templates/base_app.html:84
+msgid "Log out"
+msgstr ""
+
+#: templates/base_settings.html:29
+msgid "Billing"
+msgstr ""
+
+#: templates/base_settings.html:38
+msgid "Account"
+msgstr ""
+
+#: templates/base_settings.html:47
+msgid "Security"
+msgstr ""
+
+#: templates/base_settings.html:59
+msgid "Your organization doesn't have an active subscription"
+msgstr ""
+
+#: templates/base_settings.html:61
+#, python-format
+msgid ""
+"Choose a plan on the <a href=\"%(billing_url)s\">billing page</a> to get "
+"started, or contact your organization administrator for help."
+msgstr ""
+
+#: templates/socialaccount/authentication_error.html:6
+#: templates/socialaccount/authentication_error.html:11
+msgid "Login Failed"
+msgstr ""
+
+#: templates/socialaccount/authentication_error.html:14
+#, python-format
+msgid ""
+"An error occurred while logging in via your third-party account, please try "
+"to <a href=\"%(login_url)s\">sign in</a> again."
+msgstr ""
+
+#: templates/socialaccount/connections.html:8
+msgid "You can sign in to your account using any of the following providers."
+msgstr ""
+
+#: templates/socialaccount/connections.html:33
+msgid "Disconnect"
+msgstr ""
+
+#: templates/socialaccount/connections.html:46
+msgid "You currently have no third-party accounts connected."
+msgstr ""
+
+#: templates/socialaccount/connections.html:50
+msgid "Connect additional third-party providers to have more login options."
+msgstr ""
+
+#: templates/socialaccount/login.html:13
+#, python-format
+msgid "Connect %(provider.name)s"
+msgstr ""
+
+#: templates/socialaccount/login.html:15
+#, python-format
+msgid ""
+"You are about to connect a new third-party account from %(provider.name)s."
+msgstr ""
+
+#: templates/socialaccount/login.html:18
+#, python-format
+msgid "Sign In Via %(provider.name)s"
+msgstr ""
+
+#: templates/socialaccount/login.html:20
+#, python-format
+msgid ""
+"You are about to sign in using a third-party account from %(provider.name)s."
+msgstr ""
+
+#: templates/socialaccount/login_cancelled.html:6
+#: templates/socialaccount/login_cancelled.html:11
+msgid "Login Cancelled"
+msgstr ""
+
+#: templates/socialaccount/login_cancelled.html:14
+#, python-format
+msgid ""
+"You cancelled logging in to our service. If this was a mistake, please "
+"proceed to <a href=\"%(login_url)s\">sign in</a>."
+msgstr ""
+
+#: templates/socialaccount/snippets/provider_list.html:9
+msgid "Continue with Google"
+msgstr ""
