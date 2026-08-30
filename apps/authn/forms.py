@@ -1,12 +1,18 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 from typing import cast
 
 import allauth.account.forms as allauth_forms
 from django import forms
-from django.http import HttpRequest
-from django.utils.functional import _StrPromise
+from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
-from apps.accounts.models import User
+if TYPE_CHECKING:
+    from django.http import HttpRequest
+    from django.utils.functional import _StrPromise
+
+    from apps.accounts.models import User
 
 
 def update_field(
@@ -57,7 +63,12 @@ class SignupForm(allauth_forms.SignupForm):
     def save(self, request: HttpRequest) -> User:
         user = cast("User", super().save(request))
         user.name = self.cleaned_data.get("name", "").strip()
-        user.save(update_fields=["name"])
+
+        language = request.COOKIES.get(settings.LANGUAGE_COOKIE_NAME)
+        if language in dict(settings.LANGUAGES):
+            user.language = language
+
+        user.save(update_fields=["name", "language"])
         return user
 
 
