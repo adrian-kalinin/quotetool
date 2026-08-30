@@ -18,8 +18,8 @@ html {
 }
 
 .navbar-vertical {
-    scrollbar-gutter: stable both-edges;
-    scrollbar-width: thin;
+  scrollbar-gutter: stable both-edges;
+  scrollbar-width: thin;
 }
 
 .navbar-vertical .navbar-nav .nav-link {
@@ -39,4 +39,23 @@ html {
 
 .navbar-vertical .nav-item.active::after {
   content: none;
+}
+
+/* Tabler flattens dropdowns inside the vertical sidebar into in-place accordion
+   lists. Restore the floating dropup for the sidebar switcher on desktop. */
+@media (min-width: 992px) {
+  #sidebar-dropup .dropdown-menu {
+    position: absolute;
+    width: 100%;
+    padding: var(--tblr-dropdown-padding-y) var(--tblr-dropdown-padding-x);
+    color: var(--tblr-dropdown-color);
+    background-color: var(--tblr-dropdown-bg);
+    border: var(--tblr-dropdown-border-width) solid
+      var(--tblr-dropdown-border-color);
+    box-shadow: var(--tblr-dropdown-box-shadow);
+  }
+
+  #sidebar-dropup .dropdown-item {
+    padding-left: var(--tblr-dropdown-item-padding-x);
+  }
 }

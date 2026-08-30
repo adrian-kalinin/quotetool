@@ -47,26 +47,21 @@
               </li>
             {% endif %}
             <li class="border-bottom mb-1 mt-1 mt-lg-auto"></li>
-            <li class="nav-item dropdown dropup">
+            <li id="sidebar-dropup" class="nav-item dropdown dropup">
               <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
                 <span class="nav-link-icon">{% tabler_icon "building" %}</span>
                 <span class="nav-link-title">{{ active_organization.name }}</span>
               </a>
               <div class="dropdown-menu">
-                <div class="dropdown-item active">{% tabler_icon "check" %} {{ active_organization.name }}</div>
+                <div class="dropdown-item">{% tabler_icon "check" %} {{ active_organization.name }}</div>
                 {% for organization in available_organizations %}
                   {% if organization != active_organization %}
-                    <form id="switch-org-{{ organization.pk }}"
-                          method="post"
-                          action="{% url 'organizations:organization-switch' organization.uuid %}"
-                          class="d-none">
+                    <form method="post" action="{% url 'organizations:organization-switch' organization.uuid %}">
                       {% csrf_token %}
+                      <button type="submit" class="dropdown-item w-100">
+                        <span class="icon"></span> {{ organization.name }}
+                      </button>
                     </form>
-                    <a href="#"
-                       class="dropdown-item"
-                       onclick="event.preventDefault(); document.getElementById('switch-org-{{ organization.pk }}').submit();">
-                      <span class="icon"></span> {{ organization.name }}
-                    </a>
                   {% endif %}
                 {% endfor %}
                 <div class="dropdown-divider"></div>
