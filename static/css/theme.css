@@ -59,6 +59,10 @@ html {
     box-shadow: var(--tblr-dropdown-box-shadow);
   }
 
+  #sidebar-dropup .dropdown-header {
+    font-size: 0.7rem;
+  }
+
   #sidebar-dropup .dropdown-item {
     padding-left: var(--tblr-dropdown-item-padding-x);
   }
