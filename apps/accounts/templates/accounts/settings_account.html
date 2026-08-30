@@ -2,6 +2,10 @@
 
 {% load i18n %}
 
+{% block head_title %}
+  {% trans "Account" %} | {{ block.super }}
+{% endblock head_title %}
+
 {% block settings_content %}
   <div class="card mb-4">
     <div class="card-header">

@@ -5,6 +5,10 @@
 {% load tabler_icons %}
 {% load i18n %}
 
+{% block head_title %}
+  {% trans "Billing" %} | {{ block.super }}
+{% endblock head_title %}
+
 {% block settings_content %}
   {% if subscription %}
     <div class="card mb-4">
