@@ -14,7 +14,7 @@ build *args:
 # Start application in detached mode
 up:
     @echo "{{ MAGENTA }}Starting containers...{{ NORMAL }}"
-    @{{ COMPOSE }} up -d --remove-orphans
+    @{{ COMPOSE }} up -d --no-build --remove-orphans
 
 # Shut down all services
 down:
