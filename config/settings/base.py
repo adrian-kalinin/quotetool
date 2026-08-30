@@ -168,8 +168,8 @@ SOCIALACCOUNT_PROVIDERS = {
 # Internationalization
 
 LANGUAGES = [
-    ("en", "English"),
-    ("de", "Deutsch"),
+    ("en", "🇺🇸 English"),
+    ("de", "🇩🇪 Deutsch"),
 ]
 
 LANGUAGE_CODE = "en"
