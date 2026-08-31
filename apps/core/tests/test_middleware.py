@@ -14,9 +14,9 @@ from django.urls import reverse
 from django_htmx.middleware import HtmxDetails
 
 from apps.accounts.models import User
+from apps.core.middleware import HtmxMessagesMiddleware
+from apps.core.middleware import HtmxOnlyMiddleware
 from apps.core.middleware import UserLocaleMiddleware
-from apps.core.middleware import htmx_messages_middleware
-from apps.core.middleware import htmx_only_middleware
 
 
 class UserLocaleMiddlewareTests(SimpleTestCase):
@@ -67,14 +67,14 @@ class HtmxOnlyMiddlewareTests(SimpleTestCase):
 
     def _call(self, path: str, *, htmx: bool) -> HttpResponse:
         get_response = Mock(return_value=HttpResponse("ok"))
-        middleware = htmx_only_middleware(get_response)
+        middleware = HtmxOnlyMiddleware(get_response)
         request = RequestFactory().get(path)
 
         if htmx:
             request.META["HTTP_HX_REQUEST"] = "true"
 
         request.htmx = HtmxDetails(request)  # type: ignore[reportAttributeAccessIssue]
-        return middleware(request)
+        return middleware(request)  # type: ignore[reportArgumentType]
 
     def test_non_htmx_request_to_messages_endpoint_redirects(self) -> None:
         response = self._call(reverse("core:hx-messages"), htmx=False)
@@ -100,7 +100,7 @@ class HtmxMessagesMiddlewareTests(SimpleTestCase):
 
     def _call(self, *, with_message: bool) -> HttpResponse:
         get_response = Mock(return_value=HttpResponse("ok"))
-        middleware = htmx_messages_middleware(get_response)
+        middleware = HtmxMessagesMiddleware(get_response)
         request = RequestFactory().get("/")
         request.session = SessionStore()
         request._messages = FallbackStorage(request)  # noqa: SLF001  # type: ignore[reportAttributeAccessIssue]
@@ -108,7 +108,7 @@ class HtmxMessagesMiddlewareTests(SimpleTestCase):
         if with_message:
             messages.add_message(request, messages.ERROR, "test error")
 
-        return middleware(request)
+        return middleware(request)  # type: ignore[reportArgumentType]
 
     def test_event_header_is_set_when_messages_are_queued(self) -> None:
         response = self._call(with_message=True)

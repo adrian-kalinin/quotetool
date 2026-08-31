@@ -11,10 +11,13 @@ if TYPE_CHECKING:
     from apps.accounts.models import User
 
 
-def active_organization_integrity_middleware(get_response: Callable) -> Callable:
+class ActiveOrganizationIntegrityMiddleware:
     """If the user's `active_organization` no longer matches a membership, null it out."""
 
-    def middleware(request: HttpRequest) -> HttpResponse:
+    def __init__(self, get_response: Callable) -> None:
+        self.get_response = get_response
+
+    def __call__(self, request: HttpRequest) -> HttpResponse:
         if request.user.is_authenticated:
             user = cast("User", request.user)
             original_organization_id = user.active_organization_id
@@ -36,6 +39,4 @@ def active_organization_integrity_middleware(get_response: Callable) -> Callable
             if user.active_organization_id != original_organization_id:
                 user.save(update_fields=["active_organization", "updated_at"])
 
-        return get_response(request)
-
-    return middleware
+        return self.get_response(request)

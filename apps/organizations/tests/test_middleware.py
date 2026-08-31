@@ -7,7 +7,7 @@ from django.test import RequestFactory
 from django.test import TestCase
 
 from apps.accounts.models import User
-from apps.organizations.middleware import active_organization_integrity_middleware
+from apps.organizations.middleware import ActiveOrganizationIntegrityMiddleware
 from apps.organizations.models import Organization
 from apps.organizations.models import OrganizationMembership
 
@@ -15,12 +15,12 @@ from apps.organizations.models import OrganizationMembership
 def run_middleware(user: User | AnonymousUser) -> HttpResponse:
     request = RequestFactory().get("/")
     request.user = user
-    middleware = active_organization_integrity_middleware(lambda _request: HttpResponse())
-    return middleware(request)
+    middleware = ActiveOrganizationIntegrityMiddleware(lambda _request: HttpResponse())
+    return middleware(request)  # type: ignore[reportArgumentType]
 
 
 class ActiveOrganizationIntegrityMiddlewareTests(TestCase):
-    """Tests for active_organization_integrity_middleware."""
+    """Tests for ActiveOrganizationIntegrityMiddleware."""
 
     @classmethod
     def setUpTestData(cls) -> None:

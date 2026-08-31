@@ -55,9 +55,9 @@ MIDDLEWARE = [
     "allauth.account.middleware.AccountMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
-    "apps.core.middleware.htmx_only_middleware",
-    "apps.core.middleware.htmx_messages_middleware",
-    "apps.organizations.middleware.active_organization_integrity_middleware",
+    "apps.core.middleware.HtmxOnlyMiddleware",
+    "apps.core.middleware.HtmxMessagesMiddleware",
+    "apps.organizations.middleware.ActiveOrganizationIntegrityMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
