@@ -21,6 +21,25 @@ html {
   --tblr-dropdown-item-border-radius: 0.75rem;
 }
 
+.dropdown-menu.show {
+  animation: dropdown-in 100ms ease-out;
+}
+
+@keyframes dropdown-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dropdown-menu.show {
+    animation: none;
+  }
+}
+
 .navbar-vertical {
   scrollbar-gutter: stable both-edges;
   scrollbar-width: thin;
