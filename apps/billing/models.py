@@ -10,6 +10,8 @@ class Subscription(models.Model):
     """The organization's current Polar subscription, snapshotted from webhook payloads."""
 
     class Status(models.TextChoices):
+        INCOMPLETE = "incomplete", _("Incomplete")
+        INCOMPLETE_EXPIRED = "incomplete_expired", _("Incomplete expired")
         TRIALING = "trialing", _("Trialing")
         ACTIVE = "active", _("Active")
         PAST_DUE = "past_due", _("Past due")

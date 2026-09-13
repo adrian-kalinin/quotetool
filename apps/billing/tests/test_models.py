@@ -34,6 +34,8 @@ class SubscriptionModelTests(TestCase):
 
     def test_is_active_false_for_other_statuses(self) -> None:
         for status in (
+            Subscription.Status.INCOMPLETE,
+            Subscription.Status.INCOMPLETE_EXPIRED,
             Subscription.Status.CANCELED,
             Subscription.Status.UNPAID,
             Subscription.Status.PAUSED,
