@@ -20,6 +20,7 @@ class OrganizationForm(forms.ModelForm):
 class InviteMemberForm(forms.ModelForm):
     email = forms.EmailField(
         label=_("Email Address"),
+        max_length=254,
         widget=forms.EmailInput(attrs={"placeholder": "john.doe@example.com"}),
     )
 
