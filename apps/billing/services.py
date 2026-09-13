@@ -27,24 +27,32 @@ def process_webhook_event(*, event_id: str, event_type: str, payload: dict, data
     acked (200). Transient errors propagate and roll back the row, so Polar's retry processes fresh.
     """
     with transaction.atomic():
-        row = WebhookEvent.objects.select_for_update().filter(polar_event_id=event_id).first()
+        row, created = WebhookEvent.objects.get_or_create(
+            polar_event_id=event_id,
+            defaults={
+                "event_type": event_type,
+                "payload": payload,
+                "status": WebhookEvent.Status.RECEIVED,
+                "error": "",
+            },
+        )
 
-        if row is not None and row.status != WebhookEvent.Status.ERROR:
-            return
+        # A concurrent delivery may have inserted the same event; lock the winner's row
+        # so only unprocessed/error rows are (re)applied.
+        if not created:
+            row = WebhookEvent.objects.select_for_update().get(pk=row.pk)
+
+            if row.status != WebhookEvent.Status.ERROR:
+                return
 
         try:
             status, error = _dispatch_event(event_type, data), ""
         except UnprocessableEventError as exc:
             status, error = WebhookEvent.Status.ERROR, str(exc)
 
-        if row is None:
-            WebhookEvent.objects.create(
-                polar_event_id=event_id, event_type=event_type, payload=payload, status=status, error=error
-            )
-        else:
-            row.status = status
-            row.error = error
-            row.save(update_fields=["status", "error"])
+        row.status = status
+        row.error = error
+        row.save(update_fields=["status", "error"])
 
 
 def _dispatch_event(event_type: str, data: object) -> WebhookEvent.Status:
