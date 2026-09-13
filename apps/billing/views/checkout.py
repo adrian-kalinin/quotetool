@@ -41,7 +41,7 @@ class CheckoutView(OrganizationAccessMixin, View):
             return redirect("billing:settings-billing")
 
         product_id = product_id_for(plan_key)
-        if product_id is None:
+        if not product_id:
             messages.error(request, _("This plan is not available for purchase."))
             return redirect("billing:settings-billing")
 
