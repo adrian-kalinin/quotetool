@@ -200,7 +200,7 @@ class PortalRedirectViewTests(BillingViewTestCase):
         self.assertEqual(response.status_code, 303)
         self.assertEqual(response["Location"], "https://polar.sh/portal/x")
         kwargs = client.customer_sessions.create.call_args.kwargs
-        self.assertEqual(kwargs["customer_external_id"], str(self.organization.uuid))
+        self.assertEqual(kwargs["external_customer_id"], str(self.organization.uuid))
 
     def test_blocks_non_manager(self) -> None:
         self.client.force_login(self.member)

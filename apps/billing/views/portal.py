@@ -28,7 +28,7 @@ class PortalRedirectView(OrganizationAccessMixin, View):
 
         try:
             session = get_polar_client().customer_sessions.create(  # type: ignore[reportCallIssue]
-                customer_external_id=str(organization.uuid),
+                external_customer_id=str(organization.uuid),
                 return_url=request.build_absolute_uri(reverse("billing:settings-billing")),
             )
         except Exception:
