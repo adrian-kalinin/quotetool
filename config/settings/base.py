@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "apps.authn",
     "apps.accounts",
     "apps.organizations",
+    "apps.customers",
     "apps.billing",
     "apps.pages",
     "apps.dashboard",
