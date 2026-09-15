@@ -49,3 +49,17 @@ class UserManagerTests(TestCase):
 
         with self.assertRaises(IntegrityError), transaction.atomic():
             User.objects.create_user("dupe@example.com", "testpass123")
+
+
+class UserDisplayNameTests(TestCase):
+    """Tests for User.display_name."""
+
+    def test_returns_name_when_set(self) -> None:
+        user = User.objects.create_user("user@example.com", name="Ada Lovelace")
+
+        self.assertEqual(user.display_name, "Ada Lovelace")
+
+    def test_falls_back_to_email_without_name(self) -> None:
+        user = User.objects.create_user("user@example.com")
+
+        self.assertEqual(user.display_name, "user@example.com")

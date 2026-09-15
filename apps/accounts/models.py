@@ -60,3 +60,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     objects: UserManager = UserManager()
+
+    @property
+    def display_name(self) -> str:
+        return self.name or self.email
