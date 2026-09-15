@@ -49,53 +49,48 @@
     <p class="m-0 text-secondary">
       {% blocktranslate count total=page_obj.paginator.count %}{{ total }} customer{% plural %}{{ total }} customers{% endblocktranslate %}
     </p>
-    <div class="ms-auto d-flex align-items-center gap-2">
-      <span id="customer-pagination-spinner" class="spinner-border spinner-border-sm htmx-indicator"></span>
-      <ul class="pagination m-0">
-        <li class="page-item{% if not page_obj.has_previous %} disabled{% endif %}">
-          {% if page_obj.has_previous %}
-            <a class="page-link"
-               href="{{ request.path }}{% querystring page=page_obj.previous_page_number %}"
-               hx-get="{{ request.path }}{% querystring page=page_obj.previous_page_number %}"
-               hx-target="#customer-list-container"
-               hx-swap="innerHTML"
-               hx-push-url="true"
-               hx-indicator="#customer-pagination-spinner">
-              {% tabler_icon "chevron-left" %}
-              <span class="d-none d-sm-inline">{% trans "Previous" %}</span>
-            </a>
-          {% else %}
-            <span class="page-link">
-              {% tabler_icon "chevron-left" %}
-              <span class="d-none d-sm-inline">{% trans "Previous" %}</span>
-            </span>
-          {% endif %}
-        </li>
-        <li class="page-item disabled">
+    <ul class="pagination m-0 ms-auto">
+      <li class="page-item{% if not page_obj.has_previous %} disabled{% endif %}">
+        {% if page_obj.has_previous %}
+          <a class="page-link"
+             href="{{ request.path }}{% querystring page=page_obj.previous_page_number %}"
+             hx-get="{{ request.path }}{% querystring page=page_obj.previous_page_number %}"
+             hx-target="#customer-list-container"
+             hx-swap="innerHTML"
+             hx-push-url="true">
+            {% tabler_icon "chevron-left" %}
+            <span class="d-none d-sm-inline">{% trans "Previous" %}</span>
+          </a>
+        {% else %}
           <span class="page-link">
-            {% blocktranslate with number=page_obj.number total=page_obj.paginator.num_pages %}Page {{ number }} of {{ total }}{% endblocktranslate %}
+            {% tabler_icon "chevron-left" %}
+            <span class="d-none d-sm-inline">{% trans "Previous" %}</span>
           </span>
-        </li>
-        <li class="page-item{% if not page_obj.has_next %} disabled{% endif %}">
-          {% if page_obj.has_next %}
-            <a class="page-link"
-               href="{{ request.path }}{% querystring page=page_obj.next_page_number %}"
-               hx-get="{{ request.path }}{% querystring page=page_obj.next_page_number %}"
-               hx-target="#customer-list-container"
-               hx-swap="innerHTML"
-               hx-push-url="true"
-               hx-indicator="#customer-pagination-spinner">
-              <span class="d-none d-sm-inline">{% trans "Next" %}</span>
-              {% tabler_icon "chevron-right" %}
-            </a>
-          {% else %}
-            <span class="page-link">
-              <span class="d-none d-sm-inline">{% trans "Next" %}</span>
-              {% tabler_icon "chevron-right" %}
-            </span>
-          {% endif %}
-        </li>
-      </ul>
-    </div>
+        {% endif %}
+      </li>
+      <li class="page-item disabled">
+        <span class="page-link">
+          {% blocktranslate with number=page_obj.number total=page_obj.paginator.num_pages %}Page {{ number }} of {{ total }}{% endblocktranslate %}
+        </span>
+      </li>
+      <li class="page-item{% if not page_obj.has_next %} disabled{% endif %}">
+        {% if page_obj.has_next %}
+          <a class="page-link"
+             href="{{ request.path }}{% querystring page=page_obj.next_page_number %}"
+             hx-get="{{ request.path }}{% querystring page=page_obj.next_page_number %}"
+             hx-target="#customer-list-container"
+             hx-swap="innerHTML"
+             hx-push-url="true">
+            <span class="d-none d-sm-inline">{% trans "Next" %}</span>
+            {% tabler_icon "chevron-right" %}
+          </a>
+        {% else %}
+          <span class="page-link">
+            <span class="d-none d-sm-inline">{% trans "Next" %}</span>
+            {% tabler_icon "chevron-right" %}
+          </span>
+        {% endif %}
+      </li>
+    </ul>
   </div>
 </div>
