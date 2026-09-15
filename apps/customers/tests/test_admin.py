@@ -26,7 +26,7 @@ class CustomerAdminTests(TestCase):
             type=Customer.Type.CORPORATE,
             company_name="Acme GmbH",
             email="billing@acme.test",
-            billing_address=address,
+            billing_address=address or self.create_address(),
         )
 
     def create_address(self) -> Address:
@@ -68,6 +68,10 @@ class CustomerAdminTests(TestCase):
                 "type": Customer.Type.CORPORATE,
                 "company_name": "Acme GmbH",
                 "email": "billing@acme.test",
+                "address_line1": "Old St 1",
+                "address_city": "Berlin",
+                "address_postal_code": "10115",
+                "address_country": "Germany",
             },
         )
 
@@ -123,25 +127,24 @@ class CustomerAdminTests(TestCase):
         self.assertEqual(customer.billing_address.line1, "1 Main St")
         self.assertEqual(customer.billing_address.organization, self.organization)
 
-    def test_edit_customer_clears_billing_address(self) -> None:
+    def test_edit_requires_billing_address(self) -> None:
         address = self.create_address()
         customer = self.create_customer(address=address)
 
         response = self.client.post(
             reverse("admin:customers_customer_change", kwargs={"object_id": customer.pk}),
             {
-                "organization": self.organization.pk,
                 "type": Customer.Type.CORPORATE,
                 "company_name": "Acme GmbH",
                 "email": "billing@acme.test",
             },
         )
 
-        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
         customer.refresh_from_db()
-        self.assertIsNone(customer.billing_address)
-        self.assertFalse(Address.objects.filter(pk=address.pk).exists())
+        self.assertEqual(customer.billing_address, address)
+        self.assertTrue(Address.objects.filter(pk=address.pk).exists())
 
     def test_delete_customer_removes_billing_address(self) -> None:
         address = self.create_address()

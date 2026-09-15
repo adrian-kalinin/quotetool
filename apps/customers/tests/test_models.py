@@ -43,6 +43,20 @@ class CustomerModelTests(TestCase):
 
         self.assertEqual(customer.display_name, "John Doe")
 
+    def test_deleting_customer_deletes_owned_billing_address(self) -> None:
+        customer = Customer.objects.create(
+            organization=self.organization,
+            type=Customer.Type.CORPORATE,
+            company_name="Acme Inc.",
+            email="billing@acme.test",
+            billing_address=self.address,
+        )
+        address_id = customer.billing_address_id
+
+        customer.delete()
+
+        self.assertFalse(Address.objects.filter(pk=address_id).exists())
+
 
 class AddressModelTests(TestCase):
     """Tests for the Address model."""
