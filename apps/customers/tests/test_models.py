@@ -71,3 +71,20 @@ class AddressModelTests(TestCase):
         )
 
         self.assertEqual(str(address), "1 Main St, Berlin, Germany")
+
+    def test_formatted_without_region_or_line2(self) -> None:
+        address = Address(line1="1 Main St", city="Berlin", postal_code="10115", country="Germany")
+
+        self.assertEqual(address.formatted, "1 Main St\n10115 Berlin\nGermany")
+
+    def test_formatted_with_region_and_line2(self) -> None:
+        address = Address(
+            line1="1 Main St",
+            line2="Suite 4",
+            city="Berlin",
+            region="Berlin",
+            postal_code="10115",
+            country="Germany",
+        )
+
+        self.assertEqual(address.formatted, "1 Main St\nSuite 4\n10115 Berlin, Berlin\nGermany")

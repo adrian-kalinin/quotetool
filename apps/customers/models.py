@@ -23,6 +23,23 @@ class Address(models.Model):
     def __str__(self) -> str:
         return ", ".join(part for part in (self.line1, self.city, self.country) if part)
 
+    @property
+    def formatted(self) -> str:
+        """Return the address as a multi-line block."""
+        parts = [self.line1]
+
+        if self.line2:
+            parts.append(self.line2)
+
+        if self.region:
+            parts.append(f"{self.postal_code} {self.city}, {self.region}")
+        else:
+            parts.append(f"{self.postal_code} {self.city}")
+
+        parts.append(self.country)
+
+        return "\n".join(parts)
+
 
 class Customer(models.Model):
     class Type(models.TextChoices):
