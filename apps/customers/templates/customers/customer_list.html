@@ -1,0 +1,42 @@
+{% extends "base_app.html" %}
+
+{% load tabler_icons %}
+{% load i18n %}
+
+{% block head_title %}
+  {% trans "Customers" %} | {{ block.super }}
+{% endblock head_title %}
+
+{% block page_title %}
+  {% trans "Customers" %}
+{% endblock page_title %}
+
+{% block page_actions %}
+  <a href="{% url 'customers:customer-create' %}" class="btn btn-primary" hx-boost="true">
+    {% tabler_icon "plus" extra_class="me-2" %}{% trans "Add customer" %}
+  </a>
+{% endblock page_actions %}
+
+{% block content %}
+  <form class="mb-3"
+        hx-get="{% url 'customers:customer-list' %}"
+        hx-target="#customer-list-container"
+        hx-swap="innerHTML"
+        hx-push-url="true"
+        hx-indicator="#customer-search-spinner"
+        hx-trigger="input changed delay:300ms, search, submit">
+    <div class="input-icon">
+      <span class="input-icon-addon">{% tabler_icon "search" %}</span>
+      <input type="search"
+             name="q"
+             value="{{ query }}"
+             class="form-control"
+             placeholder="{% trans "Search by name, company, or email" %}"
+             autocomplete="off" />
+      <span id="customer-search-spinner" class="input-icon-addon htmx-indicator">
+        <span class="spinner-border spinner-border-sm"></span>
+      </span>
+    </div>
+  </form>
+  <div id="customer-list-container">{% include "customers/partials/customer_list_results.html" %}</div>
+{% endblock content %}
