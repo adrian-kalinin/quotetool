@@ -23,7 +23,6 @@
         hx-target="#customer-list-container"
         hx-swap="innerHTML"
         hx-push-url="true"
-        hx-indicator="#customer-search-spinner"
         hx-trigger="input changed delay:300ms, search, submit">
     <div class="input-icon">
       <span class="input-icon-addon">{% tabler_icon "search" %}</span>
@@ -33,9 +32,6 @@
              class="form-control"
              placeholder="{% trans "Search by name, company, or email" %}"
              autocomplete="off" />
-      <span id="customer-search-spinner" class="input-icon-addon htmx-indicator">
-        <span class="spinner-border spinner-border-sm"></span>
-      </span>
     </div>
   </form>
   <div id="customer-list-container">{% include "customers/partials/customer_list_results.html" %}</div>

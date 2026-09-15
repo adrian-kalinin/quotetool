@@ -15,38 +15,22 @@
             <li class="nav-item">
               <a href="{% url 'organizations:settings-organization' %}"
                  class="nav-link{% if request.resolver_match.view_name == 'organizations:settings-organization' %} active{% endif %}"
-                 hx-boost="true"
-                 hx-indicator="#settings-nav-organization">
-                {% tabler_icon 'building' extra_class="me-2" %} {% trans "Organization" %}
-                <span id="settings-nav-organization" class="spinner-border spinner-border-sm ms-2 htmx-indicator"></span>
-              </a>
+                 hx-boost="true">{% tabler_icon 'building' extra_class="me-2" %} {% trans "Organization" %}</a>
             </li>
             <li class="nav-item">
               <a href="{% url 'billing:settings-billing' %}"
                  class="nav-link{% if request.resolver_match.view_name == 'billing:settings-billing' %} active{% endif %}"
-                 hx-boost="true"
-                 hx-indicator="#settings-nav-billing">
-                {% tabler_icon 'credit-card' extra_class="me-2" %} {% trans "Billing" %}
-                <span id="settings-nav-billing" class="spinner-border spinner-border-sm ms-2 htmx-indicator"></span>
-              </a>
+                 hx-boost="true">{% tabler_icon 'credit-card' extra_class="me-2" %} {% trans "Billing" %}</a>
             </li>
             <li class="nav-item">
               <a href="{% url 'accounts:settings-account' %}"
                  class="nav-link{% if request.resolver_match.view_name == 'accounts:settings-account' %} active{% endif %}"
-                 hx-boost="true"
-                 hx-indicator="#settings-nav-account">
-                {% tabler_icon 'user' extra_class="me-2" %} {% trans "Account" %}
-                <span id="settings-nav-account" class="spinner-border spinner-border-sm ms-2 htmx-indicator"></span>
-              </a>
+                 hx-boost="true">{% tabler_icon 'user' extra_class="me-2" %} {% trans "Account" %}</a>
             </li>
             <li class="nav-item">
               <a href="{% url 'accounts:settings-security' %}"
                  class="nav-link{% if request.resolver_match.view_name == 'accounts:settings-security' %} active{% endif %}"
-                 hx-boost="true"
-                 hx-indicator="#settings-nav-security">
-                {% tabler_icon 'shield' extra_class="me-2" %} {% trans "Security" %}
-                <span id="settings-nav-security" class="spinner-border spinner-border-sm ms-2 htmx-indicator"></span>
-              </a>
+                 hx-boost="true">{% tabler_icon 'shield' extra_class="me-2" %} {% trans "Security" %}</a>
             </li>
           </ul>
         </div>
