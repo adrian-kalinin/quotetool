@@ -28,6 +28,16 @@
                 <span id="nav-dashboard" class="spinner-border spinner-border-sm ms-2 htmx-indicator"></span>
               </a>
             </li>
+            <li class="nav-item{% if 'customers' in request.resolver_match.view_name %} active{% endif %}">
+              <a class="nav-link{% if not active_organization.has_active_subscription %} disabled{% endif %}"
+                 href="{% url 'customers:customer-list' %}"
+                 hx-boost="true"
+                 hx-indicator="#nav-customers">
+                <span class="nav-link-icon">{% tabler_icon 'users' %}</span>
+                <span class="nav-link-title">{% trans "Customers" %}</span>
+                <span id="nav-customers" class="spinner-border spinner-border-sm ms-2 htmx-indicator"></span>
+              </a>
+            </li>
             <li class="nav-item{% if 'settings' in request.resolver_match.view_name %} active{% endif %}">
               <a class="nav-link" href="{% url 'organizations:settings-organization' %}" hx-boost="true" hx-indicator="#nav-settings">
                 <span class="nav-link-icon">{% tabler_icon 'settings' %}</span>
