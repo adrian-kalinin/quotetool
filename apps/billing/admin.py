@@ -30,13 +30,13 @@ class SubscriptionAdmin(ModelAdmin):
         ("Dates", {"fields": ("updated_at", "created_at")}),
     )
 
-    def has_add_permission(self, _: HttpRequest) -> bool:
+    def has_add_permission(self, _request: HttpRequest) -> bool:
         return False
 
-    def has_change_permission(self, _: HttpRequest, __: Subscription | None = None) -> bool:
+    def has_change_permission(self, _request: HttpRequest, _obj: Subscription | None = None) -> bool:
         return False
 
-    def has_delete_permission(self, _: HttpRequest, __: Subscription | None = None) -> bool:
+    def has_delete_permission(self, _request: HttpRequest, _obj: Subscription | None = None) -> bool:
         return False
 
     @admin.display(description="Amount")
@@ -55,13 +55,13 @@ class WebhookEventAdmin(ModelAdmin):
         ("Dates", {"fields": ("created_at",)}),
     )
 
-    def has_add_permission(self, _: HttpRequest) -> bool:
+    def has_add_permission(self, _request: HttpRequest) -> bool:
         return False
 
-    def has_change_permission(self, _: HttpRequest, __: WebhookEvent | None = None) -> bool:
+    def has_change_permission(self, _request: HttpRequest, _obj: WebhookEvent | None = None) -> bool:
         return False
 
-    def has_delete_permission(self, _: HttpRequest, __: WebhookEvent | None = None) -> bool:
+    def has_delete_permission(self, _request: HttpRequest, _obj: WebhookEvent | None = None) -> bool:
         return False
 
     @admin.display(description="Data")

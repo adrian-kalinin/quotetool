@@ -23,10 +23,10 @@ class OrganizationAdmin(ModelAdmin):
     def get_queryset(self, request: HttpRequest) -> QuerySet[Organization]:
         return super().get_queryset(request).annotate(users_count=Count("memberships"))
 
-    def has_add_permission(self, _: HttpRequest) -> bool:
+    def has_add_permission(self, _request: HttpRequest) -> bool:
         return False
 
-    def has_delete_permission(self, _: HttpRequest, __: Organization | None = None) -> bool:
+    def has_delete_permission(self, _request: HttpRequest, _obj: Organization | None = None) -> bool:
         return False
 
     @admin.display(description="Users")
@@ -47,8 +47,8 @@ class OrganizationInvitationAdmin(ModelAdmin):
     )
     readonly_fields = ("organization", "email", "invited_by", "created_at", "expires_at", "accepted_at")
 
-    def has_add_permission(self, _: HttpRequest) -> bool:
+    def has_add_permission(self, _request: HttpRequest) -> bool:
         return False
 
-    def has_delete_permission(self, _: HttpRequest, __: OrganizationInvitation | None = None) -> bool:
+    def has_delete_permission(self, _request: HttpRequest, _obj: OrganizationInvitation | None = None) -> bool:
         return False

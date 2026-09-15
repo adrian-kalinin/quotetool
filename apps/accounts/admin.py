@@ -18,10 +18,10 @@ class EmailAddressInline(TabularInline):
     fields = ("email", "verified", "primary")
     readonly_fields = ("email", "primary")
 
-    def has_add_permission(self, _: HttpRequest, __: EmailAddress | None = None) -> bool:
+    def has_add_permission(self, _request: HttpRequest, _obj: EmailAddress | None = None) -> bool:
         return False
 
-    def has_delete_permission(self, _: HttpRequest, __: EmailAddress | None = None) -> bool:
+    def has_delete_permission(self, _request: HttpRequest, _obj: EmailAddress | None = None) -> bool:
         return False
 
 
@@ -29,13 +29,13 @@ class OrganizationMembershipInline(TabularInline):
     model = OrganizationMembership
     hide_title = True
 
-    def has_change_permission(self, _: HttpRequest, __: OrganizationMembership | None = None) -> bool:
+    def has_change_permission(self, _request: HttpRequest, _obj: OrganizationMembership | None = None) -> bool:
         return False
 
-    def has_add_permission(self, _: HttpRequest, __: OrganizationMembership | None = None) -> bool:
+    def has_add_permission(self, _request: HttpRequest, _obj: OrganizationMembership | None = None) -> bool:
         return False
 
-    def has_delete_permission(self, _: HttpRequest, __: OrganizationMembership | None = None) -> bool:
+    def has_delete_permission(self, _request: HttpRequest, _obj: OrganizationMembership | None = None) -> bool:
         return False
 
 
@@ -54,8 +54,8 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
 
     inlines = [EmailAddressInline, OrganizationMembershipInline]
 
-    def has_add_permission(self, _: HttpRequest) -> bool:
+    def has_add_permission(self, _request: HttpRequest) -> bool:
         return False
 
-    def has_delete_permission(self, _: HttpRequest, __: User | None = None) -> bool:
+    def has_delete_permission(self, _request: HttpRequest, _obj: User | None = None) -> bool:
         return False
