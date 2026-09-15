@@ -11,6 +11,13 @@ class CustomerModelTests(TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
         cls.organization = Organization.objects.create(name="Acme Inc.")
+        cls.address = Address.objects.create(
+            organization=cls.organization,
+            line1="1 Main St",
+            city="Berlin",
+            postal_code="10115",
+            country="Germany",
+        )
 
     def test_display_name_for_corporate_customer(self) -> None:
         customer = Customer.objects.create(
@@ -18,6 +25,7 @@ class CustomerModelTests(TestCase):
             type=Customer.Type.CORPORATE,
             company_name="Acme Inc.",
             email="billing@acme.test",
+            billing_address=self.address,
         )
 
         self.assertEqual(customer.display_name, "Acme Inc.")
@@ -30,6 +38,7 @@ class CustomerModelTests(TestCase):
             first_name="John",
             last_name="Doe",
             email="john@example.test",
+            billing_address=self.address,
         )
 
         self.assertEqual(customer.display_name, "John Doe")

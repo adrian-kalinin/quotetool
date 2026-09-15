@@ -37,9 +37,7 @@ class Customer(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=30, blank=True)
     notes = models.TextField(blank=True)
-    billing_address = models.ForeignKey(
-        Address, on_delete=models.SET_NULL, null=True, blank=True, related_name="billing_customers"
-    )
+    billing_address = models.OneToOneField(Address, on_delete=models.PROTECT, related_name="billing_customer")
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -51,7 +49,7 @@ class Customer(models.Model):
     )
 
     organization_id: int
-    billing_address_id: int | None
+    billing_address_id: int
 
     def __str__(self) -> str:
         return self.display_name
