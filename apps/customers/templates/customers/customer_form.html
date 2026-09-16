@@ -1,0 +1,108 @@
+{% extends "base_app.html" %}
+
+{% load widget_tweaks %}
+{% load tabler_icons %}
+{% load i18n %}
+
+{% block head_title %}
+  {% if form.instance.pk %}
+    {% trans "Edit customer" %} | {{ block.super }}
+  {% else %}
+    {% trans "New customer" %} | {{ block.super }}
+  {% endif %}
+{% endblock head_title %}
+
+{% block page_title %}
+  <a href="{% if form.instance.pk %}{% url 'customers:customer-detail' form.instance.pk %}{% else %}{% url 'customers:customer-list' %}{% endif %}"
+     class="btn btn-icon btn-outline me-3"
+     aria-label="{% trans "Back" %}"
+     title="{% trans "Back" %}"
+     hx-boost="true">{% tabler_icon "arrow-left" %}</a>
+  {% if form.instance.pk %}
+    {% trans "Edit customer" %}
+  {% else %}
+    {% trans "New customer" %}
+  {% endif %}
+{% endblock page_title %}
+
+{% block page_actions %}
+  <button type="submit" form="customer-form" class="btn btn-primary">
+    {% if form.instance.pk %}
+      {% trans "Save changes" %}
+    {% else %}
+      {% trans "Create customer" %}
+    {% endif %}
+  </button>
+{% endblock page_actions %}
+
+{% block content %}
+  <form id="customer-form"
+        method="post"
+        action="{% if form.instance.pk %}{% url 'customers:customer-update' form.instance.pk %}{% else %}{% url 'customers:customer-create' %}{% endif %}"
+        x-data="{ customerType: '{{ form.type.value|default:"corporate" }}' }">
+    {% csrf_token %}
+    {% if form.non_field_errors %}{{ form.non_field_errors }}{% endif %}
+    <div class="row g-4">
+      <div class="col-12 col-lg-6">
+        <div class="card h-100">
+          <div class="card-header">
+            <h3 class="card-title">{% trans "Customer details" %}</h3>
+          </div>
+          <div class="card-body">
+            <fieldset class="mb-3">
+              <legend class="visually-hidden">{% trans "Customer type" %}</legend>
+              <div class="btn-group w-100">
+                {% for value, label in form.type.field.choices %}
+                  {% if value %}
+                    <input type="radio"
+                           class="btn-check"
+                           name="type"
+                           id="id_type_{{ value }}"
+                           value="{{ value }}"
+                           autocomplete="off"
+                           x-model="customerType"
+                           {% if form.type.value == value %}checked{% endif %} />
+                    <label class="btn w-50" for="id_type_{{ value }}">{{ label }}</label>
+                  {% endif %}
+                {% endfor %}
+              </div>
+              {% for error in form.type.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
+            </fieldset>
+            <div class="row">
+              <div class="col-12" x-show="customerType === 'corporate'" x-cloak>{{ form.company_name.as_field_group }}</div>
+              <div class="col-md-6" x-show="customerType === 'private'" x-cloak>{{ form.first_name.as_field_group }}</div>
+              <div class="col-md-6" x-show="customerType === 'private'" x-cloak>{{ form.last_name.as_field_group }}</div>
+              <div class="col-md-6">{{ form.email.as_field_group }}</div>
+              <div class="col-md-6">{{ form.phone.as_field_group }}</div>
+            </div>
+            <details {% if form.notes.value or form.notes.errors %}open{% endif %}>
+              <summary class="text-secondary">{% trans "Additional notes" %}</summary>
+              <div class="mt-2">
+                <label for="{{ form.notes.id_for_label }}" class="visually-hidden">{{ form.notes.label }}</label>
+                {{ form.notes|add_class:'form-control'|attr:'rows:3'|add_error_class:'is-invalid' }}
+                {% for error in form.notes.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="card h-100">
+          <div class="card-header">
+            <h3 class="card-title">{% trans "Billing address" %}</h3>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">{{ form.address_line1.as_field_group }}</div>
+              <div class="col-12">{{ form.address_line2.as_field_group }}</div>
+              <div class="col-md-6">{{ form.address_city.as_field_group }}</div>
+              <div class="col-md-6">{{ form.address_postal_code.as_field_group }}</div>
+              <div class="col-md-6">{{ form.address_region.as_field_group }}</div>
+              <div class="col-md-6">{{ form.address_country.as_field_group }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+{% endblock content %}
