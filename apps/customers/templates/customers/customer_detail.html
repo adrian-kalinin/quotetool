@@ -1,0 +1,83 @@
+{% extends "base_app.html" %}
+
+{% load tabler_icons %}
+{% load i18n %}
+
+{% block head_title %}
+  {{ customer.display_name }} | {{ block.super }}
+{% endblock head_title %}
+
+{% block page_title %}
+  <a href="{% url 'customers:customer-list' %}"
+     class="btn btn-icon btn-outline me-3"
+     aria-label="{% trans "Back to customers" %}"
+     title="{% trans "Back to customers" %}"
+     hx-boost="true">{% tabler_icon "arrow-left" %}</a>
+  {{ customer.display_name }}
+{% endblock page_title %}
+
+{% block page_actions %}
+  <a href="{% url 'customers:customer-update' customer.pk %}" class="btn btn-primary" hx-boost="true">
+    {% tabler_icon "pencil" extra_class="me-2" %}{% trans "Edit" %}
+  </a>
+{% endblock page_actions %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{% trans "Customer Details" %}</h3>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12 col-md-6 mb-4 mb-md-0">
+          <h3 class="subheader">{% trans "Contact information" %}</h3>
+          <ul class="list-unstyled m-0">
+            <li class="d-flex align-items-center gap-2 mb-2">
+              {% if customer.type == "corporate" %}
+                {% tabler_icon "building" extra_class="text-secondary" %}
+              {% else %}
+                {% tabler_icon "user" extra_class="text-secondary" %}
+              {% endif %}
+              <span>{{ customer.display_name }}</span>
+            </li>
+            <li class="d-flex align-items-center gap-2 mb-2">
+              {% tabler_icon "phone" extra_class="text-secondary" %}
+              <span>{{ customer.phone|default:"—" }}</span>
+            </li>
+            <li class="d-flex align-items-center gap-2">
+              {% tabler_icon "mail" extra_class="text-secondary" %}
+              <a href="mailto:{{ customer.email }}">{{ customer.email }}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-12 col-md-6">
+          <h3 class="subheader">{% trans "Billing address" %}</h3>
+          <div class="d-flex align-items-start gap-2">
+            {% tabler_icon "map-pin" extra_class="text-secondary flex-shrink-0" %}
+            <address class="mb-0">{{ customer.billing_address.formatted|linebreaksbr }}</address>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4">
+        <h3 class="subheader">{% trans "Additional notes" %}</h3>
+        <p class="mb-0">{{ customer.notes|default:"—"|linebreaksbr }}</p>
+      </div>
+    </div>
+    <div class="card-footer text-secondary text-sm">
+      <div class="d-flex flex-wrap gap-3">
+        <span>
+          {% tabler_icon "calendar-plus" extra_class="me-1" %}
+          {% blocktranslate trimmed with date=customer.created_at|date:"DATE_FORMAT" timestamp=customer.created_at|date:"SHORT_DATETIME_FORMAT" iso=customer.created_at|date:"c" author=customer.created_by.display_name|default:"—" %}
+            Created <time datetime="{{ iso }}" title="{{ timestamp }}" class="text-body">{{ date }}</time> by <span class="text-body">{{ author }}</span>
+          {% endblocktranslate %}
+        </span>
+        <span>
+          {% tabler_icon "refresh" extra_class="me-1" %}
+          {% blocktranslate trimmed with date=customer.updated_at|date:"DATE_FORMAT" timestamp=customer.updated_at|date:"SHORT_DATETIME_FORMAT" iso=customer.updated_at|date:"c" author=customer.updated_by.display_name|default:"—" %}
+            Updated <time datetime="{{ iso }}" title="{{ timestamp }}" class="text-body">{{ date }}</time> by <span class="text-body">{{ author }}</span>
+          {% endblocktranslate %}
+        </span>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
