@@ -6,6 +6,9 @@ from django.urls import reverse
 from apps.accounts.models import User
 from apps.customers.models import Address
 from apps.customers.models import Customer
+from apps.customers.tests.helpers import create_address
+from apps.customers.tests.helpers import create_customer
+from apps.customers.tests.helpers import customer_form_data
 from apps.organizations.models import Organization
 
 
@@ -20,26 +23,8 @@ class CustomerAdminTests(TestCase):
     def setUp(self) -> None:
         self.client.force_login(self.superuser)
 
-    def create_customer(self, *, address: Address | None = None) -> Customer:
-        return Customer.objects.create(
-            organization=self.organization,
-            type=Customer.Type.CORPORATE,
-            company_name="Acme GmbH",
-            email="billing@acme.test",
-            billing_address=address or self.create_address(),
-        )
-
-    def create_address(self) -> Address:
-        return Address.objects.create(
-            organization=self.organization,
-            line1="Old St 1",
-            city="Berlin",
-            postal_code="10115",
-            country="Germany",
-        )
-
     def test_change_page_renders_editable_address_inputs(self) -> None:
-        customer = self.create_customer(address=self.create_address())
+        customer = create_customer(self.organization)
 
         response = self.client.get(reverse("admin:customers_customer_change", kwargs={"object_id": customer.pk}))
 
@@ -53,26 +38,18 @@ class CustomerAdminTests(TestCase):
         self.assertContains(response, 'name="organization"')
 
     def test_organization_is_readonly_when_editing(self) -> None:
-        customer = self.create_customer()
+        customer = create_customer(self.organization)
 
         response = self.client.get(reverse("admin:customers_customer_change", kwargs={"object_id": customer.pk}))
 
         self.assertNotContains(response, 'name="organization"')
 
     def test_change_keeps_organization_without_posting_it(self) -> None:
-        customer = self.create_customer()
+        customer = create_customer(self.organization)
 
         response = self.client.post(
             reverse("admin:customers_customer_change", kwargs={"object_id": customer.pk}),
-            {
-                "type": Customer.Type.CORPORATE,
-                "company_name": "Acme GmbH",
-                "email": "billing@acme.test",
-                "address_line1": "Old St 1",
-                "address_city": "Berlin",
-                "address_postal_code": "10115",
-                "address_country": "Germany",
-            },
+            customer_form_data(),
         )
 
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
@@ -81,21 +58,12 @@ class CustomerAdminTests(TestCase):
         self.assertEqual(customer.organization, self.organization)
 
     def test_change_page_updates_billing_address(self) -> None:
-        address = self.create_address()
-        customer = self.create_customer(address=address)
+        address = create_address(self.organization, line1="Old St 1")
+        customer = create_customer(self.organization, billing_address=address)
 
         response = self.client.post(
             reverse("admin:customers_customer_change", kwargs={"object_id": customer.pk}),
-            {
-                "organization": self.organization.pk,
-                "type": Customer.Type.CORPORATE,
-                "company_name": "Acme GmbH",
-                "email": "billing@acme.test",
-                "address_line1": "New St 2",
-                "address_city": "Munich",
-                "address_postal_code": "80331",
-                "address_country": "Germany",
-            },
+            customer_form_data(address_line1="New St 2", address_city="Munich", address_postal_code="80331"),
         )
 
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
@@ -108,36 +76,22 @@ class CustomerAdminTests(TestCase):
     def test_add_customer_creates_billing_address(self) -> None:
         response = self.client.post(
             reverse("admin:customers_customer_add"),
-            {
-                "organization": self.organization.pk,
-                "type": Customer.Type.CORPORATE,
-                "company_name": "Acme GmbH",
-                "email": "billing@acme.test",
-                "address_line1": "1 Main St",
-                "address_city": "Berlin",
-                "address_postal_code": "10115",
-                "address_country": "Germany",
-            },
+            customer_form_data(organization=self.organization.pk),
         )
 
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
 
         customer = Customer.objects.get()
-        self.assertIsNotNone(customer.billing_address)
         self.assertEqual(customer.billing_address.line1, "1 Main St")
         self.assertEqual(customer.billing_address.organization, self.organization)
 
     def test_edit_requires_billing_address(self) -> None:
-        address = self.create_address()
-        customer = self.create_customer(address=address)
+        address = create_address(self.organization)
+        customer = create_customer(self.organization, billing_address=address)
 
         response = self.client.post(
             reverse("admin:customers_customer_change", kwargs={"object_id": customer.pk}),
-            {
-                "type": Customer.Type.CORPORATE,
-                "company_name": "Acme GmbH",
-                "email": "billing@acme.test",
-            },
+            customer_form_data(address_line1="", address_city="", address_postal_code="", address_country=""),
         )
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
@@ -147,8 +101,8 @@ class CustomerAdminTests(TestCase):
         self.assertTrue(Address.objects.filter(pk=address.pk).exists())
 
     def test_delete_customer_removes_billing_address(self) -> None:
-        address = self.create_address()
-        customer = self.create_customer(address=address)
+        address = create_address(self.organization)
+        customer = create_customer(self.organization, billing_address=address)
 
         response = self.client.post(
             reverse("admin:customers_customer_delete", kwargs={"object_id": customer.pk}),

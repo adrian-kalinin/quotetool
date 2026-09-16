@@ -1,7 +1,9 @@
+from django.test import SimpleTestCase
 from django.test import TestCase
 
 from apps.customers.models import Address
 from apps.customers.models import Customer
+from apps.customers.tests.helpers import create_customer
 from apps.organizations.models import Organization
 
 
@@ -11,46 +13,26 @@ class CustomerModelTests(TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
         cls.organization = Organization.objects.create(name="Acme Inc.")
-        cls.address = Address.objects.create(
-            organization=cls.organization,
-            line1="1 Main St",
-            city="Berlin",
-            postal_code="10115",
-            country="Germany",
-        )
 
     def test_display_name_for_corporate_customer(self) -> None:
-        customer = Customer.objects.create(
-            organization=self.organization,
-            type=Customer.Type.CORPORATE,
-            company_name="Acme Inc.",
-            email="billing@acme.test",
-            billing_address=self.address,
-        )
+        customer = create_customer(self.organization, company_name="Acme Inc.")
 
         self.assertEqual(customer.display_name, "Acme Inc.")
         self.assertEqual(str(customer), "Acme Inc.")
 
     def test_display_name_for_private_customer(self) -> None:
-        customer = Customer.objects.create(
-            organization=self.organization,
+        customer = create_customer(
+            self.organization,
             type=Customer.Type.PRIVATE,
             first_name="John",
             last_name="Doe",
             email="john@example.test",
-            billing_address=self.address,
         )
 
         self.assertEqual(customer.display_name, "John Doe")
 
     def test_deleting_customer_deletes_owned_billing_address(self) -> None:
-        customer = Customer.objects.create(
-            organization=self.organization,
-            type=Customer.Type.CORPORATE,
-            company_name="Acme Inc.",
-            email="billing@acme.test",
-            billing_address=self.address,
-        )
+        customer = create_customer(self.organization, company_name="Acme Inc.")
         address_id = customer.billing_address_id
 
         customer.delete()
@@ -58,17 +40,11 @@ class CustomerModelTests(TestCase):
         self.assertFalse(Address.objects.filter(pk=address_id).exists())
 
 
-class AddressModelTests(TestCase):
+class AddressModelTests(SimpleTestCase):
     """Tests for the Address model."""
 
     def test_str_joins_line1_city_and_country(self) -> None:
-        address = Address(
-            organization=Organization.objects.create(name="Acme Inc."),
-            line1="1 Main St",
-            city="Berlin",
-            postal_code="10115",
-            country="Germany",
-        )
+        address = Address(line1="1 Main St", city="Berlin", postal_code="10115", country="Germany")
 
         self.assertEqual(str(address), "1 Main St, Berlin, Germany")
 
