@@ -1,35 +1,38 @@
 {% load widget_tweaks %}
 {% load tabler_icons %}
+{% load form_controls %}
 
-<div class="mb-3">
-  {% if field.field.widget.input_type == 'checkbox' %}
-    <div class="form-check">
-      {{ field|add_class:'form-check-input'|add_error_class:'is-invalid' }}
+{% with widget_class=field|control_class %}
+  <div class="mb-3">
+    {% if field.field.widget.input_type == 'checkbox' %}
+      <div class="form-check">
+        {{ field|add_class:widget_class|add_error_class:'is-invalid' }}
+        {% if field.label %}
+          <label for="{{ field.id_for_label }}" class="form-check-label{% if field.field.required %} required{% endif %}">
+            {{ field.label }}
+          </label>
+        {% endif %}
+      </div>
+    {% else %}
       {% if field.label %}
-        <label for="{{ field.id_for_label }}" class="form-check-label{% if field.field.required %} required{% endif %}">
+        <label for="{{ field.id_for_label }}" class="form-label{% if field.field.required %} required{% endif %}">
           {{ field.label }}
         </label>
       {% endif %}
-    </div>
-  {% else %}
-    {% if field.label %}
-      <label for="{{ field.id_for_label }}" class="form-label{% if field.field.required %} required{% endif %}">
-        {{ field.label }}
-      </label>
+      {% if field.field.icon %}
+        <div class="input-icon">
+          <span class="input-icon-addon">{% tabler_icon field.field.icon extra_class="" %}</span>
+          {{ field|add_class:widget_class|add_error_class:'is-invalid' }}
+        </div>
+      {% else %}
+        {{ field|add_class:widget_class|add_error_class:'is-invalid' }}
+      {% endif %}
     {% endif %}
-    {% if field.field.icon %}
-      <div class="input-icon">
-        <span class="input-icon-addon">{% tabler_icon field.field.icon extra_class="" %}</span>
-        {{ field|add_class:'form-control'|add_error_class:'is-invalid' }}
-      </div>
-    {% else %}
-      {{ field|add_class:'form-control'|add_error_class:'is-invalid' }}
+    {% if field.errors %}
+      {% for error in field.errors %}<div class="invalid-feedback">{{ error }}</div>{% endfor %}
     {% endif %}
-  {% endif %}
-  {% if field.errors %}
-    {% for error in field.errors %}<div class="invalid-feedback">{{ error }}</div>{% endfor %}
-  {% endif %}
-  {% if field.help_text %}
-    <div id="{{ field.auto_id }}_helptext" class="form-text">{{ field.help_text|safe }}</div>
-  {% endif %}
-</div>
+    {% if field.help_text %}
+      <div id="{{ field.auto_id }}_helptext" class="form-text">{{ field.help_text|safe }}</div>
+    {% endif %}
+  </div>
+{% endwith %}
