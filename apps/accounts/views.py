@@ -2,12 +2,14 @@ from allauth.account.views import EmailView
 from allauth.account.views import PasswordChangeView
 from allauth.account.views import PasswordSetView
 from allauth.socialaccount.views import ConnectionsView
+from django.conf import settings
 from django.contrib import messages
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import UpdateView
+from django_htmx.http import HttpResponseClientRefresh
 
 from apps.accounts.forms import ProfileForm
 from apps.accounts.models import User
@@ -48,12 +50,19 @@ class ProfileUpdateView(OrganizationAccessMixin, UpdateView):
         return self.request.user
 
     def form_valid(self, form: ProfileForm) -> HttpResponse:
+        language_changed = "language" in form.changed_data
+
         response = super().form_valid(form)
+
         messages.success(self.request, _("Profile updated successfully."))
 
         if self.request.htmx:
-            return self.render_to_response(self.get_context_data())
+            if language_changed:
+                response = HttpResponseClientRefresh()
+            else:
+                response = self.render_to_response(self.get_context_data())
 
+        response.set_cookie(settings.LANGUAGE_COOKIE_NAME, form.cleaned_data["language"])
         return response
 
     def get_context_data(self, **kwargs) -> dict[str, object]:

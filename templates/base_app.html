@@ -41,18 +41,6 @@
                   {% endif %}
                 {% endfor %}
                 <div class="dropdown-divider"></div>
-                <span class="dropdown-header">{% trans "Language" %}</span>
-                <form method="post" action="{% url 'core:set-language' %}">
-                  {% csrf_token %}
-                  {% get_current_language as CURRENT_LANGUAGE %}
-                  {% get_available_languages as AVAILABLE_LANGUAGES %}
-                  <select id="language-select" name="language" class="dropdown-item w-100 pe-4" onchange="this.form.submit()">
-                    {% for code, name in AVAILABLE_LANGUAGES %}
-                      <option value="{{ code }}"{% if code == CURRENT_LANGUAGE %} selected{% endif %}>{{ name }}</option>
-                    {% endfor %}
-                  </select>
-                </form>
-                <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'organizations:organization-create' %}">{% tabler_icon "plus" %} {% trans "New organization" %}</a>
                 <form method="post" action="{% url 'account_logout' %}" class="">
                   {% csrf_token %}
