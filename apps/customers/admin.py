@@ -4,7 +4,6 @@ from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin
 from unfold.widgets import UnfoldAdminTextInputWidget
 
-from apps.customers.forms import ADDRESS_FIELDS
 from apps.customers.forms import CustomerForm
 from apps.customers.models import Customer
 
@@ -14,12 +13,11 @@ class CustomerAdminForm(CustomerForm):
 
     class Meta(CustomerForm.Meta):
         fields = (*CustomerForm.Meta.fields, "organization")
-        widgets = {}
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
-        for name in ADDRESS_FIELDS:
+        for name in CustomerForm.declared_fields:
             self.fields[name].widget = UnfoldAdminTextInputWidget()
 
 
