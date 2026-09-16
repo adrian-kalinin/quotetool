@@ -18,11 +18,13 @@
           <tr>
             <td>
               <a href="{% url 'customers:customer-detail' customer.pk %}" hx-boost="true">
-                {% if customer.type == "corporate" %}
-                  {% tabler_icon "building" extra_class="me-1 text-secondary" %}
-                {% else %}
-                  {% tabler_icon "user" extra_class="me-1 text-secondary" %}
-                {% endif %}
+                <span class="d-none d-md-inline">
+                  {% if customer.type == "corporate" %}
+                    {% tabler_icon "building" extra_class="me-1 text-secondary" %}
+                  {% else %}
+                    {% tabler_icon "user" extra_class="me-1 text-secondary" %}
+                  {% endif %}
+                </span>
                 {{ customer.display_name }}
               </a>
             </td>
