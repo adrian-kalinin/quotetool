@@ -19,7 +19,49 @@
                 aria-expanded="false">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <h1 class="navbar-brand text-primary py-lg-3">{% trans "Product" %}</h1>
+        <h1 class="d-none d-lg-block navbar-brand text-primary py-lg-3">{% trans "Product" %}</h1>
+        <div class="navbar-footer">
+          <ul class="navbar-nav">
+            <li class="nav-item dropup">
+              <a class="nav-link" href="#" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+                <span class="nav-link-icon">{% tabler_icon "building" %}</span>
+                <span class="nav-link-title w-100 d-inline">{{ active_organization.name }}</span>
+              </a>
+              <div class="dropdown-menu w-100">
+                <span class="dropdown-header">{% trans "Organization" %}</span>
+                <div class="dropdown-item">{% tabler_icon "check" %} {{ active_organization.name }}</div>
+                {% for organization in available_organizations %}
+                  {% if organization != active_organization %}
+                    <form method="post" action="{% url 'organizations:organization-switch' organization.uuid %}">
+                      {% csrf_token %}
+                      <button type="submit" class="dropdown-item w-100">
+                        <span class="icon"></span> {{ organization.name }}
+                      </button>
+                    </form>
+                  {% endif %}
+                {% endfor %}
+                <div class="dropdown-divider"></div>
+                <span class="dropdown-header">{% trans "Language" %}</span>
+                <form method="post" action="{% url 'core:set-language' %}">
+                  {% csrf_token %}
+                  {% get_current_language as CURRENT_LANGUAGE %}
+                  {% get_available_languages as AVAILABLE_LANGUAGES %}
+                  <select id="language-select" name="language" class="dropdown-item w-100 pe-4" onchange="this.form.submit()">
+                    {% for code, name in AVAILABLE_LANGUAGES %}
+                      <option value="{{ code }}"{% if code == CURRENT_LANGUAGE %} selected{% endif %}>{{ name }}</option>
+                    {% endfor %}
+                  </select>
+                </form>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'organizations:organization-create' %}">{% tabler_icon "plus" %} {% trans "New organization" %}</a>
+                <form method="post" action="{% url 'account_logout' %}" class="">
+                  {% csrf_token %}
+                  <button type="submit" class="dropdown-item text-danger w-100">{% tabler_icon "logout" %} {% trans "Log out" %}</button>
+                </form>
+              </div>
+            </li>
+          </ul>
+        </div>
         <div id="sidebar-menu" class="collapse navbar-collapse">
           <ul id="sidebar-nav" class="navbar-nav">
             <li class="border-top pb-1 ms-1 ms-lg-2"></li>
@@ -55,45 +97,6 @@
                 </a>
               </li>
             {% endif %}
-            <li class="border-bottom mb-1 mt-1 mt-lg-auto"></li>
-            <li id="sidebar-dropup" class="nav-item dropdown dropup">
-              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
-                <span class="nav-link-icon">{% tabler_icon "building" %}</span>
-                <span class="nav-link-title">{{ active_organization.name }}</span>
-              </a>
-              <div class="dropdown-menu">
-                <span class="dropdown-header">{% trans "Organization" %}</span>
-                <div class="dropdown-item">{% tabler_icon "check" %} {{ active_organization.name }}</div>
-                {% for organization in available_organizations %}
-                  {% if organization != active_organization %}
-                    <form method="post" action="{% url 'organizations:organization-switch' organization.uuid %}">
-                      {% csrf_token %}
-                      <button type="submit" class="dropdown-item w-100">
-                        <span class="icon"></span> {{ organization.name }}
-                      </button>
-                    </form>
-                  {% endif %}
-                {% endfor %}
-                <div class="dropdown-divider"></div>
-                <span class="dropdown-header">{% trans "Language" %}</span>
-                <form method="post" action="{% url 'core:set-language' %}">
-                  {% csrf_token %}
-                  {% get_current_language as CURRENT_LANGUAGE %}
-                  {% get_available_languages as AVAILABLE_LANGUAGES %}
-                  <select id="language-select" name="language" class="dropdown-item w-100 pe-4" onchange="this.form.submit()">
-                    {% for code, name in AVAILABLE_LANGUAGES %}
-                      <option value="{{ code }}"{% if code == CURRENT_LANGUAGE %} selected{% endif %}>{{ name }}</option>
-                    {% endfor %}
-                  </select>
-                </form>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'organizations:organization-create' %}">{% tabler_icon "plus" %} {% trans "New organization" %}</a>
-                <form method="post" action="{% url 'account_logout' %}" class="">
-                  {% csrf_token %}
-                  <button type="submit" class="dropdown-item text-danger w-100">{% tabler_icon "logout" %} {% trans "Log out" %}</button>
-                </form>
-              </div>
-            </li>
           </ul>
         </div>
       </div>
