@@ -165,8 +165,23 @@ class CustomerCreateViewTests(CustomerViewTestCase):
         self.assertEqual(customer.organization, self.organization)
         self.assertEqual(customer.created_by, self.user)
         self.assertEqual(customer.updated_by, self.user)
+        self.assertEqual(customer.phone.as_e164, "+4930123456")
         self.assertEqual(customer.billing_address.line1, "1 Main St")
         self.assertEqual(customer.billing_address.organization, self.organization)
+
+    def test_rejects_invalid_phone_number(self) -> None:
+        response = self.client.post(reverse("customers:customer-create"), customer_form_data(phone="not-a-phone"))
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertIn("phone", response.context["form"].errors)
+        self.assertFalse(Customer.objects.exists())
+
+    def test_rejects_national_phone_number_without_country_code(self) -> None:
+        response = self.client.post(reverse("customers:customer-create"), customer_form_data(phone="030 123456"))
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertIn("phone", response.context["form"].errors)
+        self.assertFalse(Customer.objects.exists())
 
     def test_requires_billing_address(self) -> None:
         response = self.client.post(
