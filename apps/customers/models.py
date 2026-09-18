@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from phonenumber_field.modelfields import PhoneNumberField
 
 from apps.organizations.models import Organization
 
@@ -52,7 +53,7 @@ class Customer(models.Model):
     first_name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(max_length=150, blank=True)
     email = models.EmailField()
-    phone = models.CharField(max_length=30, blank=True)
+    phone = PhoneNumberField(blank=True)
     notes = models.TextField(blank=True)
     billing_address = models.OneToOneField(Address, on_delete=models.PROTECT, related_name="billing_customer")
 
