@@ -9,6 +9,7 @@ dependencies = [
     "django>=5.2.8",
     "django-allauth[socialaccount]>=65.13.1",
     "django-htmx>=1.27.0",
+    "django-phonenumber-field[phonenumbers]>=8.5.0",
     "django-unfold>=0.102.0",
     "django-widget-tweaks>=1.5.0",
     "environs>=14.5.0",

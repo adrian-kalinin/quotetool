@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.forms",
     "django_htmx",
+    "phonenumber_field",
     "widget_tweaks",
     "allauth",
     "allauth.account",
@@ -182,6 +183,11 @@ USE_I18N = True
 USE_TZ = True
 
 LOCALE_PATHS = [BASE_DIR / "locale"]
+
+
+# Phone numbers
+
+PHONENUMBER_DEFAULT_FORMAT = "INTERNATIONAL"
 
 
 # Static files (CSS, JavaScript, Images)
