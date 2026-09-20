@@ -1,5 +1,6 @@
 from http import HTTPStatus
 
+from django.conf import settings
 from django.test import TestCase
 from django.urls import reverse
 
@@ -29,6 +30,16 @@ class SettingsAccountViewTests(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertTemplateUsed(response, "accounts/settings_account.html")
         self.assertEqual(response.context["profile_form"].instance, user)
+
+    def test_renders_timezone_from_cookie(self) -> None:
+        user = create_member("owner@example.com")
+        self.client.force_login(user)
+        self.client.cookies[settings.TIMEZONE_COOKIE_NAME] = "Europe/Berlin"
+
+        response = self.client.get(reverse("accounts:settings-account"))
+
+        self.assertContains(response, "Time zone: <b>Europe/Berlin</b>")
+        self.assertContains(response, f"{settings.TIMEZONE_COOKIE_NAME}=")
 
     def test_anonymous_user_is_redirected_to_login(self) -> None:
         response = self.client.get(reverse("accounts:settings-account"))
