@@ -53,6 +53,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "apps.core.middleware.UserLocaleMiddleware",
+    "apps.core.middleware.UserTimezoneMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "allauth.account.middleware.AccountMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -76,6 +77,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "apps.organizations.context.organizations",
+                "apps.core.context.timezone",
             ],
         },
     },
@@ -177,6 +179,8 @@ LANGUAGES = [
 LANGUAGE_CODE = "en"
 
 TIME_ZONE = "UTC"
+
+TIMEZONE_COOKIE_NAME = "django_timezone"
 
 USE_I18N = True
 

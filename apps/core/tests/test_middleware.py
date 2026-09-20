@@ -1,5 +1,6 @@
 from http import HTTPStatus
 from unittest.mock import Mock
+from urllib.parse import quote
 
 from django.conf import settings
 from django.contrib import messages
@@ -11,12 +12,14 @@ from django.http import HttpResponse
 from django.test import RequestFactory
 from django.test import SimpleTestCase
 from django.urls import reverse
+from django.utils import timezone
 from django_htmx.middleware import HtmxDetails
 
 from apps.accounts.models import User
 from apps.core.middleware import HtmxMessagesMiddleware
 from apps.core.middleware import HtmxOnlyMiddleware
 from apps.core.middleware import UserLocaleMiddleware
+from apps.core.middleware import UserTimezoneMiddleware
 
 
 class UserLocaleMiddlewareTests(SimpleTestCase):
@@ -60,6 +63,35 @@ class UserLocaleMiddlewareTests(SimpleTestCase):
     def test_default_language_is_english(self) -> None:
         request = self._request(header="fr")
         self.assertEqual(self._resolved_language(request), "en")
+
+
+class UserTimezoneMiddlewareTests(SimpleTestCase):
+    """Timezone resolution: the django_timezone cookie, falling back to the default."""
+
+    def setUp(self) -> None:
+        self.middleware = UserTimezoneMiddleware(get_response=lambda _request: HttpResponse())
+        self.addCleanup(timezone.deactivate)
+
+    def _resolved_timezone(self, *, cookie: str = "") -> str:
+        request = RequestFactory().get("/")
+
+        if cookie:
+            request.COOKIES[settings.TIMEZONE_COOKIE_NAME] = cookie
+
+        self.middleware(request)  # type: ignore[reportArgumentType]
+        return timezone.get_current_timezone_name()
+
+    def test_cookie_is_used(self) -> None:
+        self.assertEqual(self._resolved_timezone(cookie="Europe/Berlin"), "Europe/Berlin")
+
+    def test_url_encoded_cookie_is_decoded(self) -> None:
+        self.assertEqual(self._resolved_timezone(cookie=quote("Europe/Berlin", safe="")), "Europe/Berlin")
+
+    def test_default_timezone_is_utc(self) -> None:
+        self.assertEqual(self._resolved_timezone(), settings.TIME_ZONE)
+
+    def test_invalid_cookie_timezone_falls_back_to_utc(self) -> None:
+        self.assertEqual(self._resolved_timezone(cookie="Mars/Olympus"), settings.TIME_ZONE)
 
 
 class HtmxOnlyMiddlewareTests(SimpleTestCase):

@@ -32,5 +32,8 @@
          hx-get="{% url "core:hx-messages" %}"
          hx-trigger="fetch-messages from:body"
          hx-swap="afterbegin">{% include "snippets/messages.html" %}</div>
+    <script>
+      document.cookie = `{{ TIMEZONE_COOKIE_NAME }}=${Intl.DateTimeFormat().resolvedOptions().timeZone}; path=/; max-age=31536000; samesite=lax`;
+    </script>
   </body>
 </html>
