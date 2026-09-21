@@ -45,24 +45,24 @@ class UserLocaleMiddlewareTests(SimpleTestCase):
         return request.LANGUAGE_CODE
 
     def test_user_language_beats_cookie_and_header(self) -> None:
-        request = self._request(language="de", cookie="en", header="en")
-        self.assertEqual(self._resolved_language(request), "de")
+        request = self._request(language="de-de", cookie="en-gb", header="en-gb")
+        self.assertEqual(self._resolved_language(request), "de-de")
 
     def test_cookie_beats_header(self) -> None:
-        request = self._request(cookie="de", header="en")
-        self.assertEqual(self._resolved_language(request), "de")
+        request = self._request(cookie="de-de", header="en-gb")
+        self.assertEqual(self._resolved_language(request), "de-de")
 
     def test_header_is_used_as_fallback(self) -> None:
-        request = self._request(header="de")
-        self.assertEqual(self._resolved_language(request), "de")
+        request = self._request(header="de-de")
+        self.assertEqual(self._resolved_language(request), "de-de")
 
     def test_user_without_language_falls_through_to_cookie(self) -> None:
-        request = self._request(cookie="de", header="en")
-        self.assertEqual(self._resolved_language(request), "de")
+        request = self._request(cookie="de-de", header="en-gb")
+        self.assertEqual(self._resolved_language(request), "de-de")
 
     def test_default_language_is_english(self) -> None:
         request = self._request(header="fr")
-        self.assertEqual(self._resolved_language(request), "en")
+        self.assertEqual(self._resolved_language(request), "en-gb")
 
 
 class UserTimezoneMiddlewareTests(SimpleTestCase):

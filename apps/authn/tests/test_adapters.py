@@ -37,13 +37,13 @@ class SocialAccountAdapterTests(TestCase):
         self.assertEqual(user.name, "")
 
     def test_populates_language_from_cookie(self) -> None:
-        self.request.COOKIES[settings.LANGUAGE_COOKIE_NAME] = "de"
+        self.request.COOKIES[settings.LANGUAGE_COOKIE_NAME] = "de-de"
         user = self.populate({"first_name": "Ada", "email": "ada@example.com"})
 
-        self.assertEqual(user.language, "de")
+        self.assertEqual(user.language, "de-de")
 
     def test_ignores_invalid_language_cookie(self) -> None:
         self.request.COOKIES[settings.LANGUAGE_COOKIE_NAME] = "xx"
         user = self.populate({"first_name": "Ada", "email": "ada@example.com"})
 
-        self.assertEqual(user.language, "en")
+        self.assertEqual(user.language, "en-gb")

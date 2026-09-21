@@ -172,11 +172,11 @@ SOCIALACCOUNT_PROVIDERS = {
 # Internationalization
 
 LANGUAGES = [
-    ("en", "🇺🇸 English"),
-    ("de", "🇩🇪 Deutsch"),
+    ("en-gb", "🇬🇧 English"),
+    ("de-de", "🇩🇪 Deutsch"),
 ]
 
-LANGUAGE_CODE = "en"
+LANGUAGE_CODE = "en-gb"
 
 TIME_ZONE = "UTC"
 

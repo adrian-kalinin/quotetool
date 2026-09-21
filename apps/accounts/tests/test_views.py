@@ -64,7 +64,7 @@ class ProfileUpdateViewTests(TestCase):
         user = create_member("owner@example.com")
         self.client.force_login(user)
 
-        response = self.client.post(reverse("accounts:settings-profile"), {"name": "Ada Lovelace", "language": "en"})
+        response = self.client.post(reverse("accounts:settings-profile"), {"name": "Ada Lovelace", "language": "en-gb"})
 
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertEqual(response["Location"], reverse("accounts:settings-account"))
@@ -76,17 +76,17 @@ class ProfileUpdateViewTests(TestCase):
         user = create_member("owner@example.com")
         self.client.force_login(user)
 
-        self.client.post(reverse("accounts:settings-profile"), {"name": "Ada Lovelace", "language": "de"})
+        self.client.post(reverse("accounts:settings-profile"), {"name": "Ada Lovelace", "language": "de-de"})
 
         user.refresh_from_db()
-        self.assertEqual(user.language, "de")
+        self.assertEqual(user.language, "de-de")
 
     def test_htmx_post_renders_profile_partial(self) -> None:
         user = create_member("owner@example.com")
         self.client.force_login(user)
 
         response = self.client.post(
-            reverse("accounts:settings-profile"), {"name": "Ada Lovelace", "language": "en"}, HTTP_HX_REQUEST="true"
+            reverse("accounts:settings-profile"), {"name": "Ada Lovelace", "language": "en-gb"}, HTTP_HX_REQUEST="true"
         )
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
@@ -100,14 +100,14 @@ class ProfileUpdateViewTests(TestCase):
         self.client.force_login(user)
 
         response = self.client.post(
-            reverse("accounts:settings-profile"), {"name": "Ada Lovelace", "language": "de"}, HTTP_HX_REQUEST="true"
+            reverse("accounts:settings-profile"), {"name": "Ada Lovelace", "language": "de-de"}, HTTP_HX_REQUEST="true"
         )
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(response.headers["HX-Refresh"], "true")
 
         user.refresh_from_db()
-        self.assertEqual(user.language, "de")
+        self.assertEqual(user.language, "de-de")
 
     def test_blank_name_shows_form_errors(self) -> None:
         user = create_member("owner@example.com")
@@ -115,7 +115,7 @@ class ProfileUpdateViewTests(TestCase):
         user.save(update_fields=["name"])
         self.client.force_login(user)
 
-        response = self.client.post(reverse("accounts:settings-profile"), {"name": "", "language": "en"})
+        response = self.client.post(reverse("accounts:settings-profile"), {"name": "", "language": "en-gb"})
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertIn("name", response.context["profile_form"].errors)
@@ -132,7 +132,7 @@ class ProfileUpdateViewTests(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.METHOD_NOT_ALLOWED)
 
     def test_anonymous_user_is_redirected_to_login(self) -> None:
-        response = self.client.post(reverse("accounts:settings-profile"), {"name": "Ada Lovelace", "language": "en"})
+        response = self.client.post(reverse("accounts:settings-profile"), {"name": "Ada Lovelace", "language": "en-gb"})
 
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertIn(reverse("account_login"), response["Location"])

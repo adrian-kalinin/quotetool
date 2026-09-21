@@ -27,10 +27,10 @@ class SignupFormTests(TestCase):
         self.assertTrue(form.is_valid(), form.errors)
         request = RequestFactory().post("/")
         request.session = SessionStore()
-        request.COOKIES[settings.LANGUAGE_COOKIE_NAME] = "de"
+        request.COOKIES[settings.LANGUAGE_COOKIE_NAME] = "de-de"
         user = form.save(request)
 
-        self.assertEqual(user.language, "de")
+        self.assertEqual(user.language, "de-de")
 
     def test_save_ignores_invalid_language_cookie(self) -> None:
         form = SignupForm(data={"name": "Ada Lovelace", "email": "ada@example.com", "password1": "x9Kq2mZ8vLp4wR7s"})
@@ -41,7 +41,7 @@ class SignupFormTests(TestCase):
         request.COOKIES[settings.LANGUAGE_COOKIE_NAME] = "xx"
         user = form.save(request)
 
-        self.assertEqual(user.language, "en")
+        self.assertEqual(user.language, "en-gb")
 
     def test_name_is_required(self) -> None:
         form = SignupForm(data={"email": "ada@example.com", "password1": "x9Kq2mZ8vLp4wR7s"})

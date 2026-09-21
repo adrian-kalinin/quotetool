@@ -50,7 +50,7 @@
             <tr>
               <td data-label="{% trans "Email" %}">{{ invitation.email }}</td>
               <td data-label="{% trans "Invited by" %}">{{ invitation.invited_by.email }}</td>
-              <td data-label="{% trans "Expires" %}">{{ invitation.expires_at|date:"M j, Y" }}</td>
+              <td data-label="{% trans "Expires" %}">{{ invitation.expires_at|date:"SHORT_DATE_FORMAT" }}</td>
               <td class="text-end">
                 <div class="dropdown">
                   <button class="btn btn-icon btn-ghost-secondary"

@@ -67,13 +67,13 @@
       <div class="d-flex flex-wrap gap-3">
         <span>
           {% tabler_icon "calendar-plus" extra_class="me-1" %}
-          {% blocktranslate trimmed with date=customer.created_at|date:"DATE_FORMAT" timestamp=customer.created_at|date:"SHORT_DATETIME_FORMAT" iso=customer.created_at|date:"c" author=customer.created_by.display_name|default:"—" %}
+          {% blocktranslate trimmed with date=customer.created_at|date:"SHORT_DATE_FORMAT" timestamp=customer.created_at|date:"SHORT_DATETIME_FORMAT" iso=customer.created_at|date:"c" author=customer.created_by.display_name|default:"—" %}
             Created <time datetime="{{ iso }}" title="{{ timestamp }}" class="text-body">{{ date }}</time> by <span class="text-body">{{ author }}</span>
           {% endblocktranslate %}
         </span>
         <span>
           {% tabler_icon "refresh" extra_class="me-1" %}
-          {% blocktranslate trimmed with date=customer.updated_at|date:"DATE_FORMAT" timestamp=customer.updated_at|date:"SHORT_DATETIME_FORMAT" iso=customer.updated_at|date:"c" author=customer.updated_by.display_name|default:"—" %}
+          {% blocktranslate trimmed with date=customer.updated_at|date:"SHORT_DATE_FORMAT" timestamp=customer.updated_at|date:"SHORT_DATETIME_FORMAT" iso=customer.updated_at|date:"c" author=customer.updated_by.display_name|default:"—" %}
             Updated <time datetime="{{ iso }}" title="{{ timestamp }}" class="text-body">{{ date }}</time> by <span class="text-body">{{ author }}</span>
           {% endblocktranslate %}
         </span>

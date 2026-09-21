@@ -23,9 +23,9 @@
         <p class="text-secondary">
           {% if subscription.is_active and subscription.current_period_end %}
             {% if subscription.cancel_at_period_end %}
-              {% blocktranslate with end_date=subscription.current_period_end|date %}Your subscription is valid until <b>{{ end_date }}</b>.{% endblocktranslate %}
+              {% blocktranslate with end_date=subscription.current_period_end|date:"SHORT_DATE_FORMAT" %}Your subscription is valid until <b>{{ end_date }}</b>.{% endblocktranslate %}
             {% else %}
-              {% blocktranslate with end_date=subscription.current_period_end|date %}Your subscription will renew on <b>{{ end_date }}</b>.{% endblocktranslate %}
+              {% blocktranslate with end_date=subscription.current_period_end|date:"SHORT_DATE_FORMAT" %}Your subscription will renew on <b>{{ end_date }}</b>.{% endblocktranslate %}
             {% endif %}
           {% endif %}
         </p>
