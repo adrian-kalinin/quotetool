@@ -1,9 +1,43 @@
+from typing import Any
+
+from babel import Locale
 from django import forms
+from django.conf import settings
+from django.forms.renderers import BaseRenderer
+from django.utils.html import format_html
+from django.utils.html import format_html_join
+from django.utils.safestring import SafeString
+from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
 
 from apps.customers.models import Address
 from apps.customers.models import Customer
 from apps.organizations.models import Organization
+
+_NON_COUNTRY_TERRITORIES = frozenset({"EU", "EZ", "QO", "UN", "ZZ"})
+
+
+def country_names() -> tuple[str, ...]:
+    """Return country names in the active language."""
+    language = (get_language() or settings.LANGUAGE_CODE).replace("-", "_")
+    territories = Locale.parse(language).territories
+
+    return tuple(
+        sorted(name for code, name in territories.items() if code.isalpha() and code not in _NON_COUNTRY_TERRITORIES)
+    )
+
+
+class CountryInput(forms.TextInput):
+    """Text input that suggests country names."""
+
+    def render(
+        self, name: str, value: object, attrs: dict[str, Any] | None = None, renderer: BaseRenderer | None = None
+    ) -> SafeString:
+        datalist_id = f"{name}-datalist"
+        input_html = super().render(name, value, {**(attrs or {}), "list": datalist_id}, renderer)
+        options_html = format_html_join("", '<option value="{}"></option>', ((country,) for country in country_names()))
+
+        return format_html('{}<datalist id="{}">{}</datalist>', input_html, datalist_id, options_html)
 
 
 class CustomerForm(forms.ModelForm):
@@ -22,6 +56,8 @@ class CustomerForm(forms.ModelForm):
 
     def __init__(self, *args, organization: Organization | None = None, **kwargs) -> None:
         super().__init__(*args, **kwargs)
+
+        self.fields["address_country"].widget = CountryInput()
 
         if self.instance.pk is None:
             self.fields["type"].initial = Customer.Type.CORPORATE

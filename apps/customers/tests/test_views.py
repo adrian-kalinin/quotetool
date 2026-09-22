@@ -149,6 +149,14 @@ class CustomerCreateViewTests(CustomerViewTestCase):
         self.assertContains(response, 'value="corporate"')
         self.assertContains(response, 'value="private"')
 
+    def test_country_field_renders_datalist_suggestions(self) -> None:
+        response = self.client.get(reverse("customers:customer-create"))
+
+        self.assertContains(response, 'list="address_country-datalist"')
+        self.assertContains(response, 'id="address_country-datalist"')
+        self.assertContains(response, '<option value="Germany">')
+        self.assertNotContains(response, 'value="European Union"')
+
     def test_prefills_country_from_most_recent_customer(self) -> None:
         create_customer(self.organization, billing_address=create_address(self.organization, country="France"))
 
