@@ -149,6 +149,22 @@ class CustomerCreateViewTests(CustomerViewTestCase):
         self.assertContains(response, 'value="corporate"')
         self.assertContains(response, 'value="private"')
 
+    def test_prefills_country_from_most_recent_customer(self) -> None:
+        create_customer(self.organization, billing_address=create_address(self.organization, country="France"))
+
+        response = self.client.get(reverse("customers:customer-create"))
+
+        self.assertEqual(response.context["form"]["address_country"].value(), "France")
+
+    def test_does_not_prefill_country_from_another_organization(self) -> None:
+        create_customer(
+            self.other_organization, billing_address=create_address(self.other_organization, country="Italy")
+        )
+
+        response = self.client.get(reverse("customers:customer-create"))
+
+        self.assertIsNone(response.context["form"]["address_country"].value())
+
     def test_creates_corporate_customer_with_billing_address(self) -> None:
         response = self.client.post(
             reverse("customers:customer-create"),

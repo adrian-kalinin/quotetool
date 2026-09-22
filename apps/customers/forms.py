@@ -20,11 +20,12 @@ class CustomerForm(forms.ModelForm):
         model = Customer
         fields = ("type", "company_name", "first_name", "last_name", "email", "phone", "notes")
 
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args, organization: Organization | None = None, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
         if self.instance.pk is None:
             self.fields["type"].initial = Customer.Type.CORPORATE
+            self._prefill_country(organization)
 
         self.fields["company_name"].widget.attrs["placeholder"] = _("Acme Inc.")
         self.fields["first_name"].widget.attrs["placeholder"] = _("John")
@@ -49,6 +50,21 @@ class CustomerForm(forms.ModelForm):
                     "address_country": self.instance.billing_address.country,
                 }
             )
+
+    def _prefill_country(self, organization: Organization | None) -> None:
+        """Prefill the billing country from the organization's most recently added customer."""
+        if organization is None:
+            return
+
+        latest = (
+            Customer.objects.filter(organization=organization)
+            .select_related("billing_address")
+            .order_by("-created_at")
+            .first()
+        )
+
+        if latest is not None:
+            self.fields["address_country"].initial = latest.billing_address.country
 
     def clean(self) -> dict[str, object]:
         cleaned = super().clean() or {}

@@ -78,6 +78,11 @@ class CustomerCreateView(OrganizationAccessMixin, CreateView):
     template_name = "customers/customer_form.html"
     form_class = CustomerForm
 
+    def get_form_kwargs(self) -> dict[str, object]:
+        kwargs = super().get_form_kwargs()
+        kwargs["organization"] = self.request.user.active_organization
+        return kwargs
+
     def form_valid(self, form: CustomerForm) -> HttpResponse:
         form.instance.organization = self.request.user.active_organization
         form.instance.created_by = self.request.user
