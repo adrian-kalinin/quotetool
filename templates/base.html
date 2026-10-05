@@ -35,5 +35,14 @@
     <script>
       document.cookie = `{{ TIMEZONE_COOKIE_NAME }}=${Intl.DateTimeFormat().resolvedOptions().timeZone}; path=/; max-age=31536000; samesite=lax`;
     </script>
+    <script>
+      const recoverFromHtmxError = (event) => {
+        if (event.detail.boosted) {
+          window.location.assign(event.detail.pathInfo.requestPath);
+        }
+      };
+      document.body.addEventListener("htmx:responseError", recoverFromHtmxError);
+      document.body.addEventListener("htmx:sendError", recoverFromHtmxError);
+    </script>
   </body>
 </html>
