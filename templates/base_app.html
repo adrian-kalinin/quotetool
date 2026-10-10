@@ -3,7 +3,7 @@
 {% load tabler_icons i18n %}
 
 {% block page %}
-  <div class="page" hx-indicator="#global-progress">
+  <div class="page" hx-boost="true" hx-indicator="#global-progress">
     <div id="global-progress" class="htmx-indicator position-fixed top-0 start-0 end-0 z-3">
       <div class="progress progress-sm rounded-0">
         <div class="progress-bar progress-bar-indeterminate"></div>
@@ -55,29 +55,27 @@
             <li class="border-top pb-1 ms-1 ms-lg-2"></li>
             <li class="nav-item{% if request.resolver_match.view_name == 'dashboard:dashboard' %} active{% endif %}">
               <a class="nav-link{% if not active_organization.has_active_subscription %} disabled{% endif %}"
-                 href="{% url 'dashboard:dashboard' %}"
-                 hx-boost="true">
+                 href="{% url 'dashboard:dashboard' %}">
                 <span class="nav-link-icon">{% tabler_icon 'home' %}</span>
                 <span class="nav-link-title">{% trans "Home" %}</span>
               </a>
             </li>
             <li class="nav-item{% if 'customers' in request.resolver_match.view_name %} active{% endif %}">
               <a class="nav-link{% if not active_organization.has_active_subscription %} disabled{% endif %}"
-                 href="{% url 'customers:customer-list' %}"
-                 hx-boost="true">
+                 href="{% url 'customers:customer-list' %}">
                 <span class="nav-link-icon">{% tabler_icon 'users' %}</span>
                 <span class="nav-link-title">{% trans "Customers" %}</span>
               </a>
             </li>
             <li class="nav-item{% if 'settings' in request.resolver_match.view_name %} active{% endif %}">
-              <a class="nav-link" href="{% url 'organizations:settings-organization' %}" hx-boost="true">
+              <a class="nav-link" href="{% url 'organizations:settings-organization' %}">
                 <span class="nav-link-icon">{% tabler_icon 'settings' %}</span>
                 <span class="nav-link-title">{% trans "Settings" %}</span>
               </a>
             </li>
             {% if pending_invitations_count %}
               <li class="nav-item{% if request.resolver_match.view_name == 'organizations:invitations' %} active{% endif %}">
-                <a class="nav-link" href="{% url 'organizations:invitations' %}" hx-boost="true">
+                <a class="nav-link" href="{% url 'organizations:invitations' %}">
                   <span class="nav-link-icon">{% tabler_icon "mail" %}</span>
                   <span class="nav-link-title fw-bold">
                     {% blocktranslate %}Invitations ({{ pending_invitations_count }}){% endblocktranslate %}

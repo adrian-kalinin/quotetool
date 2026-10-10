@@ -11,13 +11,12 @@
   <a href="{% url 'customers:customer-list' %}"
      class="btn btn-icon btn-outline me-3"
      aria-label="{% trans "Back to customers" %}"
-     title="{% trans "Back to customers" %}"
-     hx-boost="true">{% tabler_icon "arrow-left" %}</a>
+     title="{% trans "Back to customers" %}">{% tabler_icon "arrow-left" %}</a>
   {{ customer.display_name }}
 {% endblock page_title %}
 
 {% block page_actions %}
-  <a href="{% url 'customers:customer-update' customer.pk %}" class="btn btn-primary" hx-boost="true">
+  <a href="{% url 'customers:customer-update' customer.pk %}" class="btn btn-primary">
     {% tabler_icon "pencil" extra_class="me-2" %}{% trans "Edit" %}
   </a>
 {% endblock page_actions %}

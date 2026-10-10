@@ -39,9 +39,8 @@
         <p class="text-secondary">
           {% blocktranslate with organization_name=active_organization.name %}You will lose access to this organization until you are invited again. This action does not delete the organization or your account.{% endblocktranslate %}
         </p>
-        <form method="post"
-              action="{% url 'organizations:organization-leave' %}"
-              onsubmit="return confirm('{% blocktranslate with organization_name=active_organization.name %}Leave {{ organization_name }}?{% endblocktranslate %}');">
+        {% blocktranslate with organization_name=active_organization.name asvar leave_confirm %}Leave {{ organization_name }}?{% endblocktranslate %}
+        <form method="post" action="{% url 'organizations:organization-leave' %}" hx-confirm="{{ leave_confirm }}">
           {% csrf_token %}
           <button type="submit" class="btn btn-danger">{% trans "Leave organization" %}</button>
         </form>

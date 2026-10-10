@@ -16,8 +16,7 @@
   <a href="{% if form.instance.pk %}{% url 'customers:customer-detail' form.instance.pk %}{% else %}{% url 'customers:customer-list' %}{% endif %}"
      class="btn btn-icon btn-outline me-3"
      aria-label="{% trans "Back" %}"
-     title="{% trans "Back" %}"
-     hx-boost="true">{% tabler_icon "arrow-left" %}</a>
+     title="{% trans "Back" %}">{% tabler_icon "arrow-left" %}</a>
   {% if form.instance.pk %}
     {% trans "Edit customer" %}
   {% else %}
