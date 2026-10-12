@@ -22,7 +22,7 @@
         hx-get="{% url 'customers:customer-list' %}"
         hx-target="#customer-list-container"
         hx-swap="innerHTML"
-        hx-push-url="true"
+        hx-replace-url="true"
         hx-trigger="input changed delay:300ms, search, submit">
     <div class="input-icon">
       <span class="input-icon-addon">{% tabler_icon "search" %}</span>
