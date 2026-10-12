@@ -2,7 +2,7 @@
 {% load tabler_icons %}
 {% load i18n %}
 
-<form method="post" action="{% provider_login_url "google" process=process %}">
+<form method="post" action="{% provider_login_url "google" process=process %}" hx-boost="false">
   {% csrf_token %}
   <button type="submit" class="btn btn-outline w-100">
     {% tabler_icon "brand-google" style="filled" %}

@@ -41,7 +41,7 @@
         </div>
         <div class="text-secondary mb-3">{{ subscription.amount|money:subscription.currency }} {% trans "/ month" %}</div>
         {% if is_manager %}
-          <form method="post" action="{% url 'billing:portal' %}">
+          <form method="post" action="{% url 'billing:portal' %}" hx-boost="false">
             {% csrf_token %}
             <button type="submit" class="btn btn-primary">{% trans "Manage in portal" %}</button>
           </form>
@@ -71,7 +71,7 @@
               </li>
             {% endfor %}
           </ul>
-          <form method="post" action="{% url 'billing:checkout' %}">
+          <form method="post" action="{% url 'billing:checkout' %}" hx-boost="false">
             {% csrf_token %}
             <input type="hidden" name="plan_key" value="{{ plan.plan.key }}">
             <button type="submit" class="btn btn-primary" {% if not is_manager %}disabled{% endif %}>
