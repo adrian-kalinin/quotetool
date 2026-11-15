@@ -1,6 +1,6 @@
-# django-saas-starter
+# QuoteTool
 
-Django starter for shipping SaaS products fast.
+A SaaS tool built for trade businesses and professionals, centered on quotes and the full quote lifecycle - from creating and sending to tracking, acceptance, signing, and follow-up - with supporting features that make managing the business easier.
 
 ## Tech stack
 
@@ -42,18 +42,18 @@ All configuration is via environment variables in `.env` — see `.env.example` 
 
 ## Common commands
 
-| Command             | Description                     |
-| ------------------- | ------------------------------- |
-| `just build`        | Build the dev image             |
-| `just up`           | Start containers                |
-| `just down`         | Stop containers                 |
-| `just restart`      | Restart a service (defaults to server) |
-| `just logs`         | Tail container logs             |
-| `just shell`        | Bash into the Django container  |
-| `just manage <cmd>` | Run a Django management command |
+| Command             | Description                                |
+| ------------------- | ------------------------------------------ |
+| `just build`        | Build the dev image                        |
+| `just up`           | Start containers                           |
+| `just down`         | Stop containers                            |
+| `just restart`      | Restart a service (defaults to server)     |
+| `just logs`         | Tail container logs                        |
+| `just shell`        | Bash into the Django container             |
+| `just manage <cmd>` | Run a Django management command            |
 | `just test`         | Run the test suite (needs `just up` first) |
-| `just lint`         | Pre-commit on staged files      |
-| `just lint-all`     | Pre-commit on all files         |
+| `just lint`         | Pre-commit on staged files                 |
+| `just lint-all`     | Pre-commit on all files                    |
 
 ## Polar webhooks
 
