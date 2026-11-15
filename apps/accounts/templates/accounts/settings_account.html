@@ -18,13 +18,13 @@
     <div class="card-header">
       <h3 class="card-title">{% trans "Email Address" %}</h3>
     </div>
-    <div class="card-body">{% include "account/email_change.html" %}</div>
+    <div class="card-body">{% include "account/partials/email_change.html" %}</div>
   </div>
 
   <div class="card mb-4">
     <div class="card-header">
       <h3 class="card-title">{% trans "Connected Accounts" %}</h3>
     </div>
-    <div class="card-body">{% include "socialaccount/connections.html" %}</div>
+    <div class="card-body">{% include "socialaccount/partials/connections.html" %}</div>
   </div>
 {% endblock settings_content %}

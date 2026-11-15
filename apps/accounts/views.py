@@ -80,10 +80,13 @@ class SettingsSecurityView(OrganizationAccessMixin, TemplateView):
     def get_context_data(self, **kwargs) -> dict[str, object]:
         context = super().get_context_data(**kwargs)
 
-        password_view = PasswordChangeView() if self.request.user.has_usable_password() else PasswordSetView()
+        has_password = self.request.user.has_usable_password()
+        password_view = PasswordChangeView() if has_password else PasswordSetView()
         password_view.setup(self.request)
 
-        context["password_template"] = password_view.template_name
+        context["password_template"] = (
+            "account/partials/password_change.html" if has_password else "account/partials/password_set.html"
+        )
         context.update(password_view.get_context_data())
 
         return context

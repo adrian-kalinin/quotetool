@@ -1,0 +1,51 @@
+{% load tabler_icons %}
+{% load i18n %}
+
+<div id="social-connections-container">
+  <p class="text-secondary">{% trans "You can sign in to your account using any of the following providers." %}</p>
+
+  {% if form.accounts %}
+    <div class="mb-4">
+      <div class="list-group">
+        {% for acc in form.fields.account.choices %}
+          {% with account=acc.0.instance.get_provider_account %}
+            <div class="list-group-item d-flex align-items-center gap-3">
+              <div class="d-flex align-items-center gap-2">
+                {% if account.account.provider == "google" %}
+                  {% tabler_icon "brand-google" style="filled" %}
+                {% endif %}
+                <strong>{{ account }}</strong>
+              </div>
+              <span id="disconnect-spinner-{{ account.account.pk }}" class="spinner-border spinner-border-sm htmx-indicator"></span>
+              <div class="ms-auto">
+                <form method="post"
+                      hx-post="{% url 'socialaccount_connections' %}"
+                      hx-target="#social-connections-container"
+                      hx-select="#social-connections-container"
+                      hx-swap="outerHTML"
+                      hx-indicator="#disconnect-spinner-{{ account.account.pk }}"
+                      hx-disabled-elt="#disconnect-btn-{{ account.account.pk }}"
+                      class="d-inline">
+                  {% csrf_token %}
+                  <input type="hidden" name="account" value="{{ account.account.pk }}" />
+                  <button id="disconnect-btn-{{ account.account.pk }}" type="submit" class="btn btn-action" aria-label="{% trans "Disconnect" %}">
+                    {% tabler_icon "x" %}
+                  </button>
+                </form>
+              </div>
+            </div>
+          {% endwith %}
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <div class="alert alert-info mb-4">
+      {% tabler_icon "info-circle" %}
+      {% trans "You currently have no third-party accounts connected." %}
+    </div>
+  {% endif %}
+  <div>
+    <p class="text-secondary">{% trans "Connect additional third-party providers to have more login options." %}</p>
+    {% include "socialaccount/snippets/provider_list.html" with process="connect" %}
+  </div>
+</div>

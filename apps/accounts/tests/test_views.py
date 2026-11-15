@@ -148,7 +148,7 @@ class SettingsSecurityViewTests(TestCase):
         response = self.client.get(reverse("accounts:settings-security"))
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertEqual(response.context["password_template"], "account/password_change.html")
+        self.assertEqual(response.context["password_template"], "account/partials/password_change.html")
 
     def test_user_without_usable_password_gets_set_password_form(self) -> None:
         user = create_member("social@example.com", with_password=False)
@@ -157,4 +157,62 @@ class SettingsSecurityViewTests(TestCase):
         response = self.client.get(reverse("accounts:settings-security"))
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertEqual(response.context["password_template"], "account/password_set.html")
+        self.assertEqual(response.context["password_template"], "account/partials/password_set.html")
+
+
+class AccountFragmentPageTests(TestCase):
+    """Direct navigation to the allauth fragment endpoints renders standalone pages."""
+
+    def test_password_change_renders_full_page(self) -> None:
+        user = create_member("owner@example.com")
+        self.client.force_login(user)
+
+        response = self.client.get(reverse("account_change_password"))
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(response, "account/password_change.html")
+        self.assertTemplateUsed(response, "account/partials/password_change.html")
+        self.assertContains(response, reverse("accounts:settings-security"))
+
+    def test_password_set_renders_full_page(self) -> None:
+        user = create_member("social@example.com", with_password=False)
+        self.client.force_login(user)
+
+        response = self.client.get(reverse("account_set_password"))
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(response, "account/password_set.html")
+        self.assertTemplateUsed(response, "account/partials/password_set.html")
+
+    def test_email_renders_full_page(self) -> None:
+        user = create_member("owner@example.com")
+        self.client.force_login(user)
+
+        response = self.client.get(reverse("account_email"))
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(response, "account/email_change.html")
+        self.assertTemplateUsed(response, "account/partials/email_change.html")
+
+    def test_social_connections_renders_full_page(self) -> None:
+        user = create_member("owner@example.com")
+        self.client.force_login(user)
+
+        response = self.client.get(reverse("socialaccount_connections"))
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(response, "socialaccount/connections.html")
+        self.assertTemplateUsed(response, "socialaccount/partials/connections.html")
+
+    def test_non_htmx_password_change_is_applied(self) -> None:
+        user = create_member("owner@example.com")
+        self.client.force_login(user)
+
+        response = self.client.post(
+            reverse("account_change_password"),
+            {"oldpassword": "test-password", "password1": "new-test-password", "password2": "new-test-password"},
+        )
+
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        user.refresh_from_db()
+        self.assertTrue(user.check_password("new-test-password"))

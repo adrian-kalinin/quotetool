@@ -58,7 +58,6 @@ MIDDLEWARE = [
     "allauth.account.middleware.AccountMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
-    "apps.core.middleware.HtmxOnlyMiddleware",
     "apps.core.middleware.HtmxMessagesMiddleware",
     "apps.organizations.middleware.ActiveOrganizationIntegrityMiddleware",
 ]

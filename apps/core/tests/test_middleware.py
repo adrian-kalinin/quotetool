@@ -1,4 +1,3 @@
-from http import HTTPStatus
 from unittest.mock import Mock
 from urllib.parse import quote
 
@@ -11,13 +10,10 @@ from django.http import HttpRequest
 from django.http import HttpResponse
 from django.test import RequestFactory
 from django.test import SimpleTestCase
-from django.urls import reverse
 from django.utils import timezone
-from django_htmx.middleware import HtmxDetails
 
 from apps.accounts.models import User
 from apps.core.middleware import HtmxMessagesMiddleware
-from apps.core.middleware import HtmxOnlyMiddleware
 from apps.core.middleware import UserLocaleMiddleware
 from apps.core.middleware import UserTimezoneMiddleware
 
@@ -92,39 +88,6 @@ class UserTimezoneMiddlewareTests(SimpleTestCase):
 
     def test_invalid_cookie_timezone_falls_back_to_utc(self) -> None:
         self.assertEqual(self._resolved_timezone(cookie="Mars/Olympus"), settings.TIME_ZONE)
-
-
-class HtmxOnlyMiddlewareTests(SimpleTestCase):
-    """Non-htmx requests to htmx-only endpoints are redirected to the parent page."""
-
-    def _call(self, path: str, *, htmx: bool) -> HttpResponse:
-        get_response = Mock(return_value=HttpResponse("ok"))
-        middleware = HtmxOnlyMiddleware(get_response)
-        request = RequestFactory().get(path)
-
-        if htmx:
-            request.META["HTTP_HX_REQUEST"] = "true"
-
-        request.htmx = HtmxDetails(request)  # type: ignore[reportAttributeAccessIssue]
-        return middleware(request)  # type: ignore[reportArgumentType]
-
-    def test_non_htmx_request_to_messages_endpoint_redirects(self) -> None:
-        response = self._call(reverse("core:hx-messages"), htmx=False)
-
-        self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertEqual(response["Location"], reverse("dashboard:dashboard"))
-
-    def test_htmx_request_to_messages_endpoint_passes_through(self) -> None:
-        response = self._call(reverse("core:hx-messages"), htmx=True)
-
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertEqual(response.content, b"ok")
-
-    def test_regular_page_is_not_affected(self) -> None:
-        response = self._call("/some/regular/page/", htmx=False)
-
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertEqual(response.content, b"ok")
 
 
 class HtmxMessagesMiddlewareTests(SimpleTestCase):
